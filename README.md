@@ -45,6 +45,8 @@ Finally, for each imputed election spreadsheet, I exported select results into
 corresponding CSV files in the data/results/ directory. These are the election
 results I then analyzed programmatically.
 
+I added a year column manually.
+
 ## Analysis - TODO
 
 * Review & document the logic for imputing uncontested elections
