@@ -16,27 +16,36 @@ def read_elections(elections_csv):
         with open(elections_csv, mode="r", encoding="utf-8-sig") as f_input:
             csv_file = csv.DictReader(f_input)
 
+            n_elections = 0
+            n_other_significant = 0
             for row in csv_file:
+                year = int(row['YEAR'])
+
+                bElections = True if (year != 2000) else False
+                if (bElections):
+                    n_elections += 1
+
+                state = row['STATE']
+                xx = row['XX']
+  
+                rep_v = int(row['REP_V']) 
+                dem_v = int(row['DEM_V'])
+                oth_v = int(row['OTH_V'])
+                tot_v = int(row['TOT_V']) 
+                rep_s = int(row['REP_S'])
+                dem_s = int(row['DEM_S']) 
+                oth_s = int(row['OTH_S'])
                 tot_s = int(row['TOT_S'])
 
-                if (tot_s > 1):
-                    year = int(row['YEAR'])
-                    state = row['STATE']
-                    xx = row['XX']
-                    # rep_v = int(row['REP_V']) 
-                    # dem_v = int(row['DEM_V'])
-                    # oth_v = int(row['OTH_V'])
-                    # tot_v = int(row['TOT_V']) 
-                    # rep_s = int(row['REP_S'])
-                    # dem_s = int(row['DEM_S']) 
-                    oth_s = int(row['OTH_S']) 
+                bOtherSignificant = True if ((oth_s > 0) or ((oth_v / tot_v) > 0.1)) else False
+                if (bOtherSignificant):
+                    n_other_significant += 1
 
+                if (not bOtherSignificant):
                     vote_share = float(row['VOTE_%'].strip("'"))
                     seat_share = float(row['SEAT_%'].strip("'"))
 
-                    if (oth_s > 0):
-                        print("One or more independent reps elected:", xx, year)
-
+                    # All these elections will have two-party vote- & seat-shares
                     election = {
                         "YEAR": year,
                         "STATE": state,
@@ -53,6 +62,12 @@ def read_elections(elections_csv):
                         "SEAT_%": seat_share           # Two-party seat share
                     }
                     elections_by_year.append(election)
+
+        print()
+        print(n_elections, "year-state election combinations.")
+        print("Less", n_other_significant, "elections with 'other' wins or significant 'other' showings.")
+        print("Leaving a sample of", n_elections - n_other_significant, "elections.")
+        print()
 
     except Exception as e:
         print("Exception reading elections CSV")
