@@ -17,12 +17,30 @@ def read_elections(elections_csv):
             csv_file = csv.DictReader(f_input)
 
             for row in csv_file:
-                n = int(row['TOT_S'])
-                if (n > 1):
+                tot_s = int(row['TOT_S'])
+
+                if (tot_s > 1):
+                    year = int(row['YEAR'])
+                    state = row['STATE']
+                    xx = row['XX']
+                    rep_v = int(row['REP_V']) 
+                    dem_v = int(row['DEM_V'])
+                    oth_v = int(row['OTH_V'])
+                    tot_v = int(row['TOT_V']) 
+                    rep_s = int(row['REP_S'])
+                    dem_s = int(row['DEM_S']) 
+                    oth_s = int(row['OTH_S']) 
+
+                    vote_share = float(row['VOTE_%'].strip("'"))
+                    seat_share = float(row['SEAT_%'].strip("'"))
+
+                    if (oth_s > 0):
+                        print("One or more independent reps elected:", xx, year)
+
                     election = {
-                        "YEAR": int(row['YEAR']),
-                        "STATE": row['STATE'],
-                        "XX": row['XX'],
+                        "YEAR": year,
+                        "STATE": state,
+                        "XX": xx,
                         # "REP_V": int(row['REP_V']), 
                         # "DEM_V": int(row['DEM_V']), 
                         # "OTH_V": int(row['OTH_V']), 
@@ -30,9 +48,9 @@ def read_elections(elections_csv):
                         # "REP_S": int(row['REP_S']), 
                         # "DEM_S": int(row['DEM_S']), 
                         # "OTH_S": int(row['OTH_S']), 
-                        "NREPS": n, 
-                        "VOTE_%": float(row['VOTE_%'].strip("'")), 
-                        "SEAT_%": float(row['SEAT_%'].strip("'"))
+                        "NREPS": tot_s, 
+                        "VOTE_%": vote_share, 
+                        "SEAT_%": seat_share
                     }
                     elections_by_year.append(election)
 
