@@ -16,17 +16,28 @@ def read_elections(elections_csv):
         with open(elections_csv, mode="r", encoding="utf-8-sig") as f_input:
             csv_file = csv.DictReader(f_input)
 
-            count = 0
             for row in csv_file:
-                elections_by_year.append(row)
-                count += 1
+                n = int(row['TOT_S'])
+                if (n > 1):
+                    election = {
+                        "YEAR": int(row['YEAR']),
+                        "STATE": row['STATE'],
+                        "XX": row['XX'],
+                        # "REP_V": int(row['REP_V']), 
+                        # "DEM_V": int(row['DEM_V']), 
+                        # "OTH_V": int(row['OTH_V']), 
+                        # "TOT_V": int(row['TOT_V']), 
+                        # "REP_S": int(row['REP_S']), 
+                        # "DEM_S": int(row['DEM_S']), 
+                        # "OTH_S": int(row['OTH_S']), 
+                        "NREPS": n, 
+                        "VOTE_%": float(row['VOTE_%'].strip("'")), 
+                        "SEAT_%": float(row['SEAT_%'].strip("'"))
+                    }
+                    elections_by_year.append(election)
 
     except Exception as e:
         print("Exception reading elections CSV")
         sys.exit(e)
-
-    print("")
-    print(count, "election rows read.")
-    print("")
 
     return elections_by_year 

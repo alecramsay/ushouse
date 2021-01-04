@@ -15,6 +15,14 @@ def main():
     
     elections_by_year = read_elections(filename)
 
+    count = 0
+    for item in elections_by_year:
+      count += 1
+
+    print()
+    print(count, "elections with two or more congressional districts. ")
+
+    print()
     pass
 
 
