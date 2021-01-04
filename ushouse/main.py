@@ -8,6 +8,8 @@ from helpers import *
 
 
 def main():
+    print()
+
     cwd = Path.cwd()
     mod_path = Path(__file__).parent
     relative_path = '../data/results/Congressional Elections (2000 - 2020).csv'

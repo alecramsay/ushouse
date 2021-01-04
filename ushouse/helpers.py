@@ -23,12 +23,12 @@ def read_elections(elections_csv):
                     year = int(row['YEAR'])
                     state = row['STATE']
                     xx = row['XX']
-                    rep_v = int(row['REP_V']) 
-                    dem_v = int(row['DEM_V'])
-                    oth_v = int(row['OTH_V'])
-                    tot_v = int(row['TOT_V']) 
-                    rep_s = int(row['REP_S'])
-                    dem_s = int(row['DEM_S']) 
+                    # rep_v = int(row['REP_V']) 
+                    # dem_v = int(row['DEM_V'])
+                    # oth_v = int(row['OTH_V'])
+                    # tot_v = int(row['TOT_V']) 
+                    # rep_s = int(row['REP_S'])
+                    # dem_s = int(row['DEM_S']) 
                     oth_s = int(row['OTH_S']) 
 
                     vote_share = float(row['VOTE_%'].strip("'"))
@@ -48,9 +48,9 @@ def read_elections(elections_csv):
                         # "REP_S": int(row['REP_S']), 
                         # "DEM_S": int(row['DEM_S']), 
                         # "OTH_S": int(row['OTH_S']), 
-                        "NREPS": tot_s, 
-                        "VOTE_%": vote_share, 
-                        "SEAT_%": seat_share
+                        "REPS": tot_s - oth_s,         # Two-party seat total
+                        "VOTE_%": vote_share,          # Two-party vote share
+                        "SEAT_%": seat_share           # Two-party seat share
                     }
                     elections_by_year.append(election)
 
