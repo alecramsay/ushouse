@@ -8,6 +8,7 @@ from settings import *
 # BEST SEATS - CLOSEST TO PROPORTIONAL
 #
 
+# TODO - Handle N = 1
 def best_seats(N, Vf):
     '''
     // ^S# - The # of Democratic seats closest to proportional @ statewide Vf
