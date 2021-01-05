@@ -4,7 +4,9 @@
 
 from pathlib import Path
 
+from settings import *
 from helpers import *
+from metrics import *
 
 
 def main():
@@ -16,7 +18,10 @@ def main():
     elections_by_year = read_elections(filename)
 
     for item in elections_by_year:
-      pass
+      best = best_seats(item["REPS"], item["VOTE_%"])
+      actual = item["DEM_S"]
+
+      print("Unearned seats =", unearned_seats(best, actual))
 
     pass
 

@@ -55,11 +55,11 @@ def read_elections(elections_csv):
                         # "OTH_V": int(row['OTH_V']), 
                         # "TOT_V": int(row['TOT_V']), 
                         # "REP_S": int(row['REP_S']), 
-                        # "DEM_S": int(row['DEM_S']), 
+                        "DEM_S": int(row['DEM_S']), 
                         # "OTH_S": int(row['OTH_S']), 
                         "REPS": tot_s - oth_s,         # Two-party seat total
-                        "VOTE_%": vote_share,          # Two-party vote share
-                        "SEAT_%": seat_share           # Two-party seat share
+                        "VOTE_%": vote_share,          # Two-party DEM vote share
+                        "SEAT_%": seat_share           # Two-party DEM seat share
                     }
                     elections_by_year.append(election)
 
