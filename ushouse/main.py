@@ -4,9 +4,10 @@
 
 from pathlib import Path
 
-from settings import *
 from states import *
+from settings import *
 from helpers import *
+from utils import *
 from metrics import *
 
 def main():
@@ -44,6 +45,29 @@ def main():
         else:  # 2012–2020
             i = int((year - 2012) / 2)
             by_state[xx]['UE_2012_20'][i] = ue
+    
+    # TODO
+
+    # Format the results as a CSV
+    # TODO - Add 2020
+    print('XX', 'STATE', 'UE_2000', 'UE_2002', 'UE_2004', 'UE_2006', 'UE_2008', 'UE_2010', 'UE_2012', 'UE_2014', 'UE_2016', 'UE_2018')
+    for key in by_state:
+        print(
+            "{0},".format(key),
+            "{0},".format(by_state[key]['Name']),
+            "{0},".format(by_state[key]['UE_2000']),
+            "{0},".format(by_state[key]['UE_2002_10'][0]),
+            "{0},".format(by_state[key]['UE_2002_10'][1]),
+            "{0},".format(by_state[key]['UE_2002_10'][2]),
+            "{0},".format(by_state[key]['UE_2002_10'][3]),
+            "{0},".format(by_state[key]['UE_2002_10'][4]),
+            "{0},".format(by_state[key]['UE_2012_20'][0]),
+            "{0},".format(by_state[key]['UE_2012_20'][1]),
+            "{0},".format(by_state[key]['UE_2012_20'][2]),
+            "{0},".format(by_state[key]['UE_2012_20'][3]),
+            "{0},".format(by_state[key]['UE_2012_20'][4]),
+            # "{0},".format(by_state[key]['UE_2012_20'][4]),
+        )
 
     pass
 
