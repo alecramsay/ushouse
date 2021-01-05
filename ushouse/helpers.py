@@ -16,8 +16,9 @@ def read_elections(elections_csv):
         with open(elections_csv, mode="r", encoding="utf-8-sig") as f_input:
             csv_file = csv.DictReader(f_input)
 
+            print()
             n_elections = 0
-            n_other_significant = 0
+            n_other = 0
             for row in csv_file:
                 year = int(row['YEAR'])
 
@@ -37,13 +38,13 @@ def read_elections(elections_csv):
                 oth_s = int(row['OTH_S'])
                 tot_s = int(row['TOT_S'])
 
-                # TODO - Figure out what to do about NY
-                bOtherSignificant = True if ((oth_s > 0) or ((oth_v / tot_v) > 0.1)) else False
-                if (bOtherSignificant):
-                    n_other_significant += 1
-                    print("Dropping the {0} election for {1}, because 'other' vote was significant. ".format(year, xx))
+                bOtherWins = (oth_s > 0)
+                bOtherSignificant = (oth_v / tot_v) > 0.1
+                if (bOtherWins):
+                    n_other += 1
+                    print("Dropping the {0} election for {1}, because of 'other' vote: seats = {2}, vote % = {3:4.2}. ".format(year, xx, oth_s, oth_v / tot_v))
 
-                if (not bOtherSignificant):
+                if (not bOtherWins):
                     vote_share = float(row['VOTE_%'].strip("'"))
                     seat_share = float(row['SEAT_%'].strip("'"))
 
@@ -66,9 +67,9 @@ def read_elections(elections_csv):
                     elections_by_year.append(election)
 
         print()
-        print(n_elections, "year-state election combinations.")
-        print("Less", n_other_significant, "elections with 'other' wins or significant 'other' showings.")
-        print("Leaving a sample of", n_elections - n_other_significant, "elections.")
+        print("There are {0} year-state election combinations,".format(n_elections))
+        print("less {0} elections with 'other' wins,".format(n_other))
+        print("which leaves a sample of {0} elections.".format(n_elections - n_other))
         print()
 
     except Exception as e:

@@ -49,8 +49,7 @@ def main():
     # TODO
 
     # Format the results as a CSV
-    # TODO - Add 2020
-    print('XX', 'STATE', 'UE_2000', 'UE_2002', 'UE_2004', 'UE_2006', 'UE_2008', 'UE_2010', 'UE_2012', 'UE_2014', 'UE_2016', 'UE_2018')
+    print('XX', 'STATE', 'UE_2000', 'UE_2002', 'UE_2004', 'UE_2006', 'UE_2008', 'UE_2010', 'UE_2012', 'UE_2014', 'UE_2016', 'UE_2018', 'UE_2020')
     for key in by_state:
         print(
             "{0},".format(key),
@@ -65,11 +64,10 @@ def main():
             "{0},".format(by_state[key]['UE_2012_20'][1]),
             "{0},".format(by_state[key]['UE_2012_20'][2]),
             "{0},".format(by_state[key]['UE_2012_20'][3]),
-            "{0},".format(by_state[key]['UE_2012_20'][4]),
-            # "{0},".format(by_state[key]['UE_2012_20'][4]),
+            "{0}".format(by_state[key]['UE_2012_20'][4])
         )
 
-    pass
+    print()
 
 
 # Execute the script
