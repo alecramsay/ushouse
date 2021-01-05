@@ -32,9 +32,12 @@ def main():
     for item in elections_by_year:
         year = item['YEAR']
         xx = item['XX']
-
-        best = best_seats(item['REPS'], item['VOTE_%'])
+        N = item['REPS']
         actual = item['DEM_S']
+        Vf = item['VOTE_%']
+        Sf = item['SEAT_%']
+
+        best = best_seats(N, Vf)
         ue = unearned_seats(best, actual)
 
         if (year == 2000):
@@ -45,10 +48,14 @@ def main():
         else:  # 2012–2020
             i = int((year - 2012) / 2)
             by_state[xx]['UE_2012_20'][i] = ue
+
+        if (isAntimajoritarian(Vf, Sf)):
+            print("{0} in {1} was antimajoritarian: R = {2:5.2}".format(xx, year, bigR(Vf, Sf)))
     
     # TODO
 
     # Format the results as a CSV
+    print()
     print('XX', 'STATE', 'UE_2000', 'UE_2002', 'UE_2004', 'UE_2006', 'UE_2008', 'UE_2010', 'UE_2012', 'UE_2014', 'UE_2016', 'UE_2018', 'UE_2020')
     for key in by_state:
         print(

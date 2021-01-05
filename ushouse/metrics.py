@@ -3,12 +3,13 @@
 #
 
 from settings import *
+from utils import *
+
 
 #
 # BEST SEATS - CLOSEST TO PROPORTIONAL
 #
 
-# TODO - Handle N = 1
 def best_seats(N, Vf):
     '''
     // ^S# - The # of Democratic seats closest to proportional @ statewide Vf
@@ -19,7 +20,15 @@ def best_seats(N, Vf):
     }
     '''
 
-    return round((N * Vf) - EPSILON)
+    if (N > 1):
+        return round((N * Vf) - EPSILON)
+    else:  # Only 1 CD
+        if (Vf > 0.75):
+            return 1
+        elif (Vf > 0.25):
+            return 0.5
+        else:
+            return 0
 
 
 #
@@ -40,7 +49,45 @@ def unearned_seats(best, actual):
 
 
 #
-# EFFICIENCY GAP
+# Antimajoritarian
+#
+
+def isAntimajoritarian(Vf, Sf):
+    bDem = True if ((Vf < (0.5 - AVGSVERROR)) and (Sf > 0.5)) else False
+    bRep = True if (((1 - Vf) < (0.5 - AVGSVERROR)) and ((1 - Sf) > 0.5)) else False
+
+    return bDem or bRep
+
+
+#
+# BIG 'R'
+#
+
+def bigR(Vf, Sf):
+    '''
+    // BIG 'R': Defined in Footnote 22 on P. 10
+    export function calcBigR(Vf: number, Sf: number): number | undefined
+    {
+    let bigR: number | undefined = undefined;
+
+    if (!(U.areRoughlyEqual(Vf, 0.5, S.EPSILON)))
+    {
+        bigR = (Sf - 0.5) / (Vf - 0.5);
+        bigR = U.trim(bigR);
+    }
+
+    return bigR;
+    }
+    '''
+
+    if (not areRoughlyEqual(Vf, 0.5, EPSILON)):
+        return (Sf - 0.5) / (Vf - 0.5)
+
+    return None
+
+
+#
+# EFFICIENCY GAP - TODO
 #
 
 '''
@@ -69,26 +116,5 @@ export function calcEfficiencyGap(Vf: number, Sf: number, shareType = T.Party.De
   }
 
   return U.trim(efficiencyGap);
-}
-'''
-
-
-#
-# BIG 'R'
-#
-
-'''
-// BIG 'R': Defined in Footnote 22 on P. 10
-export function calcBigR(Vf: number, Sf: number): number | undefined
-{
-  let bigR: number | undefined = undefined;
-
-  if (!(U.areRoughlyEqual(Vf, 0.5, S.EPSILON)))
-  {
-    bigR = (Sf - 0.5) / (Vf - 0.5);
-    bigR = U.trim(bigR);
-  }
-
-  return bigR;
 }
 '''
