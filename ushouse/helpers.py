@@ -37,9 +37,11 @@ def read_elections(elections_csv):
                 oth_s = int(row['OTH_S'])
                 tot_s = int(row['TOT_S'])
 
+                # TODO - Figure out what to do about NY
                 bOtherSignificant = True if ((oth_s > 0) or ((oth_v / tot_v) > 0.1)) else False
                 if (bOtherSignificant):
                     n_other_significant += 1
+                    print("Dropping the {0} election for {1}, because 'other' vote was significant. ".format(year, xx))
 
                 if (not bOtherSignificant):
                     vote_share = float(row['VOTE_%'].strip("'"))
