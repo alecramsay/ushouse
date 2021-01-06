@@ -47,7 +47,15 @@ results I then analyzed programmatically.
 
 I added a year column manually.
 
-## Analysis - TODO
+### Step 5 - Analyze the elections in Python
+
+Then I computed the "unearned" seats by election and pivoted the results by state.
+
+### Step 6 - Analyze the elections in Excel
+
+TODO
+
+## TODO
 
 * Review & document the logic for imputing uncontested elections
 * Get & process 2020 results

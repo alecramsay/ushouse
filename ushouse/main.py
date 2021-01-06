@@ -36,7 +36,9 @@ def main():
     filename = (mod_path / relative_path).resolve()
     elections_by_year = read_elections(filename)
 
+
     # Analyze each election
+
     for item in elections_by_year:
         year = item['YEAR']
         xx = item['XX']
@@ -49,10 +51,14 @@ def main():
         Vf = item['VOTE_%']     # Two-party vote-share
         Sf = item['SEAT_%']     # Two-party seat-share
 
+
         # Process each election
 
-        best = best_seats(N, Vf)
-        ue = unearned_seats(best, actual)
+        two_party_seats = True if (N > 0) else False
+
+        if (two_party_seats):
+            best = best_seats(N, Vf)
+            ue = unearned_seats(best, actual)
 
         if (year == 2000):
             by_state[xx]['UE_2000'] = ue
@@ -66,7 +72,8 @@ def main():
             base = 2012 if (year > 2010) else 2002
             offset = int((year - base) / 2)
         
-            by_state[xx][cycle][offset] = ue
+            if (two_party_seats):
+                by_state[xx][cycle][offset] = ue
 
             by_state['REP'][cycle][offset] += rep_s
             by_state['DEM'][cycle][offset] += dem_s
@@ -77,9 +84,9 @@ def main():
         # if (isAntimajoritarian(Vf, Sf)):
         #     print("{0} in {1} was antimajoritarian: R = {2:5.2}".format(xx, year, bigR(Vf, Sf)))
     
-    # Do more processing -or- analysis here ...
 
     # Format the results as a CSV
+    
     print()
     print('XX', 'STATE', 'UE_2000', 'UE_2002', 'UE_2004', 'UE_2006', 'UE_2008', 'UE_2010', 'UE_2012', 'UE_2014', 'UE_2016', 'UE_2018', 'UE_2020')
     for key in by_state:

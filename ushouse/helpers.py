@@ -1,4 +1,6 @@
-#!/usr/bin/env python3
+#
+# HELPERS
+#
 
 import sys
 import csv
@@ -38,16 +40,21 @@ def read_elections(elections_csv):
                 oth_s = int(row['OTH_S'])
                 tot_s = int(row['TOT_S'])
 
-                bOtherWins = (oth_s > 0)
-                bOtherSignificant = (oth_v / tot_v) > 0.1
-                if (bOtherWins):
-                    n_other += 1
-                    print("Dropping the {0} election for {1}, because of 'other' vote: seats = {2}, vote % = {3:4.2}. ".format(year, xx, oth_s, oth_v / tot_v))
+                # NOTE - Not dropping elections w/ 'other' wins or significant showings
+                # bOtherWins = (oth_s > 0)
+                # bOtherSignificant = (oth_v / tot_v) > 0.1
+                # if (bOtherWins):
+                #     n_other += 1
+                #     print("Dropping the {0} election for {1}, because of 'other' vote: seats = {2}, vote % = {3:4.2}. ".format(year, xx, oth_s, oth_v / tot_v))
 
-                # TODO - Don't filter out any elections
-                if (not bOtherWins):
-                    vote_share = float(row['VOTE_%'].strip("'"))
-                    seat_share = float(row['SEAT_%'].strip("'"))
+                # Don't filter out any elections
+                if (True):  # (not bOtherWins):
+                    if (oth_s < tot_s):
+                        vote_share = float(row['VOTE_%'].strip("'"))
+                        seat_share = float(row['SEAT_%'].strip("'"))
+                    else:
+                        vote_share = None
+                        seat_share = None
 
                     # All these elections will have two-party vote- & seat-shares
                     election = {
@@ -68,11 +75,10 @@ def read_elections(elections_csv):
                     }
                     elections_by_year.append(election)
 
-        # TODO
         print()
-        print("There are {0} year-state election combinations,".format(n_elections))
-        print("less {0} elections with 'other' wins,".format(n_other))
-        print("which leaves a sample of {0} elections.".format(n_elections - n_other))
+        print("There are {0} year-state election combinations.".format(n_elections))
+        # print("less {0} elections with 'other' wins,".format(n_other))
+        # print("which leaves a sample of {0} elections.".format(n_elections - n_other))
         print()
 
     except Exception as e:

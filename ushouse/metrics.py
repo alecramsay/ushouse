@@ -60,7 +60,7 @@ def isAntimajoritarian(Vf, Sf):
 
 
 #
-# BIG 'R'
+# BIG 'R' - IMPLEMEMNTED BUT NOT USED
 #
 
 def bigR(Vf, Sf):
@@ -87,7 +87,7 @@ def bigR(Vf, Sf):
 
 
 #
-# EFFICIENCY GAP - TODO
+# EFFICIENCY GAP - NOT IMPLEMENTED
 #
 
 '''
