@@ -44,6 +44,7 @@ def read_elections(elections_csv):
                     n_other += 1
                     print("Dropping the {0} election for {1}, because of 'other' vote: seats = {2}, vote % = {3:4.2}. ".format(year, xx, oth_s, oth_v / tot_v))
 
+                # TODO - Don't filter out any elections
                 if (not bOtherWins):
                     vote_share = float(row['VOTE_%'].strip("'"))
                     seat_share = float(row['SEAT_%'].strip("'"))
@@ -53,19 +54,21 @@ def read_elections(elections_csv):
                         "YEAR": year,
                         "STATE": state,
                         "XX": xx,
-                        # "REP_V": int(row['REP_V']), 
-                        # "DEM_V": int(row['DEM_V']), 
-                        # "OTH_V": int(row['OTH_V']), 
-                        # "TOT_V": int(row['TOT_V']), 
-                        # "REP_S": int(row['REP_S']), 
-                        "DEM_S": int(row['DEM_S']), 
-                        # "OTH_S": int(row['OTH_S']), 
-                        "REPS": tot_s - oth_s,         # Two-party seat total
-                        "VOTE_%": vote_share,          # Two-party DEM vote share
-                        "SEAT_%": seat_share           # Two-party DEM seat share
+                        "REP_V": rep_v,
+                        "DEM_V": dem_v,
+                        "OTH_V": oth_v,
+                        "TOT_V": tot_v,
+                        "REP_S": rep_s,
+                        "DEM_S": dem_s,
+                        "OTH_S": oth_s,
+                        "TOT_S": tot_s,
+                        "TWO_S": tot_s - oth_s,  # Two-party seats
+                        "VOTE_%": vote_share,    # Two-party DEM vote share
+                        "SEAT_%": seat_share     # Two-party DEM seat share
                     }
                     elections_by_year.append(election)
 
+        # TODO
         print()
         print("There are {0} year-state election combinations,".format(n_elections))
         print("less {0} elections with 'other' wins,".format(n_other))

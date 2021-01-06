@@ -21,6 +21,14 @@ def main():
         by_state[xx]['UE_2002_10'] = [None] * 5
         by_state[xx]['UE_2012_20'] = [None] * 5
 
+    # Add totals accumulators
+    for t in ['REP', 'DEM', 'OTH', 'TOT']:
+        by_state[t] = {}
+        by_state[t]['Name'] = ''
+        by_state[t]['UE_2000'] = 0
+        by_state[t]['UE_2002_10'] = [0] * 5
+        by_state[t]['UE_2012_20'] = [0] * 5
+
     # Read in elections
     cwd = Path.cwd()
     mod_path = Path(__file__).parent
@@ -32,27 +40,44 @@ def main():
     for item in elections_by_year:
         year = item['YEAR']
         xx = item['XX']
-        N = item['REPS']
         actual = item['DEM_S']
-        Vf = item['VOTE_%']
-        Sf = item['SEAT_%']
+        rep_s = item['REP_S']
+        dem_s = item['DEM_S']
+        oth_s = item['OTH_S']
+        tot_s = item['TOT_S']
+        N = item['TWO_S']       # Two-party seats
+        Vf = item['VOTE_%']     # Two-party vote-share
+        Sf = item['SEAT_%']     # Two-party seat-share
+
+        # Process each election
 
         best = best_seats(N, Vf)
         ue = unearned_seats(best, actual)
 
         if (year == 2000):
             by_state[xx]['UE_2000'] = ue
-        elif ((year > 2000) and (year < 2012)):
-            i = int((year - 2002) / 2)
-            by_state[xx]['UE_2002_10'][i] = ue
-        else:  # 2012–2020
-            i = int((year - 2012) / 2)
-            by_state[xx]['UE_2012_20'][i] = ue
 
-        if (isAntimajoritarian(Vf, Sf)):
-            print("{0} in {1} was antimajoritarian: R = {2:5.2}".format(xx, year, bigR(Vf, Sf)))
+            by_state['REP']['UE_2000'] += rep_s
+            by_state['DEM']['UE_2000'] += dem_s
+            by_state['OTH']['UE_2000'] += oth_s
+            by_state['TOT']['UE_2000'] += tot_s
+        else:
+            cycle = 'UE_2012_20' if (year > 2010) else 'UE_2002_10'
+            base = 2012 if (year > 2010) else 2002
+            offset = int((year - base) / 2)
+        
+            by_state[xx][cycle][offset] = ue
+
+            by_state['REP'][cycle][offset] += rep_s
+            by_state['DEM'][cycle][offset] += dem_s
+            by_state['OTH'][cycle][offset] += oth_s
+            by_state['TOT'][cycle][offset] += tot_s
+
+        # NOTE - Not that many antimajoritarian results
+        # if (isAntimajoritarian(Vf, Sf)):
+        #     print("{0} in {1} was antimajoritarian: R = {2:5.2}".format(xx, year, bigR(Vf, Sf)))
     
-    # TODO
+    # Do more processing -or- analysis here ...
 
     # Format the results as a CSV
     print()
