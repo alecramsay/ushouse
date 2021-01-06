@@ -14,7 +14,7 @@ def main():
     # Read in elections
     cwd = Path.cwd()
     mod_path = Path(__file__).parent
-    relative_path = '../data/analysis/Congressional Elections (2000 - 2020).csv'
+    relative_path = '../data/analysis/elections.csv'
     filename = (mod_path / relative_path).resolve()
     elections_by_year = read_elections(filename)
 
@@ -76,7 +76,7 @@ def main():
     # Format the results as a CSV
     
     print()
-    print('XX', 'STATE', 'UE_2000', 'UE_2002', 'UE_2004', 'UE_2006', 'UE_2008', 'UE_2010', 'UE_2012', 'UE_2014', 'UE_2016', 'UE_2018', 'UE_2020')
+    print('XX, STATE, UE_2000, UE_2002, UE_2004, UE_2006, UE_2008, UE_2010, UE_2012, UE_2014, UE_2016, UE_2018, UE_2020')
     for key in by_state:
         print(
             "{0},".format(key),
