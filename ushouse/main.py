@@ -10,6 +10,7 @@ from helpers import *
 from utils import *
 from metrics import *
 
+
 def main():
     # Read in elections
     cwd = Path.cwd()
@@ -93,7 +94,6 @@ def main():
             "{0},".format(by_state[key]['UE_2012_20'][3]),
             "{0}".format(by_state[key]['UE_2012_20'][4])
         )
-
     print()
 
 

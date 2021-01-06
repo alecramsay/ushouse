@@ -48,10 +48,17 @@ def read_elections(elections_csv):
                 #     print("Dropping the {0} election for {1}, because of 'other' vote: seats = {2}, vote % = {3:4.2}. ".format(year, xx, oth_s, oth_v / tot_v))
 
                 # Don't filter out any elections
-                if (True):  # (not bOtherWins):
+                # if (True):
+
+                # Filter out results w/ 'other' wins
+                # if (not bOtherWins):
+
+                # Filter out states w/ only 1 CD
+                if (tot_s > 1):
                     if (oth_s < tot_s):
-                        vote_share = float(row['VOTE_%'].strip("'"))
-                        seat_share = float(row['SEAT_%'].strip("'"))
+                        # NOTE - Convert REP shares to DEM shares
+                        vote_share = 1.0 - float(row['VOTE_%'].strip("'"))
+                        seat_share = 1.0 - float(row['SEAT_%'].strip("'"))
                     else:
                         vote_share = None
                         seat_share = None

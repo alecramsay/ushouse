@@ -57,6 +57,10 @@ TODO
 
 ## TODO
 
+* Fix R vs. D vote and seat shares!
+* Fix UE calculations to match
+* Validate wrto previous analysis
+
 * Review & document the logic for imputing uncontested elections
 * Get & process 2020 results
 * Programmatically analyze results by state over time
