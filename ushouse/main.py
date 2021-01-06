@@ -11,28 +11,10 @@ from utils import *
 from metrics import *
 
 def main():
-    # Setup by-state pivot
-    by_state = {}
-    for s in states:
-        xx = s['XX']
-        by_state[xx] = {}
-        by_state[xx]['Name'] = s['State']
-        by_state[xx]['UE_2000'] = None
-        by_state[xx]['UE_2002_10'] = [None] * 5
-        by_state[xx]['UE_2012_20'] = [None] * 5
-
-    # Add totals accumulators
-    for t in ['REP', 'DEM', 'OTH', 'TOT']:
-        by_state[t] = {}
-        by_state[t]['Name'] = ''
-        by_state[t]['UE_2000'] = 0
-        by_state[t]['UE_2002_10'] = [0] * 5
-        by_state[t]['UE_2012_20'] = [0] * 5
-
     # Read in elections
     cwd = Path.cwd()
     mod_path = Path(__file__).parent
-    relative_path = '../data/results/Congressional Elections (2000 - 2020).csv'
+    relative_path = '../data/analysis/Congressional Elections (2000 - 2020).csv'
     filename = (mod_path / relative_path).resolve()
     elections_by_year = read_elections(filename)
 
@@ -59,9 +41,13 @@ def main():
         if (two_party_seats):
             best = best_seats(N, Vf)
             ue = unearned_seats(best, actual)
+            ue_tot = 'REP_UE' if (ue > 0) else 'DEM_UE'
 
         if (year == 2000):
-            by_state[xx]['UE_2000'] = ue
+            if (two_party_seats):
+                by_state[xx]['UE_2000'] = ue
+                by_state[ue_tot]['UE_2000'] += ue
+                by_state['NET_UE']['UE_2000'] += ue
 
             by_state['REP']['UE_2000'] += rep_s
             by_state['DEM']['UE_2000'] += dem_s
@@ -74,6 +60,8 @@ def main():
         
             if (two_party_seats):
                 by_state[xx][cycle][offset] = ue
+                by_state[ue_tot][cycle][offset] += ue
+                by_state['NET_UE'][cycle][offset] += ue
 
             by_state['REP'][cycle][offset] += rep_s
             by_state['DEM'][cycle][offset] += dem_s

@@ -54,3 +54,22 @@ states = [
     { 'XX': 'WI', 'State': 'Wisconsin' },
     { 'XX': 'WY', 'State': 'Wyoming' } 
 ]
+
+# Setup by-state pivot
+by_state = {}
+for s in states:
+    xx = s['XX']
+    by_state[xx] = {}
+    by_state[xx]['Name'] = s['State']
+    by_state[xx]['UE_2000'] = None
+    by_state[xx]['UE_2002_10'] = [None] * 5
+    by_state[xx]['UE_2012_20'] = [None] * 5
+
+# Add totals accumulators
+for t in ['REP', 'DEM', 'OTH', 'TOT', 'REP_UE', 'DEM_UE', 'NET_UE']:
+    by_state[t] = {}
+    by_state[t]['Name'] = ''
+    by_state[t]['UE_2000'] = 0
+    by_state[t]['UE_2002_10'] = [0] * 5
+    by_state[t]['UE_2012_20'] = [0] * 5
+
