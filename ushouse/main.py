@@ -37,37 +37,49 @@ def main():
 
         # Process each election
 
-        two_party_seats = True if (N > 0) else False
+        multiple_districts = True if (tot_s > 1) else False
+        by_state[xx]['N'] = tot_s                               # HACK - Changes w/ Census, but not for the one CD states
 
-        if (two_party_seats):
+        two_party_seats = True if (N > 0) else False
+        count_unearned = multiple_districts and two_party_seats
+
+        # Calculate unearned seats for states with multiple districts, and
+        # elections in which there were at least one two-party seat
+        if (count_unearned):
             best = best_seats(N, Vf)
             ue = unearned_seats(best, actual)
-            ue_tot = 'REP_UE' if (ue > 0) else 'DEM_UE'
+            tot = 'REP_UE' if (ue > 0) else 'DEM_UE'
 
         if (year == 2000):
-            if (two_party_seats):
-                by_state[xx]['UE_2000'] = ue
-                by_state[ue_tot]['UE_2000'] += ue
-                by_state['NET_UE']['UE_2000'] += ue
+            if (count_unearned):
+                by_state[xx]['2000'] = ue
 
-            by_state['REP']['UE_2000'] += rep_s
-            by_state['DEM']['UE_2000'] += dem_s
-            by_state['OTH']['UE_2000'] += oth_s
-            by_state['TOT']['UE_2000'] += tot_s
+                totals[tot]['2000'] += ue
+                totals['NET_UE']['2000'] += ue
+            elif (not multiple_districts):
+                by_state[xx]['2000'] = single_seat(rep_s, dem_s)
+
+            totals['REP']['2000'] += rep_s
+            totals['DEM']['2000'] += dem_s
+            totals['OTH']['2000'] += oth_s
+            totals['TOT']['2000'] += tot_s
         else:
-            cycle = 'UE_2012_20' if (year > 2010) else 'UE_2002_10'
+            cycle = '2012-20' if (year > 2010) else '2002-10'
             base = 2012 if (year > 2010) else 2002
             offset = int((year - base) / 2)
         
-            if (two_party_seats):
+            if (count_unearned):
                 by_state[xx][cycle][offset] = ue
-                by_state[ue_tot][cycle][offset] += ue
-                by_state['NET_UE'][cycle][offset] += ue
 
-            by_state['REP'][cycle][offset] += rep_s
-            by_state['DEM'][cycle][offset] += dem_s
-            by_state['OTH'][cycle][offset] += oth_s
-            by_state['TOT'][cycle][offset] += tot_s
+                totals[tot][cycle][offset] += ue
+                totals['NET_UE'][cycle][offset] += ue
+            elif (not multiple_districts):
+                by_state[xx][cycle][offset] = single_seat(rep_s, dem_s)
+
+            totals['REP'][cycle][offset] += rep_s
+            totals['DEM'][cycle][offset] += dem_s
+            totals['OTH'][cycle][offset] += oth_s
+            totals['TOT'][cycle][offset] += tot_s
 
         # NOTE - Not that many antimajoritarian results
         # if (isAntimajoritarian(Vf, Sf)):
@@ -77,23 +89,15 @@ def main():
     # Format the results as a CSV
     
     print()
-    print('XX, STATE, UE_2000, UE_2002, UE_2004, UE_2006, UE_2008, UE_2010, UE_2012, UE_2014, UE_2016, UE_2018, UE_2020')
+    print_header()
     for key in by_state:
-        print(
-            "{0},".format(key),
-            "{0},".format(by_state[key]['Name']),
-            "{0},".format(by_state[key]['UE_2000']),
-            "{0},".format(by_state[key]['UE_2002_10'][0]),
-            "{0},".format(by_state[key]['UE_2002_10'][1]),
-            "{0},".format(by_state[key]['UE_2002_10'][2]),
-            "{0},".format(by_state[key]['UE_2002_10'][3]),
-            "{0},".format(by_state[key]['UE_2002_10'][4]),
-            "{0},".format(by_state[key]['UE_2012_20'][0]),
-            "{0},".format(by_state[key]['UE_2012_20'][1]),
-            "{0},".format(by_state[key]['UE_2012_20'][2]),
-            "{0},".format(by_state[key]['UE_2012_20'][3]),
-            "{0}".format(by_state[key]['UE_2012_20'][4])
-        )
+        if (by_state[key]['N'] > 1):
+            print_row(key, by_state[key])
+    for key in by_state:
+        if (by_state[key]['N'] < 2):
+            print_row(key, by_state[key])
+    for key in totals:
+        print_row(key, totals[key])
     print()
 
 

@@ -57,7 +57,16 @@ TODO
 
 ## TODO
 
-* Review & document the logic for imputing uncontested elections
-* Get & process 2020 results
-* Programmatically analyze results by state over time
-* Handle missing data in Vermont & document two-party results
+* DONE - Separate accumulators into a second structure
+* DONE - Segregate CD == 1 states
+* DONE - Revert UE for CD == 1 states to zero
+
+* TODO - Compute expected REP
+* TODO - Compute slack
+* TODO - Compute margin (actual)
+
+* TODO - Document R vote- & seat-shares in the constituent CSVs
+* TODO - Review & document the logic for imputing uncontested elections
+* TODO - Get & process 2020 results
+* TODO - Programmatically analyze results by state over time
+* TODO - Handle missing data in Vermont & document two-party results

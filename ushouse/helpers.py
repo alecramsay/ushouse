@@ -97,3 +97,25 @@ def read_elections(elections_csv):
         sys.exit(e)
 
     return elections_by_year 
+
+
+def print_header():
+    print('XX, STATE, 2000, 2002, 2004, 2006, 2008, 2010, 2012, 2014, 2016, 2018, 2020')
+
+
+def print_row(key, row):
+    print(
+        "{0},".format(key),
+        "{0},".format(row['Name']),
+        "{0},".format(row['2000']),
+        "{0},".format(row['2002-10'][0]),
+        "{0},".format(row['2002-10'][1]),
+        "{0},".format(row['2002-10'][2]),
+        "{0},".format(row['2002-10'][3]),
+        "{0},".format(row['2002-10'][4]),
+        "{0},".format(row['2012-20'][0]),
+        "{0},".format(row['2012-20'][1]),
+        "{0},".format(row['2012-20'][2]),
+        "{0},".format(row['2012-20'][3]),
+        "{0}".format(row['2012-20'][4])
+    )

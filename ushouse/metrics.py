@@ -18,14 +18,19 @@ def best_seats(N, Vf):
 
     if (N > 1):
         return round((N * Vf) - EPSILON)
+
+    return 0
     
-    # Only 1 CD
-    if (Vf > 0.75):
-        return 1
-    elif (Vf > 0.25):
-        return 0.5
-    else:
-        return 0
+    # TODO - Only 1 CD
+    # if (Vf > 0.75):
+    #     return 1
+    # elif (Vf > 0.25):
+    #     return 0.5
+    # else:
+    #     return 0
+
+def single_seat(rep, dem):
+    return 1 if (rep == 1) else (-1 if (dem == 1) else 0)
 
 
 #
@@ -39,6 +44,10 @@ def unearned_seats(best, actual):
     '''
 
     return best - actual  # R advantage is +; D advantage is –
+
+
+def expected_R_seats(actual_R, net_UE):
+    return actual_R - net_UE
 
 
 #
