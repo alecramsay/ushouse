@@ -57,7 +57,7 @@ def margin(R_total, D_total):
     return (R_total - 218) if (R_total > D_total) else ((D_total - 218) * -1)
 
 def slack(expected_R):
-    return expected_R - 218
+    return (expected_R - 218) if (expected_R >= 218) else (expected_R - 218 + 1)
 
 
 #
