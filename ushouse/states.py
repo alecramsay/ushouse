@@ -61,16 +61,12 @@ for s in states:
     xx = s['XX']
     by_state[xx] = {}
     by_state[xx]['Name'] = s['State']
-    by_state[xx]['2000'] = None
-    by_state[xx]['2002-10'] = [None] * 5
-    by_state[xx]['2012-20'] = [None] * 5
+    by_state[xx]['Elections'] = [None] * 11
 
 # Setup totals accumulators
 totals = {}
 for t in ['REP', 'DEM', 'OTH', 'TOT', 'REP_UE', 'DEM_UE', 'NET_UE', 'REP_EXP', 'DEM_EXP', 'SLACK', 'MARGIN']:
     totals[t] = {}
     totals[t]['Name'] = ''
-    totals[t]['2000'] = 0
-    totals[t]['2002-10'] = [0] * 5
-    totals[t]['2012-20'] = [0] * 5
+    totals[t]['Elections'] = [0] * 11
 

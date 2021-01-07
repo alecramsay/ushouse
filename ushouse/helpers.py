@@ -107,15 +107,15 @@ def print_row(key, row):
     print(
         "{0},".format(key),
         "{0},".format(row['Name']),
-        "{0},".format(row['2000']),
-        "{0},".format(row['2002-10'][0]),
-        "{0},".format(row['2002-10'][1]),
-        "{0},".format(row['2002-10'][2]),
-        "{0},".format(row['2002-10'][3]),
-        "{0},".format(row['2002-10'][4]),
-        "{0},".format(row['2012-20'][0]),
-        "{0},".format(row['2012-20'][1]),
-        "{0},".format(row['2012-20'][2]),
-        "{0},".format(row['2012-20'][3]),
-        "{0}".format(row['2012-20'][4])
+        "{0},".format(row['Elections'][0]),
+        "{0},".format(row['Elections'][1]),
+        "{0},".format(row['Elections'][2]),
+        "{0},".format(row['Elections'][3]),
+        "{0},".format(row['Elections'][4]),
+        "{0},".format(row['Elections'][5]),
+        "{0},".format(row['Elections'][6]),
+        "{0},".format(row['Elections'][7]),
+        "{0},".format(row['Elections'][8]),
+        "{0},".format(row['Elections'][9]),
+        "{0}".format(row['Elections'][10])
     )
