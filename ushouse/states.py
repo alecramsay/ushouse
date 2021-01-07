@@ -67,7 +67,7 @@ for s in states:
 
 # Setup totals accumulators
 totals = {}
-for t in ['REP', 'DEM', 'OTH', 'TOT', 'REP_UE', 'DEM_UE', 'NET_UE']:  # EXPECTED, SLACK, MARGIN
+for t in ['REP', 'DEM', 'OTH', 'TOT', 'REP_UE', 'DEM_UE', 'NET_UE', 'REP_EXP', 'DEM_EXP', 'SLACK', 'MARGIN']:
     totals[t] = {}
     totals[t]['Name'] = ''
     totals[t]['2000'] = 0

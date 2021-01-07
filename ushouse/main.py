@@ -13,6 +13,7 @@ from metrics import *
 
 def main():
     # Read in elections
+
     cwd = Path.cwd()
     mod_path = Path(__file__).parent
     relative_path = '../data/analysis/elections.csv'
@@ -20,7 +21,7 @@ def main():
     elections_by_year = read_elections(filename)
 
 
-    # Analyze each election
+    # Process each election
 
     for item in elections_by_year:
         year = item['YEAR']
@@ -85,6 +86,12 @@ def main():
         # if (isAntimajoritarian(Vf, Sf)):
         #     print("{0} in {1} was antimajoritarian: R = {2:5.2}".format(xx, year, bigR(Vf, Sf)))
     
+
+    # Post-process the totals
+
+    # TODO - Expected R & D
+    # TODO - Slack
+    # TODO - Margin
 
     # Format the results as a CSV
     
