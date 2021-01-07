@@ -50,8 +50,8 @@ def unearned_seats(best, actual):
 def expected_R_seats(actual_R, net_UE):
     return actual_R - net_UE
 
-def expected_D_seats(total, expected_R):
-    return total - expected_R
+def expected_D_seats(expected_R):
+    return 435 - expected_R
 
 def margin(R_total, D_total):
     return (R_total - 218) if (R_total > D_total) else ((D_total - 218) * -1)

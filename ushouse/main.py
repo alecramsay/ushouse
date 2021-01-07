@@ -70,12 +70,18 @@ def main():
         # if (isAntimajoritarian(Vf, Sf)):
         #     print("{0} in {1} was antimajoritarian: R = {2:5.2}".format(xx, year, bigR(Vf, Sf)))
     
-
     # Post-process the totals
 
-    # TODO - Expected R & D
-    # TODO - Slack
-    # TODO - Margin
+    for i in range(N_ELECTIONS):
+        actual_R = totals['REP']['Elections'][i]
+        actual_D = totals['DEM']['Elections'][i]
+        net_UE = totals['NET_UE']['Elections'][i]
+
+        expected_R = expected_R_seats(actual_R, net_UE)
+        totals['REP_EXP']['Elections'][i] = expected_R
+        totals['DEM_EXP']['Elections'][i] = expected_D_seats(expected_R)
+        totals['SLACK']['Elections'][i] = slack(expected_R)
+        totals['MARGIN']['Elections'][i] = margin(actual_R, actual_D)
 
     # Format the results as a CSV
     

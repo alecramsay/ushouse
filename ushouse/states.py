@@ -2,6 +2,9 @@
 # STATES
 #
 
+from settings import *
+
+
 states = [
     { 'XX': 'AL', 'State': 'Alabama' },
     { 'XX': 'AK', 'State': 'Alaska' },
@@ -61,12 +64,12 @@ for s in states:
     xx = s['XX']
     by_state[xx] = {}
     by_state[xx]['Name'] = s['State']
-    by_state[xx]['Elections'] = [None] * 11
+    by_state[xx]['Elections'] = [None] * N_ELECTIONS
 
 # Setup totals accumulators
 totals = {}
 for t in ['REP', 'DEM', 'OTH', 'TOT', 'REP_UE', 'DEM_UE', 'NET_UE', 'REP_EXP', 'DEM_EXP', 'SLACK', 'MARGIN']:
     totals[t] = {}
     totals[t]['Name'] = ''
-    totals[t]['Elections'] = [0] * 11
+    totals[t]['Elections'] = [0] * N_ELECTIONS
 
