@@ -42,23 +42,22 @@ the votes.
 ### Step 4 - Export the results to CSV
 
 Finally, for each imputed election spreadsheet, I exported select results into
-corresponding CSV files in the data/results/ directory. These are the election
-results I then analyzed programmatically.
-
-I added a year column manually.
+corresponding CSV files in the data/results/ directory. Then I added a year column manually, and
+combined individual files into an overall file containing all elections (elections.csv). 
 
 ### Step 5 - Analyze the elections in Python
 
-Then I computed the "unearned" seats by election and pivoted the results by state.
+Then I analyzed the election results programmatically
+computing the "unearned" seats by election and pivoting the results by state
+(pivot-by-state.csv).
 
 ### Step 6 - Analyze the elections in Excel
 
-TODO
+I imported that into Excel and analyzed the results longitudinally.
 
 ## TODO
 
 * TODO - Document R vote- & seat-shares in the constituent CSVs
 * TODO - Review & document the logic for imputing uncontested elections
-* TODO - Get & process 2020 results
 * TODO - Programmatically analyze results by state over time
 * TODO - Handle missing data in Vermont & document two-party results
