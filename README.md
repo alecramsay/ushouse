@@ -57,8 +57,8 @@ computing the "unearned" seats by election and pivoting the results by state
 
 I imported that into Excel and analyzed the results longitudinally.
 
+### Notes
+
 * I use R vote & seat shares in this analysis ... because that's how I started years ago, before switching to D vote & seat shares in DRA. 
+* For uncontested at-large districts (ND, SD, & VT) and where no districts were contested (AR), I used Presidential results as proxies.
 
-## TODO
-
-* TODO - Handle missing data in Vermont & document two-party results
