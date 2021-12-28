@@ -45,7 +45,7 @@ def main():
         totals['DEM']['Elections'][offset] += dem_s
         totals['OTH']['Elections'][offset] += oth_s
         totals['TOT']['Elections'][offset] += tot_s
-        # TODO - More ...
+        # TODO - More ... <<< Not sure what I was thinking here.
 
         # Calculate unearned seats for states with multiple districts, and
         # elections in which there were at least one two-party seat.

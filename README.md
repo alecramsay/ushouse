@@ -39,6 +39,8 @@ a 70/30 heuristic. This assumes that the uncontested votes represent 70% of the
 total vote share and that a losing candidate would have garnered a 30% share of
 the votes.
 
+* TODO - Review & document the logic for imputing uncontested elections
+
 ### Step 4 - Export the results to CSV
 
 Finally, for each imputed election spreadsheet, I exported select results into
@@ -55,9 +57,8 @@ computing the "unearned" seats by election and pivoting the results by state
 
 I imported that into Excel and analyzed the results longitudinally.
 
+* I use R vote & seat shares in this analysis ... because that's how I started years ago, before switching to D vote & seat shares in DRA. 
+
 ## TODO
 
-* TODO - Document R vote- & seat-shares in the constituent CSVs
-* TODO - Review & document the logic for imputing uncontested elections
-* TODO - Programmatically analyze results by state over time
 * TODO - Handle missing data in Vermont & document two-party results

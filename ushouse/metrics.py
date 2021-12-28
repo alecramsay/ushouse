@@ -21,7 +21,7 @@ def best_seats(N, Vf):
 
     return 0
     
-    # TODO - Only 1 CD
+    # TODO - Only 1 CD <<< Not sure what I was thinking here.
     # if (Vf > 0.75):
     #     return 1
     # elif (Vf > 0.25):
