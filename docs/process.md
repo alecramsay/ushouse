@@ -29,7 +29,7 @@ For each spreadsheet of raw election results above:
 * I make a copy in the data/imputed/ directory.
 * I extend the spreadsheet to impute the results for uncontested races, using a 70/30 heuristic. This assumes that the uncontested votes represent 70% of the total vote share and that a losing candidate would have garnered a 30% share of the votes.
 
-The details of this logic are described [here](./docs/impute.md)
+The details of this logic are described [here](impute.md)
 
 ## Step 4 - Export the results to CSV
 
