@@ -2,9 +2,9 @@
 
 This describes the process of manual workflow of extracting, imputing, and analyzing the election results at a high level.
 
-## Step 1 - Download reports
+## Step 1 - Get raw election results
 
-For each election 2000–2020, I downloaded two PDF reports from the Clerk of the House website:
+For each election, I download two PDF reports from the Clerk of the House website:
 
 * "Statistics of the Presidential and Congressional Election" and
 * "Official List of Members of the House of Representatives of the United States"
@@ -15,9 +15,9 @@ They are in the data/elections/ and data/members/ directories, respectively.
 
 For each election report, I create an associated Excel spreadsheet:
 
-* The first tab "Election Results by State" extracts the vote & seat totals for Republican, Democrat, Other, and Total by state.
+* The first tab *Election Results by State* extracts the vote & seat totals for Republican, Democrat, Other, and Total by state.
 * I use the official list of members and online info (e.g., Wikipedia) to crosscheck the number of  elected Republican & Democratic members by state and overall, to make sure I didn't miss any races. (It's easy to do with larger states.)
-* I also extract the race-level results for uncontested races in the "Uncontested Races" tab.
+* I also extract the race-level results for uncontested races in the *Uncontested Races* tab.
 * Then I aggregate uncontested race info by state (using a pivot table).
 
 These are the baseline, unmodified results in the data/extracted/ directory.
@@ -49,7 +49,7 @@ Then I analyze the election results programmatically:
 
 ## Step 6 - Analyze the elections in Excel
 
-I import that into Excel and analyz the results longitudinally.
+I import that into Excel and analyze the results longitudinally.
 
 ## Notes
 
