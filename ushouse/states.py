@@ -3,7 +3,7 @@
 # STATES
 #
 
-from settings import *
+from .settings import *
 
 
 states = [
@@ -85,3 +85,5 @@ for t in [
     totals[t] = {}
     totals[t]["Name"] = ""
     totals[t]["Elections"] = [0] * N_ELECTIONS
+
+### END ###

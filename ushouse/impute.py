@@ -59,6 +59,21 @@ complement each other in the two functions.
 """
 
 
+def recast_uncontested_votes(data: dict) -> dict:
+    """
+    Recast actual uncontested votes into imputed votes.
+    """
+
+    recast: dict = dict()
+
+    recast["REP3"] = recast_rep_votes(data)
+    recast["DEM3"] = recast_dem_votes(data)
+    recast["OTH3"] = 0
+    recast["TOT3"] = recast["REP3"] + recast["DEM3"] + recast["OTH3"]
+
+    return recast
+
+
 def recast_rep_votes(data: dict) -> int:
     """
     Formula for REP3 (Column N):
@@ -66,25 +81,27 @@ def recast_rep_votes(data: dict) -> int:
     =IF(G3>0,IF(H3>0,MAX(D3,ROUND(K3*M3,0)),MAX(F3,ROUND((1-L3)*(O3/L3),0))),D3)
     """
 
-    if data["TOT1"] > 0:
+    if data["TOT1"] > 0:  #
         # For states w/ uncontested races
         if data["REP2"] > 0:
             # If a Republican won the uncontested seat
             # Use their actual votes or the imputed votes, whichever is higher
-            return max(
+            recast: int = max(
                 data["REP1"], round(data["REP_win_pct"] * data["Contested_AVG_Votes"])
             )
+            return recast
         else:
             # If a Democrat won the uncontested seat
             # Use the actual "other" vote total or the imputed votes, whichever is higher
-            return max(
+            recast: int = max(
                 data["OTH1"],
                 round(
                     (1 - data["DEM_win_pct"])
-                    * (recast_dem_votes(dict) / data["DEM_win_pct"])
+                    * (recast_dem_votes(data) / data["DEM_win_pct"])
                 ),
                 # round((1 - data["DEM_win_pct"]) * (data["DEM3"] / data["DEM_win_pct"])),
             )
+            return recast
     else:
         # For states w/o uncontested races
         return data["REP1"]
@@ -102,20 +119,22 @@ def recast_dem_votes(data: dict) -> int:
         if data["DEM2"] > 0:
             # If a Democrat won the uncontested seat
             # Use their actual votes or the imputed votes, whichever is higher
-            return max(
+            recast: int = max(
                 data["DEM1"], round(data["DEM_win_pct"] * data["Contested_AVG_Votes"])
             )
+            return recast
         else:
             # If a Republican won the uncontested seat
             # Use the actual "other" vote total or the imputed votes, whichever is higher
-            return max(
+            recast: int = max(
                 data["OTH1"],
                 round(
                     (1 - data["REP_win_pct"])
-                    * (recast_rep_votes(dict) / data["REP_win_pct"])
+                    * (recast_rep_votes(data) / data["REP_win_pct"])
                 ),
                 # round((1 - data["REP_win_pct"]) * (data["REP3"] / data["REP_win_pct"])),
             )
+            return recast
     else:
         # For states w/o uncontested races
         return data["DEM1"]
@@ -132,14 +151,48 @@ ADJUSTMENTS
 - Column U: TOT4
 """
 
-"""
 
-=N3-D3
+def calc_imputed_offsets(actual_data: dict, recast_data: dict) -> dict:
+    """
+    Formulas for REP4, DEM4, OTH4, & TOT4:
 
-=O3-E3
+    =N3-D3
+    =O3-E3
+    =P3-F3
+    =Q3-G3
 
-=P3-F3
+    """
 
-=Q3-G3
+    offsets: dict = dict()
 
-"""
+    offsets["REP4"] = recast_data["REP3"] - actual_data["REP1"]
+    offsets["DEM4"] = recast_data["DEM3"] - actual_data["DEM1"]
+    offsets["OTH4"] = recast_data["OTH3"] - actual_data["OTH1"]
+    offsets["TOT4"] = recast_data["TOT3"] - actual_data["TOT1"]
+
+    return offsets
+
+
+# TODO - HERE
+def apply_imputed_offsets(actual_data: dict, offsets: dict) -> dict:
+    """
+    Formulas for REP5, DEM5, OTH5, & TOT5:
+
+    =D3+R3
+    =E3+S3
+    =F3+T3
+    =G3+U3
+
+    """
+
+    imputed: dict = dict()
+
+    imputed["REP5"] = actual_data["REP1"] + offsets["REP4"]
+    imputed["DEM5"] = actual_data["DEM1"] + offsets["DEM4"]
+    imputed["OTH5"] = actual_data["OTH1"] + offsets["OTH4"]
+    imputed["TOT5"] = actual_data["TOT1"] + offsets["TOT4"]
+
+    return imputed
+
+
+### END ###
