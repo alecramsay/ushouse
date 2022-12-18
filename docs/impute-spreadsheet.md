@@ -1,4 +1,4 @@
-# Detailed Process
+# The Manual Process for Imputing Uncontested Elections
 
 This describes in detail how I imputed results for uncontested races, using a series of spreadsheets.
 
