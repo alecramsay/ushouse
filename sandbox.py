@@ -21,17 +21,22 @@ def test_run() -> None:
         # "DEM_win_pct": 0.70,
         "Contested_AVG_Votes": 164699,
     }
-    recast: dict = {
-        "REP3": 115290,
+    expected: dict = {
+        "REP3": 115289,
         "DEM3": 116978,
         "OTH3": 0,
-        "TOT3": 232268,
+        "TOT3": 232267,
     }
+    actual: dict = recast_uncontested_votes(uncontested)
+
+    assert dict_approx(actual, expected)
+
+    recast: dict[str, int] = expected
     expected: dict = {
-        "REP3": 22123,
-        "DEM3": 116978,
-        "OTH3": -116978,
-        "TOT3": 22123,
+        "REP4": 22122,
+        "DEM4": 116978,
+        "OTH4": -116978,
+        "TOT4": 22122,
     }
     actual: dict = calc_imputed_offsets(uncontested, recast)
 
