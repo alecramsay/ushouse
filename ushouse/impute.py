@@ -7,7 +7,7 @@
 
 
 """
-INPUT DATA
+INPUT DATA -- for each uncontested race
 ----------
 
 Uncontested Votes:
@@ -34,8 +34,8 @@ example: dict = {
     "REP2": 1,
     "DEM2": 0,
     "OTH2": 0,
-    "REP_win_pct": 0.70,
-    "DEM_win_pct": 0.70,
+    # "REP_win_pct": 0.70,
+    # "DEM_win_pct": 0.70,
     "Contested_AVG_Votes": 318227,
 }
 
@@ -43,10 +43,10 @@ example: dict = {
 
 
 """
-RECAST
+RECAST -- Impute the uncontested votes
 ------
 
-Given a dict of the input data, recast it into these columns:
+Given a dict of the input data above, recast it into these columns:
 
 - Column N: REP3
 - Column O: DEM3
@@ -135,9 +135,8 @@ def recast_dem_votes(data: dict, vote_share: float = 0.70) -> int:
 
 
 """
-ADJUSTMENTS
+ADJUSTMENTS -- Compute offsets to the actual votes to realize the imputed values.
 -----------
-
 
 - Column R: REP4
 - Column S: DEM4
@@ -148,8 +147,6 @@ ADJUSTMENTS
 
 def calc_imputed_offsets(actual_data: dict, recast_data: dict) -> dict:
     """
-    Compute offsets for the imputed votes from the actual votes.
-
     Formulas for REP4, DEM4, OTH4, & TOT4:
 
     =N3-D3
@@ -169,26 +166,8 @@ def calc_imputed_offsets(actual_data: dict, recast_data: dict) -> dict:
     return offsets
 
 
-# TODO - HERE
-def apply_imputed_offsets(actual_data: dict, offsets: dict) -> dict:
-    """
-    Formulas for REP5, DEM5, OTH5, & TOT5:
-
-    =D3+R3
-    =E3+S3
-    =F3+T3
-    =G3+U3
-
-    """
-
-    imputed: dict = dict()
-
-    imputed["REP5"] = actual_data["REP1"] + offsets["REP4"]
-    imputed["DEM5"] = actual_data["DEM1"] + offsets["DEM4"]
-    imputed["OTH5"] = actual_data["OTH1"] + offsets["OTH4"]
-    imputed["TOT5"] = actual_data["TOT1"] + offsets["TOT4"]
-
-    return imputed
-
+"""
+REVISED -- Pivot the offsets by state and apply them to the actual votes.
+"""
 
 ### END ###
