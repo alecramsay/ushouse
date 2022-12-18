@@ -148,6 +148,8 @@ ADJUSTMENTS
 
 def calc_imputed_offsets(actual_data: dict, recast_data: dict) -> dict:
     """
+    Compute offsets for the imputed votes from the actual votes.
+
     Formulas for REP4, DEM4, OTH4, & TOT4:
 
     =N3-D3
