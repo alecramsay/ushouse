@@ -39,8 +39,8 @@ def test_recast_uncontested_votes() -> None:
         "REP2": 1,
         "DEM2": 0,
         "OTH2": 0,
-        "REP_win_pct": 0.70,
-        "DEM_win_pct": 0.70,
+        # "REP_win_pct": 0.70,
+        # "DEM_win_pct": 0.70,
         "Contested_AVG_Votes": 318227,
     }
     expected: dict = {
@@ -62,8 +62,8 @@ def test_recast_uncontested_votes() -> None:
         "REP2": 1,
         "DEM2": 0,
         "OTH2": 0,
-        "REP_win_pct": 0.70,
-        "DEM_win_pct": 0.70,
+        # "REP_win_pct": 0.70,
+        # "DEM_win_pct": 0.70,
         "Contested_AVG_Votes": 318227,
     }
     expected: dict = {

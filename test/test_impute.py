@@ -43,8 +43,8 @@ class TestImpute:
             "REP2": 1,
             "DEM2": 0,
             "OTH2": 0,
-            "REP_win_pct": 0.70,
-            "DEM_win_pct": 0.70,
+            # "REP_win_pct": 0.70,
+            # "DEM_win_pct": 0.70,
             "Contested_AVG_Votes": 318227,
         }
         expected: dict = {
@@ -66,8 +66,8 @@ class TestImpute:
             "REP2": 1,
             "DEM2": 0,
             "OTH2": 0,
-            "REP_win_pct": 0.70,
-            "DEM_win_pct": 0.70,
+            # "REP_win_pct": 0.70,
+            # "DEM_win_pct": 0.70,
             "Contested_AVG_Votes": 318227,
         }
         expected: dict = {
@@ -75,6 +75,53 @@ class TestImpute:
             "DEM3": 108469,
             "OTH3": 0,
             "TOT3": 361563,
+        }
+        actual: dict = recast_uncontested_votes(uncontested)
+
+        assert dict_approx(actual, expected)
+
+        # Large, fragmented "other" vote (2004 / NY 25th)
+        uncontested: dict = {
+            "REP1": 155163,
+            "DEM1": 0,
+            "OTH1": 160717,
+            "TOT1": 315880,
+            "REP2": 1,
+            "DEM2": 0,
+            "OTH2": 0,
+            # "REP_win_pct": 0.70,
+            # "DEM_win_pct": 0.70,
+            "Contested_AVG_Votes": 259421,
+        }
+        expected: dict = {
+            "REP3": 181595,
+            "DEM3": 160717,
+            "OTH3": 0,
+            "TOT3": 342312,
+        }
+        actual: dict = recast_uncontested_votes(uncontested)
+
+        assert dict_approx(actual, expected)
+
+        # Large, fragmented "other" vote (2010 / NY 29th)
+        # TODO - This is the wrong imputation!
+        uncontested: dict = {
+            "REP1": 93167,
+            "DEM1": 0,
+            "OTH1": 116978,
+            "TOT1": 210145,
+            "REP2": 1,
+            "DEM2": 0,
+            "OTH2": 0,
+            # "REP_win_pct": 0.70,
+            # "DEM_win_pct": 0.70,
+            "Contested_AVG_Votes": 164699,
+        }
+        expected: dict = {
+            "REP3": 115289,
+            "DEM3": 116978,
+            "OTH3": 0,
+            "TOT3": 232267,
         }
         actual: dict = recast_uncontested_votes(uncontested)
 

@@ -74,7 +74,7 @@ def recast_uncontested_votes(data: dict) -> dict:
     return recast
 
 
-def recast_rep_votes(data: dict) -> int:
+def recast_rep_votes(data: dict, vote_share: float = 0.70) -> int:
     """
     Formula for REP3 (Column N):
 
@@ -84,22 +84,19 @@ def recast_rep_votes(data: dict) -> int:
     if data["TOT1"] > 0:  #
         # For states w/ uncontested races
         if data["REP2"] > 0:
-            # If a Republican won the uncontested seat
-            # Use their actual votes or the imputed votes, whichever is higher
+            # If a Republican won the uncontested seat,
+            # use their actual votes or the imputed votes, whichever is higher
             recast: int = max(
-                data["REP1"], round(data["REP_win_pct"] * data["Contested_AVG_Votes"])
+                data["REP1"], round(vote_share * data["Contested_AVG_Votes"])
             )
             return recast
         else:
-            # If a Democrat won the uncontested seat
-            # Use the actual "other" vote total or the imputed votes, whichever is higher
+            # If a Democrat won the uncontested seat,
+            # use the actual "other" vote total or the imputed votes, whichever is higher
+            # TODO - This total must be at least one less than the winning total
             recast: int = max(
                 data["OTH1"],
-                round(
-                    (1 - data["DEM_win_pct"])
-                    * (recast_dem_votes(data) / data["DEM_win_pct"])
-                ),
-                # round((1 - data["DEM_win_pct"]) * (data["DEM3"] / data["DEM_win_pct"])),
+                round((1 - vote_share) * (recast_dem_votes(data) / vote_share)),
             )
             return recast
     else:
@@ -107,7 +104,7 @@ def recast_rep_votes(data: dict) -> int:
         return data["REP1"]
 
 
-def recast_dem_votes(data: dict) -> int:
+def recast_dem_votes(data: dict, vote_share: float = 0.70) -> int:
     """
     Formula for DEM3 (Column O):
 
@@ -117,22 +114,19 @@ def recast_dem_votes(data: dict) -> int:
     if data["TOT1"] > 0:
         # For states w/ uncontested races
         if data["DEM2"] > 0:
-            # If a Democrat won the uncontested seat
-            # Use their actual votes or the imputed votes, whichever is higher
+            # If a Democrat won the uncontested seat,
+            # use their actual votes or the imputed votes, whichever is higher
             recast: int = max(
-                data["DEM1"], round(data["DEM_win_pct"] * data["Contested_AVG_Votes"])
+                data["DEM1"], round(vote_share * data["Contested_AVG_Votes"])
             )
             return recast
         else:
-            # If a Republican won the uncontested seat
-            # Use the actual "other" vote total or the imputed votes, whichever is higher
+            # If a Republican won the uncontested seat,
+            # use the actual "other" vote total or the imputed votes, whichever is higher
+            # TODO - This total must be at least one less than the winning total
             recast: int = max(
                 data["OTH1"],
-                round(
-                    (1 - data["REP_win_pct"])
-                    * (recast_rep_votes(data) / data["REP_win_pct"])
-                ),
-                # round((1 - data["REP_win_pct"]) * (data["REP3"] / data["REP_win_pct"])),
+                round((1 - vote_share) * recast_rep_votes(data) / vote_share),
             )
             return recast
     else:
