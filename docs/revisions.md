@@ -1,29 +1,29 @@
 # REVISION HISTORY
 
-I took snapshots of all the previous work (on 12/18/22), so I can make changes if necessary and compare results.
+I took snapshots of all the previous work (on 12/18/22), so I could make changes if necessary & compare results with my original spreadsheet-based workflow.
 
 ## 2000–2016 Elections
 
-I did these all at roughly the same time several years ago.
+I processed these elections at roughly the same time several years ago.
  
 2000 election:
 - AR / 3rd -- No uncontested data (blanks). R win. 
 - LA / 2nd -- Ditto. D win.
-- LA / 3rd -- Negative "other" votes. <<< FIXED: The total vote was missing a leading '1'.
+- LA / 3rd -- Negative "other" votes. <<< FIXED: The total vote was missing a leading '1' (TODO)
 
 2002 election:
-- FL / 10th, 12th, 14th, 21st -- No uncontested data (blanks). R wins (CONFIRMED).
-- FL / 11th, 20th -- Ditto, but D wins (CONFIRMED).
-- NY / 5th, 18th, 23rd -- large fragmented "other" vote used (CONFIRMED) (TODO).
+- FL / 10th, 12th, 14th, 21st -- No uncontested data (blanks). R wins
+- FL / 11th, 20th -- Ditto, but D wins
+- NY / 5th, 18th, 23rd -- fragmented "other" vote > winner <<< CONFIRMED (TOFIX)
 
 2004 election:
 - Several uncontested races with no votes reported.
-- NY / 25th -- large fragmented "other" vote used (CONFIRMED) (TODO).
+- NY / 25th -- fragmented "other" vote > winner <<< CONFIRMED (TOFIX)
 
 2006 election:
 - Several uncontested races with no votes reported.
 - The `OTH1` (Column F) formula in the IMPUTED spreadsheet is wrong--doesn't include the R vote. It's right in the EXTRACTED spreadsheet. This affects every uncontested R win (ugh). <<< FIXED by using the EXTRACTED data (TODO)
-- TX / 22nd -- large fragmented "other" vote used (CONFIRMED) (TODO)
+- TX / 22nd -- fragmented "other" vote > winner <<< CONFIRMED (TOFIX)
 
 2008 election:
 - Several uncontested races with no votes reported.
@@ -33,7 +33,7 @@ I did these all at roughly the same time several years ago.
 
 2010 election:
 - Several uncontested races with no votes reported.
-- NY / 29th -- large fragmented "other" vote used (CONFIRMED) (TODO)
+- NY / 29th -- fragmented "other" vote > winner <<< CONFIRMED (TOFIX)
 
 2012 election:
 - Several uncontested races with no votes reported.
@@ -47,24 +47,20 @@ I did these all at roughly the same time several years ago.
 
 ## 2018 & 2020 Elections
 
-I did this more recently, after a long time away from the spreadsheet and much file reorganization:
+I processed these more recently, after a long time away from the spreadsheet and much file reorganization:
 
 2018 election:
-- Vote totals don't validate on the Results tab, because I included [special election results for the 9th](https://ballotpedia.org/).North_Carolina%27s_9th_Congressional_District_special_election,_2019
-- FL / 10th, 14th, 21st, 24th -- No uncontested data (blanks). D wins (CONFIRMED).
-- NC / 3rd -- Negative "other" votes. <<< FIXED: The total vote was erroneously zero.
+- Vote totals don't validate on the Results tab, because I included [special election results for the 9th](https://ballotpedia.org/).North_Carolina%27s_9th_Congressional_District_special_election,_2019 <<< OK
+- FL / 10th, 14th, 21st, 24th -- No uncontested data (blanks). D wins
+- NC / 3rd -- Negative "other" votes. <<< FIXED: The total vote was erroneously zero (TODO)
 
 2020 election:
-- MA / 1st, 3rd, 7th, 8th uncontested races erroneously coded as R vs. D wins (CONFIRMED). <<< FIXED
+- MA / 1st, 3rd, 7th, 8th uncontested races erroneously coded as R vs. D wins (CONFIRMED). <<< FIXED (TODO)
 - SD at large district was uncontested -- So, no AVG contested vote. Used the Presidential total (422,609) as a proxy. <<< TODO
 
 ## 2022 Election
 
-I'm going this now ...
-
-## Issues
-
-- How to insert a proxy for the AVG contest votes in the process?
+I'm going this, when the Clerk of the House releases the official results.
 
 ## Special Test Cases
 
