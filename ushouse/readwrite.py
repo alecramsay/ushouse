@@ -7,7 +7,7 @@ import sys
 import csv
 
 
-def read_elections(elections_csv):
+def read_election(elections_csv):
     """
     Read a CSV of congressional election results with columns;
     YEAR, STATE, XX, REP_V, DEM_V, OTH_V, TOT_V, REP_S, DEM_S, OTH_S, TOT_S, VOTE_%, SEAT_%

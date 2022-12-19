@@ -5,11 +5,13 @@
 
 from pathlib import Path
 
-from .states import *
-from .settings import *
-from .helpers import *
-from .utils import *
-from .metrics import *
+from ushouse import *
+
+# from .states import *
+# from .settings import *
+# from .readwrite import *
+# from .utils import *
+# from .metrics import *
 
 
 def main():
@@ -19,7 +21,7 @@ def main():
     mod_path = Path(__file__).parent
     relative_path = "../data/analysis/elections.csv"
     filename = (mod_path / relative_path).resolve()
-    elections_by_year = read_elections(filename)
+    elections_by_year = read_election(filename)
 
     # Process each election
 

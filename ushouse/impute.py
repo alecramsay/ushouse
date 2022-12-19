@@ -79,6 +79,14 @@ def recast_rep_votes(data: dict, vote_share: float = 0.70) -> int:
     Formula for REP3 (Column N):
 
     =IF(G3>0,IF(H3>0,MAX(D3,ROUND(K3*M3,0)),MAX(F3,ROUND((1-L3)*(O3/L3),0))),D3)
+
+    -or-
+
+    IF(G3>0,
+    IF(H3>0,
+        MAX(D3,ROUND(K3*M3,0)),
+        MAX(F3,ROUND((1-L3)*(O3/L3),0))),
+    D3)
     """
 
     if data["TOT1"] > 0:  #
