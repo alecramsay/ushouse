@@ -35,9 +35,9 @@ I did these all at roughly the same time several years ago.
 2010 election:
 - Several uncontested races with no votes reported.
 - NY / 29th -- large fragmented "other" vote used (CONFIRMED) (TODO)
-- TODO: Export RESULTS & UNCONTESTED
 
 2012 election:
+- Several uncontested races with no votes reported.
 - TODO: Export RESULTS & UNCONTESTED
 
 2014 election:
