@@ -1,10 +1,94 @@
 #!/usr/bin/env python3
 #
-# HELPERS
+# READ/WRITE SUPPORT
 #
 
+import os
 import sys
 import csv
+from csv import DictReader, DictWriter
+
+
+### GENERIC CSV READ/WRITE FUNCTIONS ###
+
+
+def read_typed_csv(rel_path, field_types) -> list:
+    """
+    Read a CSV with DictReader
+    Patterned after: https://stackoverflow.com/questions/8748398/python-csv-dictreader-type
+    """
+
+    abs_path: str = FileSpec(rel_path).abs_path
+
+    try:
+        rows: list = []
+        with open(abs_path, "r", encoding="utf-8-sig") as file:
+            reader: DictReader[str] = DictReader(
+                file, fieldnames=None, restkey=None, restval=None, dialect="excel"
+            )
+
+            for row_in in reader:
+                if len(field_types) >= len(reader.fieldnames):
+                    # Extract the values in the same order as the csv header
+                    ivalues = map(row_in.get, reader.fieldnames)
+
+                    # Apply type conversions
+                    iconverted: list = [
+                        cast(x, y) for (x, y) in zip(field_types, ivalues)
+                    ]
+
+                    # Pass the field names and the converted values to the dict constructor
+                    row_out: dict = dict(zip(reader.fieldnames, iconverted))
+
+                rows.append(row_out)
+
+        return rows
+
+    except:
+        raise Exception("Exception reading CSV with explicit types.")
+
+
+def write_csv(rel_path, rows, cols) -> None:
+    try:
+        abs_path: str = FileSpec(rel_path).abs_path
+
+        with open(abs_path, "w") as f:
+            writer: DictWriter = DictWriter(f, fieldnames=cols)
+            writer.writeheader()
+
+            for row in rows:
+                mod: dict = {}
+                for (k, v) in row.items():
+                    if isinstance(v, float):
+                        mod[k] = "{:.6f}".format(v)
+                    else:
+                        mod[k] = v
+                writer.writerow(mod)
+
+    except:
+        raise Exception("Exception writing CSV.")
+
+
+def cast(t, v_str) -> str | int | float:
+    # HACK - For thease files, treat missing values as 0.
+    if v_str == " " and t == int:
+        return 0
+    return t(v_str)
+
+
+class FileSpec:
+    def __init__(self, path: str, name=None) -> None:
+        file_name: str
+        file_extension: str
+        file_name, file_extension = os.path.splitext(path)
+
+        self.rel_path: str = path
+        self.abs_path: str = os.path.abspath(path)
+        self.name: str = name.lower() if (name) else os.path.basename(file_name).lower()
+        self.extension: str = file_extension
+
+
+### ANALYTSIS INPUT HELPERS ###
 
 
 def read_election(elections_csv):
@@ -100,11 +184,14 @@ def read_election(elections_csv):
     return elections_by_year
 
 
-def print_header():
+### ANALYSIS OUTPUT HELPERS ###
+
+
+def print_header() -> None:
     print("XX, STATE, 2000, 2002, 2004, 2006, 2008, 2010, 2012, 2014, 2016, 2018, 2020")
 
 
-def print_row(key, row):
+def print_row(key, row) -> None:
     print(
         "{0},".format(key),
         "{0},".format(row["Name"]),
@@ -120,3 +207,6 @@ def print_row(key, row):
         "{0},".format(row["Elections"][9]),
         "{0}".format(row["Elections"][10]),
     )
+
+
+### END ###
