@@ -14,12 +14,16 @@ I did these all at roughly the same time several years ago.
 2002 election:
 - FL / 10th, 12th, 14th, 21st -- No uncontested data (blanks). R wins (CONFIRMED).
 - FL / 11th, 20th -- Ditto, but D wins (CONFIRMED).
-- NY / 5th, 18th, 23rd -- large fragmented "other" vote used (CONFIRMED).
+- NY / 5th, 18th, 23rd -- large fragmented "other" vote used (CONFIRMED) (TODO).
 
 2004 election:
-- TODO: Export RESULTS & UNCONTESTED
+- Several uncontested races with no votes reported.
+- NY / 25th -- large fragmented "other" vote used (CONFIRMED) (TODO).
 
 2006 election:
+- Several uncontested races with no votes reported.
+- The `OTH1` (Column F) formula in the IMPUTED spreadsheet is wrong--doesn't include the R vote. It's right in the EXTRACTED spreadsheet. This affects every uncontested R win (ugh). <<< FIXED (TODO)
+- TX / 22nd -- large fragmented "other" vote used (CONFIRMED) (TODO)
 - TODO: Export RESULTS & UNCONTESTED
 
 2008 election:
@@ -58,6 +62,8 @@ I'm going this now ...
 
 - How to insert a proxy for the AVG contest votes in the process?
 
-## Uncontested Cases
+## Special Test Cases
 
+- 2006 / AL / 6th -- non-winning imputed votes > winning
+- TX / 22nd -- fragmented "other" votes > winning
 - 2018 / WI / 2nd -- actual votes > 0.7 average contested vote
