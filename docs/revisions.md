@@ -31,9 +31,10 @@ I did these all at roughly the same time several years ago.
 - The `OTH1` (Column F) formula in the IMPUTED spreadsheet is wrong--doesn't include the R vote. It's right in the EXTRACTED spreadsheet. This affects every uncontested R win (ugh). <<< FIXED by using the EXTRACTED data (TODO)
 - AL / all 4 races were uncontested -- So, no AVG contested vote. Used Presidential total (271,654) as a proxy. <<< TODO
 - VT at large district was uncontested -- So, no AVG contested vote. Used the Presidential total (325,046) as a proxy. <<< TODO
-- TODO: Export RESULTS & UNCONTESTED
 
 2010 election:
+- Several uncontested races with no votes reported.
+- NY / 29th -- large fragmented "other" vote used (CONFIRMED) (TODO)
 - TODO: Export RESULTS & UNCONTESTED
 
 2012 election:
