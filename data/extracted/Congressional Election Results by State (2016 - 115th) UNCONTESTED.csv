@@ -1,0 +1,96 @@
+﻿STATE,XX,DISTRICT,REP_V,DEM_V,OTH_V,TOT_V,REP_S,DEM_S,OTH_S
+Alabama,AL,1st,208083,0,7810,215893,1,0,0
+Alabama,AL,4th,235925,0,3519,239444,1,0,0
+Alabama,AL,7th,0,229330,3698,233028,0,1,0
+Alaska,AK,n/a,0,0,0,0,0,0,0
+Arizona,AZ,3rd,0,148973,2062,151035,0,1,0
+Arizona,AZ,8th,204942,0,94029,298971,1,0,0
+Arkansas,AR,1st,183866,0,57181,241047,1,0,0
+Arkansas,AR,3rd,217192,0,63715,280907,1,0,0
+Arkansas,AR,4th,182885,0,61274,244159,1,0,0
+California,CA,12th,0,274035,64810,338845,0,1,0
+California,CA,17th,0,233192,0,233192,0,1,0
+California,CA,29th,0,171824,0,171824,0,1,0
+California,CA,32nd,0,186646,0,186646,0,1,0
+California,CA,34th,0,159156,0,159156,0,1,0
+California,CA,37th,0,237272,0,237272,0,1,0
+California,CA,40th,0,106554,42743,149297,0,1,0
+California,CA,44th,0,178413,0,178413,0,1,0
+California,CA,46th,0,164593,0,164593,0,1,0
+Colorado,CO,n/a,0,0,0,0,0,0,0
+Connecticut,CT,n/a,0,0,0,0,0,0,0
+Delaware,DE,n/a,0,0,0,0,0,0,0
+Florida,FL,24th, , , , ,0,1,0
+Georgia,GA,1st,210243,0,869,211112,1,0,0
+Georgia,GA,9th,256535,0,0,256535,1,0,0
+Georgia,GA,10th,243725,0,1096,244821,1,0,0
+Georgia,GA,13th,0,252833,0,252833,0,1,0
+Georgia,GA,14th,216743,0,0,216743,1,0,0
+Hawaiʻi,HI,n/a,0,0,0,0,0,0,0
+Idaho,ID,n/a,0,0,0,0,0,0,0
+Illinois,IL,3rd,0,225320,91,225411,0,1,0
+Illinois,IL,4th,0,171297,0,171297,0,1,0
+Illinois,IL,15th,274554,0,0,274554,1,0,0
+Illinois,IL,16th,259722,0,131,259853,1,0,0
+Indiana,IN,1st,0,207515,47068,254583,0,1,0
+Iowa,IA,n/a,0,0,0,0,0,0,0
+Kansas,KS,1st,169992,0,87979,257971,1,0,0
+Kentucky,KY,2nd,251825,0,0,251825,1,0,0
+Kentucky,KY,5th,221242,0,0,221242,1,0,0
+Louisiana,LA,2nd,0,284269,0,284269,0,1,0
+Louisiana,LA,5th,255662,0,0,255662,1,0,0
+Maine,ME,n/a,0,0,0,0,0,0,0
+Maryland,MD,n/a,0,0,0,0,0,0,0
+Massachusetts,MA,1st,0,235803,113873,349676,0,1,0
+Massachusetts,MA,2nd,0,275487,87710,363197,0,1,0
+Massachusetts,MA,5th,0,285606,99849,385455,0,1,0
+Massachusetts,MA,6th,0,308923,106826,415749,0,1,0
+Massachusetts,MA,7th,0,253354,56291,309645,0,1,0
+Michigan,MI,n/a,0,0,0,0,0,0,0
+Minnesota,MN,2nd,173970,0,196545,370515,1,0,0
+Minnesota,MN,3rd,223075,0,170382,393457,1,0,0
+Minnesota,MN,6th,235385,0,123545,358930,1,0,0
+Mississippi,MS,n/a,0,0,0,0,0,0,0
+Missouri,MO,n/a,0,0,0,0,0,0,0
+Montana,MT,n/a,0,0,0,0,0,0,0
+Nebraska,NE,3rd,226720,0,0,226720,1,0,0
+Nevada,NV,n/a,0,0,0,0,0,0,0
+New Hampshire,NH,n/a,0,0,0,0,0,0,0
+New Jersey,NJ,n/a,0,0,0,0,0,0,0
+New Mexico,NM,n/a,0,0,0,0,0,0,0
+New York,NY,n/a,0,0,0,0,0,0,0
+New York,NY,8th,0,203235,54367,257602,0,1,0
+New York,NY,9th,0,198886,57967,256853,0,1,0
+New York,NY,16th,0,198811,88745,287556,0,1,0
+New York,NY,17th,0,193819,131752,325571,0,1,0
+North Carolina,NC,n/a,0,0,0,0,0,0,0
+North Dakota,ND,AL,233980,0,104479,338459,1,0,0
+Ohio,OH,n/a,0,0,0,0,0,0,0
+Oklahoma,OK,1st, , , , ,1,0,0
+Oregon,OR,3rd,0,274687,107668,382355,0,1,0
+Pennsylvania,PA,3rd,244893,0,0,244893,1,0,0
+Pennsylvania,PA,13th,0,239316,0,239316,0,1,0
+Pennsylvania,PA,18th,293684,0,0,293684,1,0,0
+Rhode Island,RI,n/a,0,0,0,0,0,0,0
+South Carolina,SC,n/a,0,0,0,0,0,0,0
+South Dakota,SD,n/a,0,0,0,0,0,0,0
+Tennessee,TN,n/a,0,0,0,0,0,0,0
+Texas,TX,4th,216643,0,29577,246220,1,0,0
+Texas,TX,5th,155469,0,37406,192875,1,0,0
+Texas,TX,8th,236379,0,0,236379,1,0,0
+Texas,TX,11th,201871,0,23677,225548,1,0,0
+Texas,TX,13th,199050,0,22192,221242,1,0,0
+Texas,TX,16th,0,150228,25001,175229,0,1,0
+Texas,TX,19th,176314,0,27161,203475,1,0,0
+Texas,TX,20th,0,149640,38029,187669,0,1,0
+Texas,TX,32nd,162868,0,66303,229171,1,0,0
+Texas,TX,36th,193675,0,24890,218565,1,0,0
+Utah,UT,n/a,0,0,0,0,0,0,0
+Vermont,VT,n/a,0,0,0,0,0,0,0
+Virginia,VA,11th,0,247818,34185,282003,0,1,0
+Washington,WA,4th,229919,0,0,229919,1,0,0
+Washington,WA,7th,0,378754,0,378754,0,1,0
+West Virginia,WV,n/a,0,0,0,0,0,0,0
+Wisconsin,WI,3rd,0,257401,2969,260370,0,1,0
+Wisconsin,WI,4th,0,220181,66728,286909,0,1,0
+Wyoming,WY,n/a,0,0,0,0,0,0,0

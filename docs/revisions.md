@@ -24,7 +24,6 @@ I did these all at roughly the same time several years ago.
 - Several uncontested races with no votes reported.
 - The `OTH1` (Column F) formula in the IMPUTED spreadsheet is wrong--doesn't include the R vote. It's right in the EXTRACTED spreadsheet. This affects every uncontested R win (ugh). <<< FIXED by using the EXTRACTED data (TODO)
 - TX / 22nd -- large fragmented "other" vote used (CONFIRMED) (TODO)
-- TODO: Export RESULTS & UNCONTESTED
 
 2008 election:
 - Several uncontested races with no votes reported.
@@ -43,7 +42,8 @@ I did these all at roughly the same time several years ago.
 - Several uncontested races with no votes reported.
 
 2016 election:
-- TODO: Export RESULTS & UNCONTESTED
+- Two uncontested races with no votes reported.
+- ND at large district was uncontested -- So, no AVG contested vote. Used the Presidential total (344,360) as a proxy. <<< TODO
 
 ## 2018 & 2020 Elections
 
@@ -69,5 +69,6 @@ I'm going this now ...
 ## Special Test Cases
 
 - 2006 / AL / 6th -- non-winning imputed votes > winning
-- TX / 22nd -- fragmented "other" votes > winning
+- 2006 / TX / 22nd -- fragmented "other" votes > winning
+- 2016 / MN / 2nd -- imputed > actual
 - 2018 / WI / 2nd -- actual votes > 0.7 average contested vote
