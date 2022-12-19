@@ -38,10 +38,9 @@ I did these all at roughly the same time several years ago.
 
 2012 election:
 - Several uncontested races with no votes reported.
-- TODO: Export RESULTS & UNCONTESTED
 
 2014 election:
-- TODO: Export RESULTS & UNCONTESTED
+- Several uncontested races with no votes reported.
 
 2016 election:
 - TODO: Export RESULTS & UNCONTESTED
