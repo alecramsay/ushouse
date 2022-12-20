@@ -80,9 +80,14 @@ def recast_uncontested_votes(actual: dict, avg_contested_vote: int) -> dict:
     return recast
 
 
-def votes_key(party: str) -> str:
+def v_key(party: str) -> str:
     """Return the votes key for a party."""
     return party + "_V"
+
+
+def s_key(party: str) -> str:
+    """Return the seats key for a party."""
+    return party + "_S"
 
 
 def recast_uncontested_vote(
@@ -103,22 +108,22 @@ def recast_uncontested_vote(
     assert party1 in ["REP", "DEM"]
 
     # Not uncontested, i.e., contested -- dummy is all zeroes
-    if actual["REP_V"] == 0 and actual["DEM_V"] == 0:
+    if actual["REP_S"] == 0 and actual["DEM_S"] == 0:
         return 0
 
     # Uncontested
 
     party2: str = "DEM" if party1 == "REP" else "REP"
 
-    if actual[votes_key(party1)] > 0:
-        recast: int = max(
-            actual[votes_key(party1)], round(vote_share * avg_contested_vote)
-        )
+    if actual[s_key(party1)] == 1:
+        # Uncontested winner
+        recast: int = max(actual[v_key(party1)], round(vote_share * avg_contested_vote))
         return recast
     else:
+        # Uncontested 'loser'
         # TODO - This total must be at least one less than the winning total
         recast: int = max(
-            actual[votes_key("OTH")],
+            actual[v_key("OTH")],
             round(
                 (1 - vote_share)
                 * (
