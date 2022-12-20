@@ -72,77 +72,62 @@ def recast_uncontested_votes(actual: dict, avg_contested_vote: int) -> dict:
 
     recast: dict = dict()
 
-    recast["REP_V"] = recast_rep_votes(actual, avg_contested_vote)
-    recast["DEM_V"] = recast_dem_votes(actual, avg_contested_vote)
+    recast["REP_V"] = recast_uncontested_vote("REP", actual, avg_contested_vote)
+    recast["DEM_V"] = recast_uncontested_vote("DEM", actual, avg_contested_vote)
     recast["OTH_V"] = 0
     recast["TOT_V"] = recast["REP_V"] + recast["DEM_V"] + recast["OTH_V"]
 
     return recast
 
 
-"""
-NOTE - These two formulates are interdependent. They work, because the if/else blocks
-complement each other in the two functions.
-"""
+def votes_key(party: str) -> str:
+    """Return the votes key for a party."""
+    return party + "_V"
 
 
-def recast_rep_votes(
-    actual: dict, avg_contested_vote: int, vote_share: float = 0.70
+def recast_uncontested_vote(
+    party1: str, actual: dict, avg_contested_vote: int, vote_share: float = 0.70
 ) -> int:
     """
-    For states w/ uncontested races, if a Republican won the uncontested seat,
-    use their actual votes or the imputed votes, whichever is higher. If a Democrat won
-    the uncontested seat, use the actual "other" vote total or the imputed votes, whichever
-    is higher. For states w/o uncontested races (dummy all zeroes), use the actuals.
+    For the imputed Republican vote in an uncontested race:
+    - If a Republican won the uncontested seat, use their actual votes or the imputed votes,
+      whichever is higher.
+    - If a Democrat won the uncontested seat, use the actual "other" vote total or the imputed votes,
+      again whichever is higher.
+
+    Vice versa, for the imputed Democrat vote in an uncontested race.
+
+    For a contested race (i.e., all zeroes dummy record), do nothing.
     """
 
-    if actual["TOT_V"] > 0:
-        if actual["REP_V"] > 0:
+    assert party1 in ["REP", "DEM"]
 
-            recast: int = max(actual["REP_V"], round(vote_share * avg_contested_vote))
-            return recast
-        else:
-            # TODO - This total must be at least one less than the winning total
-            recast: int = max(
-                actual["OTH_V"],
-                round(
-                    (1 - vote_share)
-                    * (recast_dem_votes(actual, avg_contested_vote) / vote_share)
-                ),
-            )
-            return recast
+    # Not uncontested, i.e., contested -- dummy is all zeroes
+    if actual["REP_V"] == 0 and actual["DEM_V"] == 0:
+        return 0
+
+    # Uncontested
+
+    party2: str = "DEM" if party1 == "REP" else "REP"
+
+    if actual[votes_key(party1)] > 0:
+        recast: int = max(
+            actual[votes_key(party1)], round(vote_share * avg_contested_vote)
+        )
+        return recast
     else:
-        return actual["REP_V"]
-
-
-def recast_dem_votes(
-    actual: dict, avg_contested_vote: int, vote_share: float = 0.70
-) -> int:
-    """
-    The converse of the above:
-    For states w/ uncontested races, if a Democrat won the uncontested seat,
-    use their actual votes or the imputed votes, whichever is higher. If a Republican won
-    the uncontested seat, use the actual "other" vote total or the imputed votes, whichever
-    is higher. For states w/o uncontested races (dummy all zeroes), use the actuals.
-    """
-
-    if actual["TOT_V"] > 0:
-        if actual["DEM_V"] > 0:
-            recast: int = max(actual["DEM_V"], round(vote_share * avg_contested_vote))
-            return recast
-        else:
-            # TODO - This total must be at least one less than the winning total
-            recast: int = max(
-                actual["OTH_V"],
-                round(
-                    (1 - vote_share)
-                    * recast_rep_votes(actual, avg_contested_vote)
+        # TODO - This total must be at least one less than the winning total
+        recast: int = max(
+            actual[votes_key("OTH")],
+            round(
+                (1 - vote_share)
+                * (
+                    recast_uncontested_vote(party2, actual, avg_contested_vote)
                     / vote_share
-                ),
-            )
-            return recast
-    else:
-        return actual["DEM_V"]
+                )
+            ),
+        )
+        return recast
 
 
 def calc_imputed_offsets(actual: dict, recast: dict) -> dict:
