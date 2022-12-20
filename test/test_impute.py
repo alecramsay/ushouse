@@ -3,8 +3,6 @@
 # TEST IMPUTING UNCONTESTED ELECTIONS
 #
 
-import pytest
-
 from ushouse.impute import *
 from ushouse.utils import *
 
@@ -210,8 +208,7 @@ class TestImputingOneUncontestedElection:
 
     def test_majority_OTH(self) -> None:
         """2010 / NY 29th -- non-winning imputed votes > winning"""
-        # Also 2006 / AL / 6th -- non-winning imputed votes > winning
-        # TODO - This is the wrong imputation!
+        """2006 / AL / 6th -- non-winning imputed votes > winning <<< ALSO"""
         uncontested: dict = {
             "REP_V": 93167,
             "DEM_V": 0,
@@ -225,10 +222,20 @@ class TestImputingOneUncontestedElection:
 
         expected: dict = {
             "REP_V": 115289,
+            "DEM_V": 115288,
+            "OTH_V": 0,
+            "TOT_V": 230577,
+        }
+        """
+        # Bad old imputation -- loser > winner
+        
+        expected: dict = {
+            "REP_V": 115289,
             "DEM_V": 116978,
             "OTH_V": 0,
             "TOT_V": 232267,
         }
+        """
 
         actual: int
         actual = recast_uncontested_vote("REP", uncontested, avg_contested_votes)
@@ -244,10 +251,20 @@ class TestImputingOneUncontestedElection:
         recast: dict[str, int] = expected
         expected: dict = {
             "REP_V": 22122,
+            "DEM_V": 115288,
+            "OTH_V": -116978,
+            "TOT_V": 20432,
+        }
+        """
+        # Bad old imputation -- loser > winner
+
+        expected: dict = {
+            "REP_V": 22122,
             "DEM_V": 116978,
             "OTH_V": -116978,
             "TOT_V": 22122,
         }
+        """
         actual: dict = calc_imputed_offsets(uncontested, recast)
 
         assert dict_approx(actual, expected)

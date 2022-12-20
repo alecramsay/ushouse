@@ -120,17 +120,19 @@ def recast_uncontested_vote(
         recast: int = max(actual[v_key(party1)], round(vote_share * avg_contested_vote))
         return recast
     else:
-        # Uncontested 'loser'
-        # TODO - This total must be at least one less than the winning total
-        recast: int = max(
-            actual[v_key("OTH")],
-            round(
-                (1 - vote_share)
-                * (
-                    recast_uncontested_vote(party2, actual, avg_contested_vote)
-                    / vote_share
-                )
+        # Uncontested 'loser' -- must be less than the winning total
+        recast: int = min(
+            max(
+                actual[v_key("OTH")],
+                round(
+                    (1 - vote_share)
+                    * (
+                        recast_uncontested_vote(party2, actual, avg_contested_vote)
+                        / vote_share
+                    )
+                ),
             ),
+            recast_uncontested_vote(party2, actual, avg_contested_vote) - 1,
         )
         return recast
 
