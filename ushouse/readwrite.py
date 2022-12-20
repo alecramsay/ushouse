@@ -71,7 +71,7 @@ def write_csv(rel_path, rows, cols) -> None:
 
 def cast(t, v_str) -> str | int | float:
     # HACK - For thease files, treat missing values as 0.
-    if v_str == " " and t == int:
+    if t == int and (len(v_str) == 0 or v_str == " "):
         return 0
     return t(v_str)
 
