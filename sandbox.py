@@ -7,39 +7,48 @@ from ushouse import *
 
 
 def test_run() -> None:
-    # Large, fragmented "other" vote (2010 / NY 29th)
-    # TODO - This is the wrong imputation!
+    # Contested dummy (2020 / AK)
     uncontested: dict = {
-        "REP1": 93167,
-        "DEM1": 0,
-        "OTH1": 116978,
-        "TOT1": 210145,
-        "REP2": 1,
-        "DEM2": 0,
-        "OTH2": 0,
-        # "REP_win_pct": 0.70,
-        # "DEM_win_pct": 0.70,
-        "Contested_AVG_Votes": 164699,
+        "REP_V": 0,
+        "DEM_V": 0,
+        "OTH_V": 0,
+        "TOT_V": 0,
+        "REP_S": 0,
+        "DEM_S": 0,
+        "OTH_S": 0,
     }
     expected: dict = {
-        "REP3": 115289,
-        "DEM3": 116978,
-        "OTH3": 0,
-        "TOT3": 232267,
+        "REP_V": 0,
+        "DEM_V": 0,
+        "OTH_V": 0,
+        "TOT_V": 0,
+        "REP_S": 0,
+        "DEM_S": 0,
+        "OTH_S": 0,
     }
-    actual: dict = recast_uncontested_votes(uncontested)
-
+    actual: dict = recast_rep_votes(uncontested, 353165)
     assert dict_approx(actual, expected)
 
-    recast: dict[str, int] = expected
-    expected: dict = {
-        "REP4": 22122,
-        "DEM4": 116978,
-        "OTH4": -116978,
-        "TOT4": 22122,
+    # Contested dummy (2020 / AK)
+    uncontested: dict = {
+        "REP_V": 0,
+        "DEM_V": 0,
+        "OTH_V": 0,
+        "TOT_V": 0,
+        "REP_S": 0,
+        "DEM_S": 0,
+        "OTH_S": 0,
     }
-    actual: dict = calc_imputed_offsets(uncontested, recast)
-
+    expected: dict = {
+        "REP_V": 0,
+        "DEM_V": 0,
+        "OTH_V": 0,
+        "TOT_V": 0,
+        "REP_S": 0,
+        "DEM_S": 0,
+        "OTH_S": 0,
+    }
+    actual: dict = recast_dem_votes(uncontested, 353165)
     assert dict_approx(actual, expected)
 
 

@@ -70,7 +70,7 @@ for year, congress in zip(years, congresses):
     results: list = read_typed_csv(input_root + results_csv, results_types)
     uncontested: list = read_typed_csv(input_root + uncontested_csv, uncontested_types)
 
-    pass
+    break
 
 print("Done.")
 pass

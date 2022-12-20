@@ -9,43 +9,39 @@ from ushouse.impute import *
 from ushouse.utils import *
 
 
-# TODO
-# - Combine these two suites into one, so data isn't duplicated
-# - Add tests for apply_imputed_offsets()
-
-
-class TestImputingUncontestedElections:
+class TestImputingOneUncontestedElection:
     def test_no_uncontested(self) -> None:
         # Contested dummy (2020 / AK)
         uncontested: dict = {
-            "REP1": 0,
-            "DEM1": 0,
-            "OTH1": 0,
-            "TOT1": 0,
-            "REP2": 1,
-            "DEM2": 0,
-            "OTH2": 0,
-            "REP_win_pct": 0.70,
-            "DEM_win_pct": 0.70,
-            "Contested_AVG_Votes": 353165,
+            "REP_V": 0,
+            "DEM_V": 0,
+            "OTH_V": 0,
+            "TOT_V": 0,
+            "REP_S": 0,
+            "DEM_S": 0,
+            "OTH_S": 0,
         }
+        avg_contested_votes: int = 353165
+
         expected: dict = {
-            "REP3": 0,
-            "DEM3": 0,
-            "OTH3": 0,
-            "TOT3": 0,
+            "REP_V": 0,
+            "DEM_V": 0,
+            "OTH_V": 0,
+            "TOT_V": 0,
         }
-        actual: dict = recast_uncontested_votes(uncontested)
+
+        actual: int
+        actual = recast_rep_votes(uncontested, avg_contested_votes)
+        assert actual == expected["REP_V"]
+
+        actual = recast_dem_votes(uncontested, avg_contested_votes)
+        assert actual == expected["DEM_V"]
+
+        actual: dict = recast_uncontested_votes(uncontested, avg_contested_votes)
 
         assert dict_approx(actual, expected)
 
         recast: dict[str, int] = expected
-        expected: dict = {
-            "REP4": 0,
-            "DEM4": 0,
-            "OTH4": 0,
-            "TOT4": 0,
-        }
         actual: dict = calc_imputed_offsets(uncontested, recast)
 
         assert dict_approx(actual, expected)
@@ -53,33 +49,40 @@ class TestImputingUncontestedElections:
     def test_REP_uncontested(self) -> None:
         # R uncontested (2020 / AL 5th)
         uncontested: dict = {
-            "REP1": 253094,
-            "DEM1": 0,
-            "OTH1": 11066,
-            "TOT1": 264160,
-            "REP2": 1,
-            "DEM2": 0,
-            "OTH2": 0,
-            # "REP_win_pct": 0.70,
-            # "DEM_win_pct": 0.70,
-            "Contested_AVG_Votes": 318227,
+            "REP_V": 253094,
+            "DEM_V": 0,
+            "OTH_V": 11066,
+            "TOT_V": 264160,
+            "REP_S": 1,
+            "DEM_S": 0,
+            "OTH_S": 0,
         }
+        avg_contested_votes: int = 318227
+
         expected: dict = {
-            "REP3": 253094,
-            "DEM3": 108469,
-            "OTH3": 0,
-            "TOT3": 361563,
+            "REP_V": 253094,
+            "DEM_V": 108469,
+            "OTH_V": 0,
+            "TOT_V": 361563,
         }
-        actual: dict = recast_uncontested_votes(uncontested)
+
+        actual: int
+        actual = recast_rep_votes(uncontested, avg_contested_votes)
+        assert actual == expected["REP_V"]
+
+        actual = recast_dem_votes(uncontested, avg_contested_votes)
+        assert actual == expected["DEM_V"]
+
+        actual: dict = recast_uncontested_votes(uncontested, avg_contested_votes)
 
         assert dict_approx(actual, expected)
 
         recast: dict[str, int] = expected
         expected: dict = {
-            "REP4": 0,
-            "DEM4": 108469,
-            "OTH4": -11066,
-            "TOT4": 97403,
+            "REP_V": 0,
+            "DEM_V": 108469,
+            "OTH_V": -11066,
+            "TOT_V": 97403,
         }
         actual: dict = calc_imputed_offsets(uncontested, recast)
 
@@ -88,33 +91,40 @@ class TestImputingUncontestedElections:
     def test_DEM_uncontested(self) -> None:
         # D uncontested (2020 / AL 7th)
         uncontested: dict = {
-            "REP1": 0,
-            "DEM1": 225742,
-            "OTH1": 6589,
-            "TOT1": 232331,
-            "REP2": 0,
-            "DEM2": 1,
-            "OTH2": 0,
-            # "REP_win_pct": 0.70,
-            # "DEM_win_pct": 0.70,
-            "Contested_AVG_Votes": 318227,
+            "REP_V": 0,
+            "DEM_V": 225742,
+            "OTH_V": 6589,
+            "TOT_V": 232331,
+            "REP_S": 0,
+            "DEM_S": 1,
+            "OTH_S": 0,
         }
+        avg_contested_votes: int = 318227
+
         expected: dict = {
-            "REP3": 96747,
-            "DEM3": 225742,
-            "OTH3": 0,
-            "TOT3": 322489,
+            "REP_V": 96747,
+            "DEM_V": 225742,
+            "OTH_V": 0,
+            "TOT_V": 322489,
         }
-        actual: dict = recast_uncontested_votes(uncontested)
+
+        actual: int
+        actual = recast_rep_votes(uncontested, avg_contested_votes)
+        assert actual == expected["REP_V"]
+
+        actual = recast_dem_votes(uncontested, avg_contested_votes)
+        assert actual == expected["DEM_V"]
+
+        actual: dict = recast_uncontested_votes(uncontested, avg_contested_votes)
 
         assert dict_approx(actual, expected)
 
         recast: dict[str, int] = expected
         expected: dict = {
-            "REP4": 96747,
-            "DEM4": 0,
-            "OTH4": -6589,
-            "TOT4": 90158,
+            "REP_V": 96747,
+            "DEM_V": 0,
+            "OTH_V": -6589,
+            "TOT_V": 90158,
         }
         actual: dict = calc_imputed_offsets(uncontested, recast)
 
@@ -123,33 +133,40 @@ class TestImputingUncontestedElections:
     def test_large_OTH(self) -> None:
         # Large, fragmented "other" vote (2004 / NY 25th)
         uncontested: dict = {
-            "REP1": 155163,
-            "DEM1": 0,
-            "OTH1": 160717,
-            "TOT1": 315880,
-            "REP2": 1,
-            "DEM2": 0,
-            "OTH2": 0,
-            # "REP_win_pct": 0.70,
-            # "DEM_win_pct": 0.70,
-            "Contested_AVG_Votes": 259421,
+            "REP_V": 155163,
+            "DEM_V": 0,
+            "OTH_V": 160717,
+            "TOT_V": 315880,
+            "REP_S": 1,
+            "DEM_S": 0,
+            "OTH_S": 0,
         }
+        avg_contested_votes: int = 259421
+
         expected: dict = {
-            "REP3": 181595,
-            "DEM3": 160717,
-            "OTH3": 0,
-            "TOT3": 342312,
+            "REP_V": 181595,
+            "DEM_V": 160717,
+            "OTH_V": 0,
+            "TOT_V": 342312,
         }
-        actual: dict = recast_uncontested_votes(uncontested)
+
+        actual: int
+        actual = recast_rep_votes(uncontested, avg_contested_votes)
+        assert actual == expected["REP_V"]
+
+        actual = recast_dem_votes(uncontested, avg_contested_votes)
+        assert actual == expected["DEM_V"]
+
+        actual: dict = recast_uncontested_votes(uncontested, avg_contested_votes)
 
         assert dict_approx(actual, expected)
 
         recast: dict[str, int] = expected
         expected: dict = {
-            "REP4": 26432,
-            "DEM4": 160717,
-            "OTH4": -160717,
-            "TOT4": 26432,
+            "REP_V": 26432,
+            "DEM_V": 160717,
+            "OTH_V": -160717,
+            "TOT_V": 26432,
         }
         actual: dict = calc_imputed_offsets(uncontested, recast)
 
@@ -159,37 +176,51 @@ class TestImputingUncontestedElections:
         # Large, fragmented "other" vote (2010 / NY 29th)
         # TODO - This is the wrong imputation!
         uncontested: dict = {
-            "REP1": 93167,
-            "DEM1": 0,
-            "OTH1": 116978,
-            "TOT1": 210145,
-            "REP2": 1,
-            "DEM2": 0,
-            "OTH2": 0,
-            # "REP_win_pct": 0.70,
-            # "DEM_win_pct": 0.70,
-            "Contested_AVG_Votes": 164699,
+            "REP_V": 93167,
+            "DEM_V": 0,
+            "OTH_V": 116978,
+            "TOT_V": 210145,
+            "REP_S": 1,
+            "DEM_S": 0,
+            "OTH_S": 0,
         }
+        avg_contested_votes: int = 164699
+
         expected: dict = {
-            "REP3": 115289,
-            "DEM3": 116978,
-            "OTH3": 0,
-            "TOT3": 232267,
+            "REP_V": 115289,
+            "DEM_V": 116978,
+            "OTH_V": 0,
+            "TOT_V": 232267,
         }
-        actual: dict = recast_uncontested_votes(uncontested)
+
+        actual: int
+        actual = recast_rep_votes(uncontested, avg_contested_votes)
+        assert actual == expected["REP_V"]
+
+        actual = recast_dem_votes(uncontested, avg_contested_votes)
+        assert actual == expected["DEM_V"]
+
+        actual: dict = recast_uncontested_votes(uncontested, avg_contested_votes)
 
         assert dict_approx(actual, expected)
 
         recast: dict[str, int] = expected
         expected: dict = {
-            "REP4": 22122,
-            "DEM4": 116978,
-            "OTH4": -116978,
-            "TOT4": 22122,
+            "REP_V": 22122,
+            "DEM_V": 116978,
+            "OTH_V": -116978,
+            "TOT_V": 22122,
         }
         actual: dict = calc_imputed_offsets(uncontested, recast)
 
         assert dict_approx(actual, expected)
+
+    # TODO - Add scenarios ...
+
+
+class TestAggregatingImputedOffsets:
+    def test_placeholder(self) -> None:
+        pass  # TODO
 
 
 ### END ###
