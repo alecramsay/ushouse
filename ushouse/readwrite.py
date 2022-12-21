@@ -76,19 +76,7 @@ def cast(t, v_str) -> str | int | float:
     return t(v_str)
 
 
-class FileSpec:
-    def __init__(self, path: str, name=None) -> None:
-        file_name: str
-        file_extension: str
-        file_name, file_extension = os.path.splitext(path)
-
-        self.rel_path: str = path
-        self.abs_path: str = os.path.abspath(path)
-        self.name: str = name.lower() if (name) else os.path.basename(file_name).lower()
-        self.extension: str = file_extension
-
-
-### ANALYTSIS INPUT HELPERS ###
+### ANALYSIS INPUT HELPERS ###
 
 
 def read_election(elections_csv):
@@ -207,6 +195,21 @@ def print_row(key, row) -> None:
         "{0},".format(row["Elections"][9]),
         "{0}".format(row["Elections"][10]),
     )
+
+
+### MISCELLANEOUS ###
+
+
+class FileSpec:
+    def __init__(self, path: str, name=None) -> None:
+        file_name: str
+        file_extension: str
+        file_name, file_extension = os.path.splitext(path)
+
+        self.rel_path: str = path
+        self.abs_path: str = os.path.abspath(path)
+        self.name: str = name.lower() if (name) else os.path.basename(file_name).lower()
+        self.extension: str = file_extension
 
 
 ### END ###

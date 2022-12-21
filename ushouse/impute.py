@@ -3,6 +3,8 @@
 # The logic for imputing results for uncontested elections.
 #
 
+from .states import state_codes
+
 """
 PROCESSING STEPS:
 -----------------
@@ -57,9 +59,100 @@ uncontested: dict = {
 
 """
 
+COLS: list = ["REP_V", "DEM_V", "OTH_V", "TOT_V", "REP_S", "DEM_S", "OTH_S"]
+
 ### AVERAGE CONTESTED VOTES ###
 
-# TODO
+
+def agg_uncontested(by_race: list) -> dict:
+    """Aggregate uncontested races by state."""
+
+    by_state: dict = dict()
+    for xx in state_codes:
+        by_state[xx] = dict.fromkeys(COLS, 0)
+
+    for row in by_race:
+        xx: str = row["XX"]
+
+        for c in COLS:
+            by_state[xx][c] += row[c]
+
+    return by_state
+
+
+def calc_avg_contested_votes(
+    results_by_state: list, uncontested_by_race: list, proxies: dict
+) -> dict[str, int]:
+    """Calculate the average contested vote by state."""
+
+    uncontested_by_state: dict = agg_uncontested(uncontested_by_race)
+
+    avg_contested_vote: dict[str, int] = dict.fromkeys(state_codes, None)
+
+    for row in results_by_state:
+        xx: str = row["XX"]
+        uncontested: dict = uncontested_by_state[xx]
+
+        contested_seats: int = (
+            row["TOT_S"] - uncontested["REP_S"] - uncontested["DEM_S"]
+        )
+        contested_votes: int = row["TOT_V"] - uncontested["TOT_V"]
+
+        if contested_seats > 0:
+            avg_contested_vote[xx] = round(contested_votes / contested_seats)
+        else:
+            # No contested seats. Use a proxy.
+            if xx in proxies:
+                avg_contested_vote[xx] = proxies[xx]
+            else:
+                raise Exception(f"No contested seats in and no proxy for {xx}")
+
+    return avg_contested_vote
+
+
+# def aggregate_cols(by_col, table, agg_cols):
+#     """
+#     Compute aggregates on specified numeric columns in a table.
+#     """
+#     by = by_col.name if by_col else None
+
+#     buckets = {}
+
+#     for row_in in table.rows:
+#         if by_col:
+#             # Make the 'by' value a string to use as a dict key
+#             by_val = row_in.get(by) if (by_col.type == str) else str(row_in.get(by))
+
+#             # If a bucket for this 'by' value doesn't exist, create one.
+#             if by_val not in buckets:
+#                 buckets[by_val] = {}
+
+#         for col in agg_cols:
+#             name = col.name
+
+#             if by:
+#                 if name not in buckets[by_val]:
+#                     buckets[by_val][name] = init_bucket()
+
+#                 update_bucket(buckets[by_val][name], row_in.get(name))
+#             else:
+#                 if name not in buckets:
+#                     buckets[name] = init_bucket()
+
+#                 update_bucket(buckets[name], row_in.get(name))
+
+#     # Compute the average values
+#     if by:
+#         for by_val in buckets:
+#             for name in buckets[by_val]:
+#                 buckets[by_val][name]["avg"] = (
+#                     buckets[by_val][name]["sum"] / buckets[by_val][name]["count"]
+#                 )
+#     else:
+#         for name in buckets:
+#             buckets[name]["avg"] = buckets[name]["sum"] / buckets[name]["count"]
+
+#     return buckets
 
 
 ### IMPUTE UNCONTESTED RESULTS ###
