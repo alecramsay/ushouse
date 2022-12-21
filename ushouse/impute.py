@@ -110,55 +110,23 @@ def calc_avg_contested_votes(
     return avg_contested_vote
 
 
-# def aggregate_cols(by_col, table, agg_cols):
-#     """
-#     Compute aggregates on specified numeric columns in a table.
-#     """
-#     by = by_col.name if by_col else None
-
-#     buckets = {}
-
-#     for row_in in table.rows:
-#         if by_col:
-#             # Make the 'by' value a string to use as a dict key
-#             by_val = row_in.get(by) if (by_col.type == str) else str(row_in.get(by))
-
-#             # If a bucket for this 'by' value doesn't exist, create one.
-#             if by_val not in buckets:
-#                 buckets[by_val] = {}
-
-#         for col in agg_cols:
-#             name = col.name
-
-#             if by:
-#                 if name not in buckets[by_val]:
-#                     buckets[by_val][name] = init_bucket()
-
-#                 update_bucket(buckets[by_val][name], row_in.get(name))
-#             else:
-#                 if name not in buckets:
-#                     buckets[name] = init_bucket()
-
-#                 update_bucket(buckets[name], row_in.get(name))
-
-#     # Compute the average values
-#     if by:
-#         for by_val in buckets:
-#             for name in buckets[by_val]:
-#                 buckets[by_val][name]["avg"] = (
-#                     buckets[by_val][name]["sum"] / buckets[by_val][name]["count"]
-#                 )
-#     else:
-#         for name in buckets:
-#             buckets[name]["avg"] = buckets[name]["sum"] / buckets[name]["count"]
-
-#     return buckets
-
-
 ### IMPUTE UNCONTESTED RESULTS ###
 
 
-def recast_uncontested_votes(actual: dict, avg_contested_vote: int) -> dict:
+def recast_uncontested_races(
+    uncontested_official: list, avg_contested_vote: dict
+) -> dict:
+    """Impute uncontested votes for each race."""
+
+    uncontested_recast: dict = dict()
+    for row in uncontested_official:
+        xx: str = row["XX"]
+        uncontested_recast[xx] = recast_uncontested_race(row, avg_contested_vote[xx])
+
+    return uncontested_recast
+
+
+def recast_uncontested_race(actual: dict, avg_contested_vote: int) -> dict:
     """
     Recast actual uncontested votes into imputed votes for one uncontested race.
     """

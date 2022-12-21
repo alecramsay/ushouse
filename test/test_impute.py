@@ -35,7 +35,7 @@ class TestImputingOneUncontestedElection:
         actual = recast_uncontested_vote("DEM", uncontested, avg_contested_votes)
         assert actual == expected["DEM_V"]
 
-        actual: dict = recast_uncontested_votes(uncontested, avg_contested_votes)
+        actual: dict = recast_uncontested_race(uncontested, avg_contested_votes)
 
         assert dict_approx(actual, expected)
 
@@ -71,7 +71,7 @@ class TestImputingOneUncontestedElection:
         actual = recast_uncontested_vote("DEM", uncontested, avg_contested_votes)
         assert actual == expected["DEM_V"]
 
-        actual: dict = recast_uncontested_votes(uncontested, avg_contested_votes)
+        actual: dict = recast_uncontested_race(uncontested, avg_contested_votes)
 
         assert dict_approx(actual, expected)
 
@@ -107,7 +107,7 @@ class TestImputingOneUncontestedElection:
         actual = recast_uncontested_vote("DEM", uncontested, avg_contested_votes)
         assert actual == expected["DEM_V"]
 
-        actual: dict = recast_uncontested_votes(uncontested, avg_contested_votes)
+        actual: dict = recast_uncontested_race(uncontested, avg_contested_votes)
 
         assert dict_approx(actual, expected)
 
@@ -149,7 +149,7 @@ class TestImputingOneUncontestedElection:
         actual = recast_uncontested_vote("DEM", uncontested, avg_contested_votes)
         assert actual == expected["DEM_V"]
 
-        actual: dict = recast_uncontested_votes(uncontested, avg_contested_votes)
+        actual: dict = recast_uncontested_race(uncontested, avg_contested_votes)
 
         assert dict_approx(actual, expected)
 
@@ -191,7 +191,7 @@ class TestImputingOneUncontestedElection:
         actual = recast_uncontested_vote("DEM", uncontested, avg_contested_votes)
         assert actual == expected["DEM_V"]
 
-        actual: dict = recast_uncontested_votes(uncontested, avg_contested_votes)
+        actual: dict = recast_uncontested_race(uncontested, avg_contested_votes)
 
         assert dict_approx(actual, expected)
 
@@ -244,7 +244,7 @@ class TestImputingOneUncontestedElection:
         actual = recast_uncontested_vote("DEM", uncontested, avg_contested_votes)
         assert actual == expected["DEM_V"]
 
-        actual: dict = recast_uncontested_votes(uncontested, avg_contested_votes)
+        actual: dict = recast_uncontested_race(uncontested, avg_contested_votes)
 
         assert dict_approx(actual, expected)
 
@@ -296,7 +296,7 @@ class TestImputingOneUncontestedElection:
         actual = recast_uncontested_vote("DEM", uncontested, avg_contested_votes)
         assert actual == expected["DEM_V"]
 
-        actual: dict = recast_uncontested_votes(uncontested, avg_contested_votes)
+        actual: dict = recast_uncontested_race(uncontested, avg_contested_votes)
 
         assert dict_approx(actual, expected)
 
@@ -338,7 +338,7 @@ class TestImputingOneUncontestedElection:
         actual = recast_uncontested_vote("DEM", uncontested, avg_contested_votes)
         assert actual == expected["DEM_V"]
 
-        actual: dict = recast_uncontested_votes(uncontested, avg_contested_votes)
+        actual: dict = recast_uncontested_race(uncontested, avg_contested_votes)
 
         assert dict_approx(actual, expected)
 

@@ -63,9 +63,9 @@ congresses: list[str] = [
 ]
 
 for year, congress in zip(years, congresses):
-    if year != "2008":  # TODO - Remove this line.
-        continue
     print(f"Processing {year} {congress}...")
+
+    # Read the data
     results_csv: str = file_name(year, congress, "RESULTS")
     uncontested_csv: str = file_name(year, congress, "UNCONTESTED")
 
@@ -74,15 +74,17 @@ for year, congress in zip(years, congresses):
         input_root + uncontested_csv, uncontested_types
     )
 
+    # Calculate the average contested votes, by state.
     proxies: dict = avg_contested_proxies[year] if year in avg_contested_proxies else {}
     avg_contested_vote: dict = calc_avg_contested_votes(
         results_official, uncontested_races, proxies
     )
 
-    # TODO - Aggregate official uncontested races (by state, xx).
-    # TODO - Compute imputed uncontested votes (by state, xx).
+    # Impute revised votes for uncontested races (by race).
+    uncontested_recast: dict = recast_uncontested_races(
+        uncontested_races, avg_contested_vote
+    )
 
-    # TODO - Impute revised votes for uncontested races (by race).
     # TODO - Compute offsets to adjust the official results (by race).
 
     # TODO - Aggregate the offsets (by state, xx).
