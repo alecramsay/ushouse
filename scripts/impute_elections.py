@@ -105,18 +105,9 @@ for year, congress in zip(years, congresses):
     results_revised = sorted(results_revised, key=lambda x: x["STATE"])
     cols: list = results_revised[0].keys()
 
-    # TODO - Calculate two-party vote & seat shares
-
     # Write the revised results to a CSV file.
     election_csv: str = output_file(year, congress)
     write_csv(election_root + election_csv, results_revised, cols)
-    # write_csv(
-    #     None,
-    #     results_revised,
-    #     cols,
-    # )
-
-    # break # TODO - Remove this
 
 print("Done.")
 pass
