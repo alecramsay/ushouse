@@ -10,14 +10,15 @@ from ushouse import *
 # Housekeeping
 
 input_root: str = "data/extracted/"
-election_root: str = "data/results/"
+# election_root: str = "data/results/"
+election_root: str = "temp/"  # TODO: Change this back to "data/results/"
 snapshoot_root: str = "data/results/snapshots/"
 
 results_types: list = [str, str, int, int, int, int, int, int, int, int]
 uncontested_types: list = [str, str, str, int, int, int, int, int, int, int]
 
 
-def file_name(year: str, congress: str, category: str) -> str:
+def input_file(year: str, congress: str, category: str) -> str:
     """
     Congressional Election Results by State (2000 - 107th) RESULTS.csv
     Congressional Election Results by State (2000 - 107th) UNCONTESTED.csv
@@ -25,6 +26,13 @@ def file_name(year: str, congress: str, category: str) -> str:
     return (
         f"Congressional Election Results by State ({year} - {congress}) {category}.csv"
     )
+
+
+def output_file(year: str, congress: str) -> str:
+    """
+    Congressional Elections (2000 - 107th).csv
+    """
+    return f"Congressional Elections ({year} - {congress}).csv"
 
 
 avg_contested_proxies: dict[str, dict[str, int]] = {
@@ -66,8 +74,8 @@ for year, congress in zip(years, congresses):
     print(f"Processing {year} {congress}...")
 
     # Read the data
-    results_csv: str = file_name(year, congress, "RESULTS")
-    uncontested_csv: str = file_name(year, congress, "UNCONTESTED")
+    results_csv: str = input_file(year, congress, "RESULTS")
+    uncontested_csv: str = input_file(year, congress, "UNCONTESTED")
 
     results_official: list = read_typed_csv(input_root + results_csv, results_types)
     uncontested_races: list = read_typed_csv(
@@ -95,10 +103,20 @@ for year, congress in zip(years, congresses):
 
     # Make sure the output is sorted by state (name).
     results_revised = sorted(results_revised, key=lambda x: x["STATE"])
+    cols: list = results_revised[0].keys()
 
-    # TODO - Write the revised results to a CSV file.
+    # TODO - Calculate two-party vote & seat shares
 
-    break
+    # Write the revised results to a CSV file.
+    election_csv: str = output_file(year, congress)
+    write_csv(election_root + election_csv, results_revised, cols)
+    # write_csv(
+    #     None,
+    #     results_revised,
+    #     cols,
+    # )
+
+    # break # TODO - Remove this
 
 print("Done.")
 pass

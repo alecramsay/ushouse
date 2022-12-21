@@ -7,6 +7,8 @@ import os
 import sys
 import csv
 from csv import DictReader, DictWriter
+import contextlib
+from typing import Generator, TextIO
 
 
 ### GENERIC CSV READ/WRITE FUNCTIONS ###
@@ -48,11 +50,18 @@ def read_typed_csv(rel_path, field_types) -> list:
         raise Exception("Exception reading CSV with explicit types.")
 
 
+def cast(t, v_str) -> str | int | float:
+    # HACK - For thease files, treat missing values as 0.
+    if t == int and (len(v_str) == 0 or v_str == " "):
+        return 0
+    return t(v_str)
+
+
 def write_csv(rel_path, rows, cols) -> None:
     try:
-        abs_path: str = FileSpec(rel_path).abs_path
+        cf: str | None = FileSpec(rel_path).abs_path if (rel_path is not None) else None
 
-        with open(abs_path, "w") as f:
+        with smart_open(cf) as f:
             writer: DictWriter = DictWriter(f, fieldnames=cols)
             writer.writeheader()
 
@@ -69,11 +78,21 @@ def write_csv(rel_path, rows, cols) -> None:
         raise Exception("Exception writing CSV.")
 
 
-def cast(t, v_str) -> str | int | float:
-    # HACK - For thease files, treat missing values as 0.
-    if t == int and (len(v_str) == 0 or v_str == " "):
-        return 0
-    return t(v_str)
+@contextlib.contextmanager
+def smart_open(filename=None) -> Generator[TextIO | TextIO, None, None]:
+    """
+    Patterned after: https://stackoverflow.com/questions/17602878/how-to-handle-both-with-open-and-sys-stdout-nicely
+    """
+    if filename and filename != "-":
+        fh: TextIO = open(filename, "w")
+    else:
+        fh = sys.stdout
+
+    try:
+        yield fh
+    finally:
+        if fh is not sys.stdout:
+            fh.close()
 
 
 ### ANALYSIS INPUT HELPERS ###
