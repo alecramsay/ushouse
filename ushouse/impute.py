@@ -62,14 +62,14 @@ uncontested: dict = {
 ### AVERAGE CONTESTED VOTES ###
 
 
-def agg_uncontested(by_race: list, cols: list[str]) -> dict:
+def agg_uncontested(uncontested: list, cols: list[str]) -> dict:
     """Aggregate uncontested races by state."""
 
     by_state: dict = dict()
     for xx in state_codes:
         by_state[xx] = dict.fromkeys(cols, 0)
 
-    for row in by_race:
+    for row in uncontested:
         xx: str = row["XX"]
 
         for c in cols:
@@ -79,18 +79,18 @@ def agg_uncontested(by_race: list, cols: list[str]) -> dict:
 
 
 def calc_avg_contested_votes(
-    results_by_state: list, uncontested_by_race: list, proxies: dict
+    results: list, uncontested: list, proxies: dict
 ) -> dict[str, int]:
     """Calculate the average contested vote by state."""
 
     uncontested_by_state: dict = agg_uncontested(
-        uncontested_by_race,
+        uncontested,
         ["REP_V", "DEM_V", "OTH_V", "TOT_V", "REP_S", "DEM_S", "OTH_S"],
     )
 
     avg_contested_vote: dict[str, int] = dict.fromkeys(state_codes, None)
 
-    for row in results_by_state:
+    for row in results:
         xx: str = row["XX"]
         uncontested: dict = uncontested_by_state[xx]
 
@@ -114,13 +114,11 @@ def calc_avg_contested_votes(
 ### IMPUTE UNCONTESTED RESULTS ###
 
 
-def revise_uncontested_races(
-    uncontested_official: list, avg_contested_vote: dict
-) -> list:
+def revise_uncontested_races(uncontested: list, avg_contested_vote: dict) -> list:
     """Impute uncontested votes for each race, and convert them into offsets."""
 
     uncontested_offsets: list = list()
-    for row in uncontested_official:
+    for row in uncontested:
         xx: str = row["XX"]
         recast: dict = recast_uncontested_race(row, avg_contested_vote[xx])
         offsets: dict = offset_uncontested_race(row, recast)
@@ -225,15 +223,21 @@ def offset_uncontested_race(actual: dict, recast: dict) -> dict:
     return offsets
 
 
-### AGGREGATE IMPUTED RESULTS & REVISE THE OFFICIAL RESULTS TO REFLECT THEM ###
-
-# TODO -- Pivot the offsets by state
-
-# TODO -- Apply the aggregated offsets to the actual votes
+### APPLY THE OFFSETS TO THE OFFICIAL RESULTS ###
 
 
-def apply_imputed_offsets(actual: dict, offsets: dict) -> dict:
-    pass  # TODO
+def apply_imputed_offsets(results: list, uncontested_offsets: dict) -> dict:
+    revised_results: list = list()
+
+    for row in results:
+        row_out: dict = row.copy()
+        offsets: dict = uncontested_offsets[row["XX"]]
+        for key in offsets:
+            row_out[key] += offsets[key]
+
+        revised_results.append(row_out)
+
+    return revised_results
 
 
 ### END ###

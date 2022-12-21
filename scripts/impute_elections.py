@@ -29,7 +29,7 @@ def file_name(year: str, congress: str, category: str) -> str:
 
 avg_contested_proxies: dict[str, dict[str, int]] = {
     "2008": {"AL": 271654, "AR": 271654, "VT": 325046},
-    "2016": {"SD": 344360},
+    "2016": {"ND": 344360, "SD": 344360},
     "2020": {"SD": 422609},
 }
 
@@ -74,7 +74,7 @@ for year, congress in zip(years, congresses):
         input_root + uncontested_csv, uncontested_types
     )
 
-    # Calculate the average contested votes, by state.
+    # Calculate the average contested votes by state.
     proxies: dict = avg_contested_proxies[year] if year in avg_contested_proxies else {}
     avg_contested_vote: dict = calc_avg_contested_votes(
         results_official, uncontested_races, proxies
@@ -85,15 +85,18 @@ for year, congress in zip(years, congresses):
         uncontested_races, avg_contested_vote
     )
 
-    # Aggregate the offsets, indexed by state (xx).
+    # Aggregate the offsets by state.
     uncontested_offsets: dict = agg_uncontested(
         uncontested_revised, ["REP_V", "DEM_V", "OTH_V", "TOT_V"]
     )
 
-    # TODO - Apply the offsets to the official results (by state).
+    # Apply the offsets to the official results by state.
+    results_revised: list = apply_imputed_offsets(results_official, uncontested_offsets)
 
-    # TODO - Make sure the output is sorted by state (name).
-    # results_official = sorted(results_official, key=lambda x: x["XX"])
+    # Make sure the output is sorted by state (name).
+    results_revised = sorted(results_revised, key=lambda x: x["STATE"])
+
+    # TODO - Write the revised results to a CSV file.
 
     break
 
