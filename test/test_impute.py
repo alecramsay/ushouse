@@ -40,7 +40,7 @@ class TestImputingOneUncontestedElection:
         assert dict_approx(actual, expected)
 
         recast: dict[str, int] = expected
-        actual: dict = calc_imputed_offsets(uncontested, recast)
+        actual: dict = offset_uncontested_race(uncontested, recast)
 
         assert dict_approx(actual, expected)
 
@@ -76,7 +76,7 @@ class TestImputingOneUncontestedElection:
         assert dict_approx(actual, expected)
 
         recast: dict[str, int] = expected
-        actual: dict = calc_imputed_offsets(uncontested, recast)
+        actual: dict = offset_uncontested_race(uncontested, recast)
 
         assert dict_approx(actual, expected)
 
@@ -118,7 +118,7 @@ class TestImputingOneUncontestedElection:
             "OTH_V": -11066,
             "TOT_V": 97403,
         }
-        actual: dict = calc_imputed_offsets(uncontested, recast)
+        actual: dict = offset_uncontested_race(uncontested, recast)
 
         assert dict_approx(actual, expected)
 
@@ -160,7 +160,7 @@ class TestImputingOneUncontestedElection:
             "OTH_V": -6589,
             "TOT_V": 90158,
         }
-        actual: dict = calc_imputed_offsets(uncontested, recast)
+        actual: dict = offset_uncontested_race(uncontested, recast)
 
         assert dict_approx(actual, expected)
 
@@ -202,7 +202,7 @@ class TestImputingOneUncontestedElection:
             "OTH_V": -160717,
             "TOT_V": 26432,
         }
-        actual: dict = calc_imputed_offsets(uncontested, recast)
+        actual: dict = offset_uncontested_race(uncontested, recast)
 
         assert dict_approx(actual, expected)
 
@@ -265,7 +265,7 @@ class TestImputingOneUncontestedElection:
             "TOT_V": 22122,
         }
         """
-        actual: dict = calc_imputed_offsets(uncontested, recast)
+        actual: dict = offset_uncontested_race(uncontested, recast)
 
         assert dict_approx(actual, expected)
 
@@ -307,7 +307,7 @@ class TestImputingOneUncontestedElection:
             "OTH_V": -196545,
             "TOT_V": 69278,
         }
-        actual: dict = calc_imputed_offsets(uncontested, recast)
+        actual: dict = offset_uncontested_race(uncontested, recast)
 
         assert dict_approx(actual, expected)
 
@@ -349,7 +349,7 @@ class TestImputingOneUncontestedElection:
             "OTH_V": -8179,
             "TOT_V": 124299,
         }
-        actual: dict = calc_imputed_offsets(uncontested, recast)
+        actual: dict = offset_uncontested_race(uncontested, recast)
 
         assert dict_approx(actual, expected)
 

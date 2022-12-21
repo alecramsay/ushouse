@@ -80,14 +80,12 @@ for year, congress in zip(years, congresses):
         results_official, uncontested_races, proxies
     )
 
-    # Impute revised votes for uncontested races (by race).
-    uncontested_recast: dict = recast_uncontested_races(
+    # Impute revised votes for uncontested races & convert them to offsets.
+    uncontested_revised: list = revise_uncontested_races(
         uncontested_races, avg_contested_vote
     )
 
-    # TODO - Compute offsets to adjust the official results (by race).
-
-    # TODO - Aggregate the offsets (by state, xx).
+    # TODO - Aggregate the offsets, indexed by state (xx).
     # TODO - Apply the offsets to the official results (by state).
 
     # TODO - Make sure the output is sorted by state (name).
