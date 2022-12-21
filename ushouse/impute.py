@@ -59,22 +59,20 @@ uncontested: dict = {
 
 """
 
-COLS: list = ["REP_V", "DEM_V", "OTH_V", "TOT_V", "REP_S", "DEM_S", "OTH_S"]
-
 ### AVERAGE CONTESTED VOTES ###
 
 
-def agg_uncontested(by_race: list) -> dict:
+def agg_uncontested(by_race: list, cols: list[str]) -> dict:
     """Aggregate uncontested races by state."""
 
     by_state: dict = dict()
     for xx in state_codes:
-        by_state[xx] = dict.fromkeys(COLS, 0)
+        by_state[xx] = dict.fromkeys(cols, 0)
 
     for row in by_race:
         xx: str = row["XX"]
 
-        for c in COLS:
+        for c in cols:
             by_state[xx][c] += row[c]
 
     return by_state
@@ -85,7 +83,10 @@ def calc_avg_contested_votes(
 ) -> dict[str, int]:
     """Calculate the average contested vote by state."""
 
-    uncontested_by_state: dict = agg_uncontested(uncontested_by_race)
+    uncontested_by_state: dict = agg_uncontested(
+        uncontested_by_race,
+        ["REP_V", "DEM_V", "OTH_V", "TOT_V", "REP_S", "DEM_S", "OTH_S"],
+    )
 
     avg_contested_vote: dict[str, int] = dict.fromkeys(state_codes, None)
 
@@ -132,20 +133,6 @@ def revise_uncontested_races(
         uncontested_offsets.append(row_out)
 
     return uncontested_offsets
-
-
-# TODO - DELETE
-# def recast_uncontested_races(
-#     uncontested_official: list, avg_contested_vote: dict
-# ) -> dict:
-#     """Impute uncontested votes for each race."""
-
-#     uncontested_recast: dict = dict()
-#     for row in uncontested_official:
-#         xx: str = row["XX"]
-#         uncontested_recast[xx] = recast_uncontested_race(row, avg_contested_vote[xx])
-
-#     return uncontested_recast
 
 
 def recast_uncontested_race(actual: dict, avg_contested_vote: int) -> dict:
@@ -221,20 +208,6 @@ def recast_uncontested_vote(
 
 
 ### CALCULATE OFFSETS TO REFLECT IMPUTED VOTES ###
-
-
-# TODO - DELETE
-# def offset_uncontested_races(
-#     uncontested_official: list, uncontested_recast: dict
-# ) -> dict:
-#     """Calculate offsets to reflect imputed votes for each uncontested race."""
-
-#     uncontested_offsets: dict = dict()
-#     for row in results_official:
-#         xx: str = row["XX"]
-#         uncontested_offsets[xx] = offset_uncontested_race(row, uncontested_recast[xx])
-
-#     return uncontested_recast
 
 
 def offset_uncontested_race(actual: dict, recast: dict) -> dict:

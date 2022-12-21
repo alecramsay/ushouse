@@ -85,7 +85,11 @@ for year, congress in zip(years, congresses):
         uncontested_races, avg_contested_vote
     )
 
-    # TODO - Aggregate the offsets, indexed by state (xx).
+    # Aggregate the offsets, indexed by state (xx).
+    uncontested_offsets: dict = agg_uncontested(
+        uncontested_revised, ["REP_V", "DEM_V", "OTH_V", "TOT_V"]
+    )
+
     # TODO - Apply the offsets to the official results (by state).
 
     # TODO - Make sure the output is sorted by state (name).
