@@ -21,7 +21,7 @@ def main():
     mod_path = Path(__file__).parent
     relative_path = "../data/analysis/elections.csv"
     filename = (mod_path / relative_path).resolve()
-    elections_by_year = read_election(filename)
+    elections_by_year = read_election_LEGACY(filename)
 
     # Process each election
 

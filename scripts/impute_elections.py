@@ -103,11 +103,18 @@ for year, congress in zip(years, congresses):
 
     # Make sure the output is sorted by state (name).
     results_revised = sorted(results_revised, key=lambda x: x["STATE"])
-    cols: list = results_revised[0].keys()
+    cols: list = ["YEAR"] + list(results_revised[0].keys())
+
+    # Add the year as the first column.
+    results_out: list = list()
+    for row in results_revised:
+        row_out: dict = {"YEAR": year}
+        row_out.update(row)
+        results_out.append(row_out)
 
     # Write the revised results to a CSV file.
     election_csv: str = output_file(year, congress)
-    write_csv(election_root + election_csv, results_revised, cols)
+    write_csv(election_root + election_csv, results_out, cols)
 
 print("Done.")
 pass
