@@ -12,18 +12,39 @@ def areRoughlyEqual(x: float, y: float, tolerance: float) -> bool:
 
 
 def dict_approx(actual: dict, expected: dict) -> bool:
+    """Approximately equal"""
     for key in expected:
         if key not in actual:
             return False
 
-        a: float | int = actual[key]
-        e: float | int = expected[key]
-
-        if type(e) == float:
-            if a != approx(e):
+        if type(expected[key]) == float:
+            if actual[key] != approx(expected[key]):
                 return False
         else:
-            if a != e:
+            if actual[key] != expected[key]:
+                return False
+
+    return True
+
+
+def dict_close(actual: dict, expected: dict, threshold: int = 1) -> bool:
+    """Close but not necessarily equal"""
+
+    for key in expected:
+        if key not in actual:
+            return False
+
+        if type(expected[key]) == str:
+            if actual[key] != expected[key]:
+                return False
+
+        if type(expected[key]) == int:
+            # Allow for rounding differences
+            if abs(actual[key] - expected[key]) > threshold:
+                return False
+
+        if type(expected[key]) == float:
+            if actual[key] != approx(expected[key]):
                 return False
 
     return True

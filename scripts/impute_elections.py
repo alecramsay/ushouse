@@ -12,7 +12,7 @@ from ushouse import *
 input_root: str = "data/extracted/"
 # election_root: str = "data/results/"
 election_root: str = "temp/"  # TODO: Change this back to "data/results/"
-snapshoot_root: str = "data/results/snapshots/"
+snapshot_root: str = "data/results/snapshots/"
 
 results_types: list = [str, str, int, int, int, int, int, int, int, int]
 uncontested_types: list = [str, str, str, int, int, int, int, int, int, int]
@@ -43,35 +43,8 @@ avg_contested_proxies: dict[str, dict[str, int]] = {
 
 # Revise official election data to include imputed results for uncontested races.
 
-years: list[str] = [
-    "2000",
-    "2002",
-    "2004",
-    "2006",
-    "2008",
-    "2010",
-    "2012",
-    "2014",
-    "2016",
-    "2018",
-    "2020",
-]
-congresses: list[str] = [
-    "107th",
-    "108th",
-    "109th",
-    "110th",
-    "111th",
-    "112th",
-    "113th",
-    "114th",
-    "115th",
-    "116th",
-    "117th",
-]
-
 for year, congress in zip(years, congresses):
-    print(f"Processing {year} {congress}...")
+    print(f"Processing {year} {congress} ...")
 
     # Read the data
     results_csv: str = input_file(year, congress, "RESULTS")

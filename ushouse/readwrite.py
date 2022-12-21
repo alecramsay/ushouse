@@ -8,7 +8,7 @@ import sys
 import csv
 from csv import DictReader, DictWriter
 import contextlib
-from typing import Generator, TextIO
+from typing import Any, Generator, TextIO
 
 
 ### GENERIC CSV READ/WRITE FUNCTIONS ###
@@ -98,98 +98,77 @@ def smart_open(filename=None) -> Generator[TextIO | TextIO, None, None]:
 ### ANALYSIS INPUT HELPERS ###
 
 
-def read_election(rel_path) -> list:
+def read_election(rel_path: str, invert: bool = False) -> list:
     """
     Read a CSV of congressional election results with columns;
     YEAR, STATE, XX, REP_V, DEM_V, OTH_V, TOT_V, REP_S, DEM_S, OTH_S, TOT_S, VOTE_%, SEAT_%
     """
 
     abs_path: str = FileSpec(rel_path).abs_path
-    elections_by_year: list = list()
+    elections: list = list()
 
     try:
         with open(abs_path, mode="r", encoding="utf-8-sig") as f_input:
             csv_file: DictReader[str] = csv.DictReader(f_input)
 
-            print()
-            n_elections = 0
-            n_other = 0
             for row in csv_file:
-                year = int(row["YEAR"])
+                year: str = row["YEAR"]
 
-                bElections = True if (year != 2000) else False
-                if bElections:
-                    n_elections += 1
+                state: str = row["STATE"]
+                xx: str = row["XX"]
 
-                state = row["STATE"]
-                xx = row["XX"]
+                rep_v: int = int(row["REP_V"])
+                dem_v: int = int(row["DEM_V"])
+                oth_v: int = int(row["OTH_V"])
+                tot_v: int = int(row["TOT_V"])
+                rep_s: int = int(row["REP_S"])
+                dem_s: int = int(row["DEM_S"])
+                oth_s: int = int(row["OTH_S"])
+                tot_s: int = int(row["TOT_S"])
 
-                rep_v = int(row["REP_V"])
-                dem_v = int(row["DEM_V"])
-                oth_v = int(row["OTH_V"])
-                tot_v = int(row["TOT_V"])
-                rep_s = int(row["REP_S"])
-                dem_s = int(row["DEM_S"])
-                oth_s = int(row["OTH_S"])
-                tot_s = int(row["TOT_S"])
-
-                """
-                # NOTE - Not dropping elections w/ 'other' wins or significant showings
-                bOtherWins = (oth_s > 0)
-                bOtherSignificant = (oth_v / tot_v) > 0.1
-                if (bOtherWins):
-                    n_other += 1
-                    print("Dropping the {0} election for {1}, because of 'other' vote: seats = {2}, vote % = {3:4.2}. ".format(year, xx, oth_s, oth_v / tot_v))
-                """
-
-                # Don't filter out any elections
-                if True:
-                    """
-                    # To filter out results w/ 'other' wins:
-                    if (not bOtherWins):
-
-                    # To filter out states w/ only 1 CD:
-                    if (tot_s > 1):
-                    """
-
-                    if oth_s < tot_s:
-                        # NOTE - Convert REP shares to DEM shares
-                        vote_share = 1.0 - float(row["VOTE_%"].strip("'"))
-                        seat_share = 1.0 - float(row["SEAT_%"].strip("'"))
+                vote_share: float
+                seat_share: float
+                digits: int = 4
+                if oth_s < tot_s:
+                    # D and/or R wins
+                    if invert:
+                        # NOTE - Invert REP shares to DEM shares <<< legacy files
+                        vote_share = round(
+                            1.0 - float(row["VOTE_%"].strip("'")), digits
+                        )
+                        seat_share = round(
+                            1.0 - float(row["SEAT_%"].strip("'")), digits
+                        )
                     else:
-                        vote_share = None
-                        seat_share = None
+                        vote_share = round(float(row["VOTE_%"].strip("'")), digits)
+                        seat_share = round(float(row["SEAT_%"].strip("'")), digits)
+                else:
+                    # Only 3rd-party wins
+                    vote_share = None
+                    seat_share = None
 
-                    # All these elections will have two-party vote- & seat-shares
-                    election = {
-                        "YEAR": year,
-                        "STATE": state,
-                        "XX": xx,
-                        "REP_V": rep_v,
-                        "DEM_V": dem_v,
-                        "OTH_V": oth_v,
-                        "TOT_V": tot_v,
-                        "REP_S": rep_s,
-                        "DEM_S": dem_s,
-                        "OTH_S": oth_s,
-                        "TOT_S": tot_s,
-                        "TWO_S": tot_s - oth_s,  # Two-party seats
-                        "VOTE_%": vote_share,  # Two-party DEM vote share
-                        "SEAT_%": seat_share,  # Two-party DEM seat share
-                    }
-                    elections_by_year.append(election)
-
-        print()
-        print("There are {0} year-state election combinations.".format(n_elections))
-        # print("less {0} elections with 'other' wins,".format(n_other))
-        # print("which leaves a sample of {0} elections.".format(n_elections - n_other))
-        print()
+                election: dict[str, Any] = {
+                    "YEAR": year,
+                    "STATE": state,
+                    "XX": xx,
+                    "REP_V": rep_v,
+                    "DEM_V": dem_v,
+                    "OTH_V": oth_v,
+                    "TOT_V": tot_v,
+                    "REP_S": rep_s,
+                    "DEM_S": dem_s,
+                    "OTH_S": oth_s,
+                    "TOT_S": tot_s,
+                    "VOTE_%": vote_share,
+                    "SEAT_%": seat_share,
+                }
+                elections.append(election)
 
     except Exception as e:
         print("Exception reading elections CSV")
         sys.exit(e)
 
-    return elections_by_year
+    return elections
 
 
 def read_election_LEGACY(elections_csv):
