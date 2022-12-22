@@ -62,7 +62,9 @@ I processed these more recently, after a long time away from the spreadsheet and
 
 ## 2022 Election
 
-I'm going this, when the Clerk of the House releases the official results.
+- Why are all the "other" vote totals changing? <<< TODO: Investigate
+
+I'm going to process this again, when the Clerk of the House releases the official results.
 
 ## Special Test Cases
 

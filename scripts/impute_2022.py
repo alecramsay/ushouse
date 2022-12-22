@@ -1,42 +1,22 @@
 #!/usr/bin/env python3
 
 """
-Impute results for uncontested races & revise election results to include them.
+>>> 2022 HACK <<<
 
-NOTE - Make sure avg_contested_proxies is up-to-date before running this script.
+Impute results for uncontested races & revise election results to include them.
 
 For example:
 
-$ scripts/impute_election.py 2006
-
-For documentation, type:
-
-$ scripts/impute_election.py -h
+$ scripts/impute_2022.py
 
 """
-
-import argparse
-from argparse import ArgumentParser, Namespace
 
 from ushouse import *
 
 
 ### PARSE ARGS ###
 
-parser: ArgumentParser = argparse.ArgumentParser(
-    description="Impute results for uncontested races"
-)
-
-parser.add_argument("year", help="The election year", type=str)
-parser.add_argument(
-    "-v", "--verbose", dest="verbose", action="store_true", help="Verbose mode"
-)
-
-args: Namespace = parser.parse_args()
-
-#
-
-year: str = args.year
+year: str = "2022"
 congress: str = congresses[year]
 
 avg_contested_proxies: dict[str, dict[str, int]] = {
@@ -50,9 +30,10 @@ avg_contested_proxies: dict[str, dict[str, int]] = {
 # Housekeeping
 
 
-extracted_root: str = "data/extracted/"
-imputed_root: str = "data/imputed/"
-election_root: str = "data/results/"
+# HACK - use local files
+extracted_root: str = "/Users/alecramsay/Downloads/data/extracted/"
+imputed_root: str = "/Users/alecramsay/Downloads/data/imputed/"
+election_root: str = "/Users/alecramsay/Downloads/data/results/"
 
 results_types: list = [str, str, int, int, int, int, int, int, int, int]
 uncontested_types: list = [str, str, str, int, int, int, int, int, int, int]
