@@ -7,17 +7,36 @@ Compare pairs of revised elections incorporating imputed results for uncontested
 
 For example:
 
-$ scripts/compare_elections.py
-$ scripts/compare_elections.py > temp/comparisons.txt
+$ scripts/compare_elections.py 2006
+$ scripts/compare_elections.py 2006 > temp/compare (2006).txt
 
 """
 
+import argparse
+from argparse import ArgumentParser, Namespace
+
 from ushouse import *
 
-year: str = "2006"
+
+### PARSE ARGS ###
+
+parser: ArgumentParser = argparse.ArgumentParser(
+    description="Compare revised elections"
+)
+
+parser.add_argument("year", help="The election year", type=str)
+parser.add_argument(
+    "-v", "--verbose", dest="verbose", action="store_true", help="Verbose mode"
+)
+
+args: Namespace = parser.parse_args()
+
+#
+
+year: str = args.year
 congress: str = congresses[year]
 
-election_root: str = "temp/"  # TODO: Change this back to "data/results/"
+election_root: str = "data/results/"
 snapshot_root: str = "data/results/snapshot/"
 
 

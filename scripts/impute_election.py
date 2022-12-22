@@ -3,15 +3,40 @@
 """
 Impute results for uncontested races & revise election results to include them.
 
-1. Update the args below.
-2. Run the script.
+NOTE - Make sure avg_contested_proxies is up-to-date before running this script.
+
+For example:
+
+$ scripts/impute_election.py 2006
+
+For documentation, type:
+
+$ scripts/impute_election.py -h
 
 """
 
+import argparse
+from argparse import ArgumentParser, Namespace
+
 from ushouse import *
 
-# Args
-year: str = "2006"
+
+### PARSE ARGS ###
+
+parser: ArgumentParser = argparse.ArgumentParser(
+    description="Impute results for uncontested races"
+)
+
+parser.add_argument("year", help="The election year", type=str)
+parser.add_argument(
+    "-v", "--verbose", dest="verbose", action="store_true", help="Verbose mode"
+)
+
+args: Namespace = parser.parse_args()
+
+#
+
+year: str = args.year
 congress: str = congresses[year]
 
 avg_contested_proxies: dict[str, dict[str, int]] = {
@@ -20,16 +45,22 @@ avg_contested_proxies: dict[str, dict[str, int]] = {
     "2020": {"SD": 422609},
 }
 
+
 # Housekeeping
-input_root: str = "data/extracted/"
-# output_root: str = "data/results/"
-output_root: str = "temp/"  # TODO: Change this back to "data/results/"
+
+
+extracted_root: str = "data/extracted/"
+imputed_root: str = "data/imputed/"
+election_root: str = "data/results/"
 
 results_types: list = [str, str, int, int, int, int, int, int, int, int]
 uncontested_types: list = [str, str, str, int, int, int, int, int, int, int]
 
+
 # Helpers
-def input_file(year: str, congress: str, category: str) -> str:
+
+
+def extracted_file(year: str, congress: str, category: str) -> str:
     """
     Congressional Election Results by State (2000 - 107th) RESULTS.csv
     Congressional Election Results by State (2000 - 107th) UNCONTESTED.csv
@@ -39,7 +70,7 @@ def input_file(year: str, congress: str, category: str) -> str:
     )
 
 
-def output_file(year: str, congress: str) -> str:
+def election_file(year: str, congress: str) -> str:
     """
     Congressional Elections (2000 - 107th).csv
     """
@@ -47,12 +78,14 @@ def output_file(year: str, congress: str) -> str:
 
 
 # Read the data
-results_csv: str = input_file(year, congress, "RESULTS")
-uncontested_csv: str = input_file(year, congress, "UNCONTESTED")
 
-results_official: list = read_typed_csv(input_root + results_csv, results_types)
+
+results_csv: str = extracted_file(year, congress, "RESULTS")
+uncontested_csv: str = extracted_file(year, congress, "UNCONTESTED")
+
+results_official: list = read_typed_csv(extracted_root + results_csv, results_types)
 uncontested_races: list = read_typed_csv(
-    input_root + uncontested_csv, uncontested_types
+    extracted_root + uncontested_csv, uncontested_types
 )
 
 ### Impute the results for uncontested races ###
@@ -78,7 +111,6 @@ results_revised: list = apply_imputed_offsets(results_official, uncontested_offs
 
 # Make sure the output is sorted by state (name).
 results_revised = sorted(results_revised, key=lambda x: x["STATE"])
-cols: list = ["YEAR"] + list(results_revised[0].keys())
 
 # Add the year as the first column.
 results_out: list = list()
@@ -88,7 +120,13 @@ for row in results_revised:
     results_out.append(row_out)
 
 # Write the revised results to a CSV file.
-election_csv: str = output_file(year, congress)
-write_csv(output_root + election_csv, results_out, cols)
+election_csv: str = election_file(year, congress)
+cols: list = ["YEAR"] + list(results_revised[0].keys())
+write_csv(election_root + election_csv, results_out, cols)
+
+# Write the imputed results to a CSV file.
+uncontested_csv: str = extracted_file(year, congress, "UNCONTESTED")
+cols: list = list(uncontested_revised[0].keys())
+write_csv(imputed_root + uncontested_csv, uncontested_revised, cols)
 
 pass
