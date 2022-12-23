@@ -37,7 +37,7 @@ year: str = args.year
 congress: str = congresses[year]
 
 election_root: str = "data/results/"
-snapshot_root: str = "data/results/snapshot/"
+snapshot_root: str = "data/results/OLD/results/"
 
 
 def input_file(year: str, congress: str) -> str:

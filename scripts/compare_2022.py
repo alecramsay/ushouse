@@ -21,7 +21,7 @@ congress: str = congresses[year]
 
 # HACK - use local files
 election_root: str = "/Users/alecramsay/Downloads/data/results/"
-snapshot_root: str = "/Users/alecramsay/Downloads/data/results/snapshot/"
+snapshot_root: str = "/Users/alecramsay/Downloads/data/results/OLD/results/"
 
 
 def input_file(year: str, congress: str) -> str:

@@ -1,8 +1,6 @@
 # REVIEW / VERIFICATION
 
-## Main ...
-
-I took snapshots of all the previous work (on 12/18/22), so I could make changes if necessary & compare results with my original spreadsheet-based workflow. This document describes peculiarities with the raw data (scenarios) as well as problems I found with my old manual work using a series of spreadsheets. I fixed the problems with my new automated script.
+I took snapshots of my previous work (on 12/18/22), so I could make changes if necessary & compare results with my original spreadsheet-based workflow. These notes catalogue peculiarities with the raw data (scenarios) as well as problems I found with my old manual work using a series of spreadsheets. I fixed the problems with my new automated script.
 
 ## 2000–2016 Elections
 
