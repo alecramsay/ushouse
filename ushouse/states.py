@@ -6,7 +6,7 @@
 from .settings import *
 
 
-states = [
+states: list[dict[str, str]] = [
     {"XX": "AL", "State": "Alabama"},
     {"XX": "AK", "State": "Alaska"},
     {"XX": "AZ", "State": "Arizona"},
@@ -59,16 +59,21 @@ states = [
     {"XX": "WY", "State": "Wyoming"},
 ]
 
-# Setup by-state pivot
-by_state = {}
+state_codes: list = list()
 for s in states:
-    xx = s["XX"]
+    xx: str = s["XX"]
+    state_codes.append(xx)
+
+# Setup by-state pivot
+by_state: dict = dict()
+for s in states:
+    xx: str = s["XX"]
     by_state[xx] = {}
     by_state[xx]["Name"] = s["State"]
     by_state[xx]["Elections"] = [None] * N_ELECTIONS
 
 # Setup totals accumulators
-totals = {}
+totals: dict = dict()
 for t in [
     "REP",
     "DEM",
@@ -82,7 +87,7 @@ for t in [
     "SLACK",
     "MARGIN",
 ]:
-    totals[t] = {}
+    totals[t] = dict()
     totals[t]["Name"] = ""
     totals[t]["Elections"] = [0] * N_ELECTIONS
 

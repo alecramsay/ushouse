@@ -18,41 +18,26 @@ For each election report, I create an associated Excel spreadsheet:
 * The first tab *Election Results by State* extracts the vote & seat totals for Republican, Democrat, Other, and Total by state.
 * I use the official list of members and online info (e.g., Wikipedia) to crosscheck the number of  elected Republican & Democratic members by state and overall, to make sure I didn't miss any races. (It's easy to do with larger states.)
 * I also extract the race-level results for uncontested races in the *Uncontested Races* tab.
-* Then I aggregate uncontested race info by state (using a pivot table).
+* I export these into similarly named *RESULTS* and *UNCONTESTED* CSV files.
 
 These are the baseline, unmodified results in the data/extracted/ directory.
 
 ## Step 3 - Impute results for uncontested races
 
-For each spreadsheet of raw election results above:
+For each election, I run the impute_election.py script. The details of this process are described [here](impute-code.md).
 
-* I make a copy in the data/imputed/ directory.
-* I extend the spreadsheet to impute the results for uncontested races, using a 70/30 heuristic. This assumes that the uncontested votes represent 70% of the total vote share and that a losing candidate would have garnered a 30% share of the votes.
-
-The details of this logic are described [here](impute-spreadsheet.md).
-
-## Step 4 - Export the results to CSV
-
-For each imputed election spreadsheet: 
-
-* I export the results into a CSV file in the data/results/ directory. 
-* Then I added a year column manually, and
-* Combine the individual files into an overall file containing all elections (elections.csv). 
-
-At this point, the results for uncontested races have been imputed.
-
-## Step 5 - Analyze the elections in Python
+## Step 4 - Analyze the elections in Python
 
 Then I analyze the election results programmatically:
 
 * I compute the "unearned" seats by election and pivot the results by state (pivot-by-state.csv).
 
-## Step 6 - Analyze the elections in Excel
+## Step 5 - Analyze the elections in Excel
 
 I import that into Excel and analyze the results longitudinally.
 
 ## Notes
 
 * I use R vote & seat shares in this analysis ... because that's how I started years ago, before switching to D vote & seat shares in DRA. 
-* For uncontested at-large districts (ND, SD, & VT) and where no districts were contested (AR), I use some statewide race results (e.g., Governor, Senator, President) as proxies.
+* Where there no contested districts to use as a baseline, I use some statewide race results (e.g., Governor, Senator, President) as proxies.
 

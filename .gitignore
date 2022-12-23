@@ -138,5 +138,10 @@ dmypy.json
 __pycache__/
 *.py[cod]
 
-# Misc test files
+# Misc test, temp, and housekeeping files
 sandbox.py
+TODO.md
+temp/
+
+# Ignore Mac DS_Store files
+.DS_Store

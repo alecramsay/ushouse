@@ -3,171 +3,253 @@
 # The logic for imputing results for uncontested elections.
 #
 
-# TODO
-
+from .states import state_codes
 
 """
-INPUT DATA -- for each uncontested race
+PROCESSING STEPS:
+-----------------
+
+There are three major processing steps:
+
+1. Calculate the average number of votes, for contested races by state.
+2. Recast (impute) the votes for uncontested, for each uncontested race.
+3. Aggregate the imputed uncontested results for each state, and
+   apply the changes to the official results.
+
+INPUT DATA
 ----------
 
-Uncontested Votes:
-- Column D: REP1
-- Column E: DEM1
-- Column F: OTH1
-- Column G: TOT1
+There are two input data sets:
 
-Uncontested Seats (Races):
-- Column H: REP2
-- Column I: DEM2
-- Column J: OTH2
+(1) RESULTS -- one record per state:
+- Actual election results, for each state
+- Fields: STATE,XX,REP_V,DEM_V,OTH_V,TOT_V,REP_S,DEM_S,OTH_S,TOT_S
 
-Imputed Vote Shares:
-- Column K: REP win %
-- Column L: DEM win %
-- Column M: Contested AVG Votes
+Alabama,AL,1416012,608809,26838,2051659,6,1,0,7
+results: dict = {
+    "STATE": "Alabama",
+    "XX": "AL",
+    "REP_V": 1416012,
+    "DEM_V": 608809,
+    "OTH_V": 26838,
+    "TOT_V": 2051659,
+    "REP_S": 6,
+    "DEM_S": 1,
+    "OTH_S": 0,
+    "TOT_S": 7,
+}
 
-example: dict = {
-    "REP1": 253094,
-    "DEM1": 0,
-    "OTH1": 11066,
-    "TOT1": 264160,
-    "REP2": 1,
-    "DEM2": 0,
-    "OTH2": 0,
-    # "REP_win_pct": 0.70,
-    # "DEM_win_pct": 0.70,
-    "Contested_AVG_Votes": 318227,
+(2) UNCONTESTED -- one record per uncontested race:
+- Actual election results for uncontested races,
+- Optional dummy record (all zeroes) for states with no uncontested races
+- Fields: STATE,XX,DISTRICT,REP_V,DEM_V,OTH_V,TOT_V,REP_S,DEM_S,OTH_S
+
+uncontested: dict = {
+    "STATE": "Alabama",
+    "XX": "AL",
+    "DISTRICT": "5th",
+    "REP_V": 253094,
+    "DEM_V": 0,
+    "OTH_V": 11066,
+    "TOT_V": 264160,
+    "REP_S": 1,
+    "DEM_S": 0,
+    "OTH_S": 0,
 }
 
 """
 
-
-"""
-RECAST -- Impute the uncontested votes
-------
-
-Given a dict of the input data above, recast it into these columns:
-
-- Column N: REP3
-- Column O: DEM3
-- Column P: OTH3 -- 0
-- Column Q: TOT3 -- =SUM(N3:P3)
-
-NOTE - The two formulates are interdependent. They work, because the if/else blocks
-complement each other in the two functions.
-
-"""
+### AVERAGE CONTESTED VOTES ###
 
 
-def recast_uncontested_votes(data: dict) -> dict:
+def agg_uncontested(uncontested: list, cols: list[str]) -> dict:
+    """Aggregate uncontested races by state."""
+
+    by_state: dict = dict()
+    for xx in state_codes:
+        by_state[xx] = dict.fromkeys(cols, 0)
+
+    for row in uncontested:
+        xx: str = row["XX"]
+
+        for c in cols:
+            by_state[xx][c] += row[c]
+
+    return by_state
+
+
+def calc_avg_contested_votes(
+    results: list, uncontested: list, proxies: dict
+) -> dict[str, int]:
+    """Calculate the average contested vote by state."""
+
+    uncontested_by_state: dict = agg_uncontested(
+        uncontested,
+        ["REP_V", "DEM_V", "OTH_V", "TOT_V", "REP_S", "DEM_S", "OTH_S"],
+    )
+
+    avg_contested_vote: dict[str, int] = dict.fromkeys(state_codes, None)
+
+    for row in results:
+        xx: str = row["XX"]
+        uncontested: dict = uncontested_by_state[xx]
+
+        contested_seats: int = (
+            row["TOT_S"] - uncontested["REP_S"] - uncontested["DEM_S"]
+        )
+        contested_votes: int = row["TOT_V"] - uncontested["TOT_V"]
+
+        if contested_seats > 0:
+            avg_contested_vote[xx] = round(contested_votes / contested_seats)
+        else:
+            # No contested seats. Use a proxy.
+            if xx in proxies:
+                avg_contested_vote[xx] = proxies[xx]
+            else:
+                raise Exception(f"No contested seats in and no proxy for {xx}")
+
+    return avg_contested_vote
+
+
+### IMPUTE UNCONTESTED RESULTS ###
+
+
+def revise_uncontested_races(uncontested: list, avg_contested_vote: dict) -> list:
+    """Impute uncontested votes for each race, *and* convert them into offsets."""
+
+    uncontested_offsets: list = list()
+    for row in uncontested:
+        xx: str = row["XX"]
+        recast: dict = recast_uncontested_race(row, avg_contested_vote[xx])
+        offsets: dict = offset_uncontested_race(row, recast)
+
+        row_out: dict = dict()
+        row_out["STATE"] = row["STATE"]
+        row_out["XX"] = row["XX"]
+        row_out.update(offsets)
+
+        uncontested_offsets.append(row_out)
+
+    return uncontested_offsets
+
+
+def recast_uncontested_race(actual: dict, avg_contested_vote: int) -> dict:
     """
-    Recast actual uncontested votes into imputed votes.
+    Recast actual uncontested votes into imputed votes for one uncontested race.
     """
 
     recast: dict = dict()
 
-    recast["REP3"] = recast_rep_votes(data)
-    recast["DEM3"] = recast_dem_votes(data)
-    recast["OTH3"] = 0
-    recast["TOT3"] = recast["REP3"] + recast["DEM3"] + recast["OTH3"]
+    recast["REP_V"] = recast_uncontested_vote("REP", actual, avg_contested_vote)
+    recast["DEM_V"] = recast_uncontested_vote("DEM", actual, avg_contested_vote)
+    recast["OTH_V"] = 0
+    recast["TOT_V"] = recast["REP_V"] + recast["DEM_V"] + recast["OTH_V"]
 
     return recast
 
 
-def recast_rep_votes(data: dict, vote_share: float = 0.70) -> int:
-    """
-    Formula for REP3 (Column N):
+def v_key(party: str) -> str:
+    """Return the votes key for a party."""
+    return party + "_V"
 
-    =IF(G3>0,IF(H3>0,MAX(D3,ROUND(K3*M3,0)),MAX(F3,ROUND((1-L3)*(O3/L3),0))),D3)
+
+def s_key(party: str) -> str:
+    """Return the seats key for a party."""
+    return party + "_S"
+
+
+def recast_uncontested_vote(
+    party1: str, actual: dict, avg_contested_vote: int, vote_share: float = 0.70
+) -> int:
+    """
+    For the imputed Republican vote in an uncontested race:
+    - If a Republican won the uncontested seat, use their actual votes or the imputed votes,
+      whichever is higher.
+    - If a Democrat won the uncontested seat, use the actual "other" vote total or the imputed votes,
+      again whichever is higher.
+
+    Vice versa, for the imputed Democrat vote in an uncontested race.
+
+    For a contested race (i.e., all zeroes dummy record), do nothing.
     """
 
-    if data["TOT1"] > 0:  #
-        # For states w/ uncontested races
-        if data["REP2"] > 0:
-            # If a Republican won the uncontested seat,
-            # use their actual votes or the imputed votes, whichever is higher
-            recast: int = max(
-                data["REP1"], round(vote_share * data["Contested_AVG_Votes"])
-            )
-            return recast
-        else:
-            # If a Democrat won the uncontested seat,
-            # use the actual "other" vote total or the imputed votes, whichever is higher
-            # TODO - This total must be at least one less than the winning total
-            recast: int = max(
-                data["OTH1"],
-                round((1 - vote_share) * (recast_dem_votes(data) / vote_share)),
-            )
-            return recast
+    assert party1 in ["REP", "DEM"]
+
+    # Not uncontested, i.e., contested -- dummy is all zeroes
+    if actual["REP_S"] == 0 and actual["DEM_S"] == 0:
+        return 0
+
+    # Uncontested
+
+    party2: str = "DEM" if party1 == "REP" else "REP"
+
+    if actual[s_key(party1)] == 1:
+        # Uncontested winner
+        recast: int = max(actual[v_key(party1)], round(vote_share * avg_contested_vote))
+        return recast
     else:
-        # For states w/o uncontested races
-        return data["REP1"]
+        # Uncontested 'loser' -- must be less than the winning total
+        recast: int = min(
+            max(
+                actual[v_key("OTH")],
+                round(
+                    (1 - vote_share)
+                    * (
+                        recast_uncontested_vote(party2, actual, avg_contested_vote)
+                        / vote_share
+                    )
+                ),
+            ),
+            recast_uncontested_vote(party2, actual, avg_contested_vote) - 1,
+        )
+        return recast
 
 
-def recast_dem_votes(data: dict, vote_share: float = 0.70) -> int:
+### CALCULATE OFFSETS TO REFLECT IMPUTED VOTES ###
+
+
+def offset_uncontested_race(actual: dict, recast: dict) -> dict:
     """
-    Formula for DEM3 (Column O):
-
-    =IF(G3>0,IF(I3>0,MAX(E3,ROUND(L3*M3,0)),MAX(F3,ROUND((1-K3)*(N3/K3),0))),E3)
-    """
-
-    if data["TOT1"] > 0:
-        # For states w/ uncontested races
-        if data["DEM2"] > 0:
-            # If a Democrat won the uncontested seat,
-            # use their actual votes or the imputed votes, whichever is higher
-            recast: int = max(
-                data["DEM1"], round(vote_share * data["Contested_AVG_Votes"])
-            )
-            return recast
-        else:
-            # If a Republican won the uncontested seat,
-            # use the actual "other" vote total or the imputed votes, whichever is higher
-            # TODO - This total must be at least one less than the winning total
-            recast: int = max(
-                data["OTH1"],
-                round((1 - vote_share) * recast_rep_votes(data) / vote_share),
-            )
-            return recast
-    else:
-        # For states w/o uncontested races
-        return data["DEM1"]
-
-
-"""
-ADJUSTMENTS -- Compute offsets to the actual votes to realize the imputed values.
------------
-
-- Column R: REP4
-- Column S: DEM4
-- Column T: OTH4
-- Column U: TOT4
-"""
-
-
-def calc_imputed_offsets(actual_data: dict, recast_data: dict) -> dict:
-    """
-    Formulas for REP4, DEM4, OTH4, & TOT4:
-
-    =N3-D3
-    =O3-E3
-    =P3-F3
-    =Q3-G3
-
+    For one uncontested race, compute offsets for the imputed votes from the actual votes.
     """
 
     offsets: dict = dict()
 
-    offsets["REP4"] = recast_data["REP3"] - actual_data["REP1"]
-    offsets["DEM4"] = recast_data["DEM3"] - actual_data["DEM1"]
-    offsets["OTH4"] = recast_data["OTH3"] - actual_data["OTH1"]
-    offsets["TOT4"] = recast_data["TOT3"] - actual_data["TOT1"]
+    offsets["REP_V"] = recast["REP_V"] - actual["REP_V"]
+    offsets["DEM_V"] = recast["DEM_V"] - actual["DEM_V"]
+    offsets["OTH_V"] = recast["OTH_V"] - actual["OTH_V"]
+    offsets["TOT_V"] = recast["TOT_V"] - actual["TOT_V"]
 
     return offsets
 
 
-"""
-REVISED -- Pivot the offsets by state and apply them to the actual votes.
-"""
+### APPLY THE OFFSETS TO THE OFFICIAL RESULTS ###
+
+
+def apply_imputed_offsets(results: list, uncontested_offsets: dict) -> dict:
+    revised_results: list = list()
+
+    for row in results:
+        row_out: dict = row.copy()
+        offsets: dict = uncontested_offsets[row["XX"]]
+        for key in offsets:
+            row_out[key] += offsets[key]
+
+        # Add two-party D vote & seat share
+        vote_share: float = None  # Handle other/independent-only case
+        seat_share: float = None
+        if (row_out["DEM_V"] + row_out["REP_V"]) > 0 and (
+            row_out["DEM_S"] + row_out["REP_S"]
+        ) > 0:
+            vote_share = row_out["DEM_V"] / (row_out["DEM_V"] + row_out["REP_V"])
+            seat_share = row_out["DEM_S"] / (row_out["DEM_S"] + row_out["REP_S"])
+
+        row_out["VOTE_%"] = vote_share  # Two-party DEM vote share
+        row_out["SEAT_%"] = seat_share  # Two-party DEM seat share
+
+        revised_results.append(row_out)
+
+    return revised_results
+
 
 ### END ###
