@@ -1,42 +1,18 @@
 #!/usr/bin/env python3
 
 """
-Impute results for uncontested races & revise election results to include them.
-
-NOTE - Make sure avg_contested_proxies is up-to-date before running this script.
-
-For example:
-
-$ scripts/impute_election.py 2006
-
-For documentation, type:
-
-$ scripts/impute_election.py -h
-
+DEBUG imputation for a specific election
 """
-
-import argparse
-from argparse import ArgumentParser, Namespace
 
 from ushouse import *
 
 
 ### PARSE ARGS ###
 
-parser: ArgumentParser = argparse.ArgumentParser(
-    description="Impute results for uncontested races"
-)
-
-parser.add_argument("year", help="The election year", type=str)
-parser.add_argument(
-    "-v", "--verbose", dest="verbose", action="store_true", help="Verbose mode"
-)
-
-args: Namespace = parser.parse_args()
+year: str = "2002"
 
 #
 
-year: str = args.year
 congress: str = congresses[year]
 
 avg_contested_proxies: dict[str, dict[str, int]] = {
@@ -97,7 +73,7 @@ avg_contested_vote: dict = calc_avg_contested_votes(
     results_official, uncontested_races, proxies
 )
 
-# Impute revised votes for uncontested races *and* convert them to offsets.
+# Impute revised votes for uncontested races & convert them to offsets.
 uncontested_revised: list = revise_uncontested_races(
     uncontested_races, avg_contested_vote
 )
@@ -120,14 +96,16 @@ for row in results_revised:
     row_out.update(row)
     results_out.append(row_out)
 
-# Write the revised results to a CSV file.
-election_csv: str = election_file(year, congress)
-cols: list = ["YEAR"] + list(results_revised[0].keys())
-write_csv(election_root + election_csv, results_out, cols)
+pass
 
-# Write the imputed *offsets* to a CSV file.
-uncontested_csv: str = extracted_file(year, congress, "UNCONTESTED")
-cols: list = list(uncontested_revised[0].keys())
-write_csv(imputed_root + uncontested_csv, uncontested_revised, cols)
+# # Write the revised results to a CSV file.
+# election_csv: str = election_file(year, congress)
+# cols: list = ["YEAR"] + list(results_revised[0].keys())
+# write_csv(election_root + election_csv, results_out, cols)
+
+# # Write the imputed results to a CSV file.
+# uncontested_csv: str = extracted_file(year, congress, "UNCONTESTED")
+# cols: list = list(uncontested_revised[0].keys())
+# write_csv(imputed_root + uncontested_csv, uncontested_revised, cols)
 
 pass

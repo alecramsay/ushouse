@@ -115,7 +115,7 @@ def calc_avg_contested_votes(
 
 
 def revise_uncontested_races(uncontested: list, avg_contested_vote: dict) -> list:
-    """Impute uncontested votes for each race, and convert them into offsets."""
+    """Impute uncontested votes for each race, *and* convert them into offsets."""
 
     uncontested_offsets: list = list()
     for row in uncontested:
