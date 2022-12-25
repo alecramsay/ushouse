@@ -8,6 +8,6 @@ from .states import *
 from .impute import *
 from .metrics import *
 
-# from .main import *
+from .analyze import *
 
 name: str = "ushouse"
