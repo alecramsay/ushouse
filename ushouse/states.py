@@ -64,31 +64,4 @@ for s in states:
     xx: str = s["XX"]
     state_codes.append(xx)
 
-# Setup by-state pivot
-by_state: dict = dict()
-for s in states:
-    xx: str = s["XX"]
-    by_state[xx] = {}
-    by_state[xx]["Name"] = s["State"]
-    by_state[xx]["Elections"] = [None] * N_ELECTIONS
-
-# Setup totals accumulators
-totals: dict = dict()
-for t in [
-    "REP",
-    "DEM",
-    "OTH",
-    "TOT",
-    "REP_UE",
-    "DEM_UE",
-    "NET_UE",
-    "REP_EXP",
-    "DEM_EXP",
-    "SLACK",
-    "MARGIN",
-]:
-    totals[t] = dict()
-    totals[t]["Name"] = ""
-    totals[t]["Elections"] = [0] * N_ELECTIONS
-
 ### END ###

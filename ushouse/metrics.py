@@ -7,12 +7,7 @@ from .settings import *
 from .utils import *
 
 
-#
-# BEST SEATS - CLOSEST TO PROPORTIONAL
-#
-
-
-def best_seats(N, Vf):
+def best_seats(N: int, Vf: float) -> int:
     """
     The # of seats closest to proportional @ statewide Vf, which is
     the "expected number of seats" from http://bit.ly/2Fcuf4q.
@@ -32,16 +27,11 @@ def best_seats(N, Vf):
     #     return 0
 
 
-def single_seat(rep, dem):
+def single_seat(rep: int, dem: int) -> int:
     return 1 if (rep == 1) else (-1 if (dem == 1) else 0)
 
 
-#
-# UNEARNED SEATS (UE)
-#
-
-
-def unearned_seats(best, actual):
+def unearned_seats(best: int, actual: int) -> int:
     """
     The # of "unearned" seats won beyond proportional, based on statewide Vf.
     which is UE_# from http://bit.ly/2Fcuf4q.
@@ -50,81 +40,32 @@ def unearned_seats(best, actual):
     return best - actual  # R advantage is +; D advantage is –
 
 
-# Related concepts
+### RELATED CONCEPTS & HELPERS ###
 
 
-def expected_R_seats(actual_R, net_UE):
+def expected_R_seats(actual_R: int, net_UE: int) -> int:
     return actual_R - net_UE
 
 
-def expected_D_seats(expected_R):
+def expected_D_seats(expected_R: int) -> int:
     return 435 - expected_R
 
 
-def margin(R_total, D_total):
+def margin(R_total: int, D_total: int) -> int:
     return (R_total - 218) if (R_total > D_total) else ((D_total - 218) * -1)
 
 
-def slack(expected_R):
+def slack(expected_R: int) -> int:
     return (expected_R - 218) if (expected_R >= 218) else (expected_R - 218 + 1)
 
 
-#
-# Antimajoritarian
-#
-
-
-def isAntimajoritarian(Vf, Sf):
-    bDem = True if ((Vf < (0.5 - AVGSVERROR)) and (Sf > 0.5)) else False
-    bRep = True if (((1 - Vf) < (0.5 - AVGSVERROR)) and ((1 - Sf) > 0.5)) else False
+def isAntimajoritarian(Vf: int, Sf: float) -> bool:
+    bDem: bool = True if ((Vf < (0.5 - AVGSVERROR)) and (Sf > 0.5)) else False
+    bRep: bool = (
+        True if (((1 - Vf) < (0.5 - AVGSVERROR)) and ((1 - Sf) > 0.5)) else False
+    )
 
     return bDem or bRep
 
 
-#
-# BIG 'R' - IMPLEMEMNTED BUT NOT USED
-#
-
-
-def bigR(Vf, Sf):
-    """
-    Defined in Footnote 22 on P. 10. See dra-score & Nagle and Ramsay 2021.
-    """
-
-    if not areRoughlyEqual(Vf, 0.5, EPSILON):
-        return (Sf - 0.5) / (Vf - 0.5)
-
-    return None
-
-
-#
-# EFFICIENCY GAP - NOT IMPLEMENTED YET
-#
-
-"""
-NOTE the formulation used.
-export function calcEfficiencyGap(Vf: number, Sf: number, shareType = T.Party.Democratic): number
-{
-  let efficiencyGap: number;
-
-  if (shareType == T.Party.Republican)
-  {
-    // NOTE - This is the  common formulation:
-    //
-    //   EG = (Sf – 0.5)  – (2 × (Vf – 0.5))
-    //
-    //   in which it is implied that '-' = R bias; '+' = D bias.
-
-    efficiencyGap = U.trim((Sf - 0.5) - (2.0 * (Vf - 0.5)));
-  }
-  else
-  {
-    // NOTE - This is the alternate formulation in which '+' = R bias; '-' = D bias,
-    //   which is consistent with all our other metrics.
-
-    efficiencyGap = U.trim((2.0 * (Vf - 0.5)) - (Sf - 0.5));
-  }
-
-  return U.trim(efficiencyGap);
-}
-"""
+### END ###
