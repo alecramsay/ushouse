@@ -27,7 +27,7 @@ parser: ArgumentParser = argparse.ArgumentParser(
     description="Impute results for uncontested races"
 )
 
-parser.add_argument("year", help="The election year", type=str)
+parser.add_argument("year", default="2000", help="The election year", type=str)
 parser.add_argument(
     "-v", "--verbose", dest="verbose", action="store_true", help="Verbose mode"
 )

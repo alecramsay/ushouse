@@ -236,12 +236,16 @@ def apply_imputed_offsets(results: list, uncontested_offsets: dict) -> dict:
             row_out[key] += offsets[key]
 
         # Add two-party D vote & seat share
-        vote_share: float = None  # Handle other/independent-only case
-        seat_share: float = None
-        if (row_out["DEM_V"] + row_out["REP_V"]) > 0 and (
-            row_out["DEM_S"] + row_out["REP_S"]
-        ) > 0:
+        two_party_votes: int = row_out["DEM_V"] + row_out["REP_V"]
+        two_party_seats: int = row_out["DEM_S"] + row_out["REP_S"]
+
+        # Handle other/independent-only cases
+        vote_share: float = 0.0
+        seat_share: float = 0.0
+
+        if two_party_votes > 0:
             vote_share = row_out["DEM_V"] / (row_out["DEM_V"] + row_out["REP_V"])
+        if two_party_seats > 0:
             seat_share = row_out["DEM_S"] / (row_out["DEM_S"] + row_out["REP_S"])
 
         row_out["VOTE_%"] = vote_share  # Two-party DEM vote share
