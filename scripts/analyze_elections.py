@@ -19,7 +19,6 @@ by_state, totals = analyze_elections(input_file)
 
 # Write the results in a format suitable for saving to a CSV file
 
-print()
 print_header()
 for key in by_state:
     print_row(key, by_state[key])

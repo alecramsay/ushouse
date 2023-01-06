@@ -30,7 +30,7 @@ For each election, I run the impute_election.py script. The details of this proc
 
 Then I analyze the election results programmatically:
 
-* I compute the "unearned" seats by election and pivot the results by state (pivot-by-state.csv).
+* I compute the "unearned" seats by election and pivot the results by state (pivot-by-state.csv), using the analyze_elections.py script.
 
 ## Step 5 - Analyze the elections in Excel
 
