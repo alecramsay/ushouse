@@ -94,6 +94,8 @@ def analyze_elections(rel_path: str):
     for i in range(N_ELECTIONS):
         actual_R: int = totals["REP"]["Elections"][i]
         actual_D: int = totals["DEM"]["Elections"][i]
+        # NOTE - NET_UE here accumulates net state results. It does *not* look
+        # total national vote by party.
         net_UE: int = totals["NET_UE"]["Elections"][i]
 
         expected_R: int = expected_R_seats(actual_R, net_UE)
