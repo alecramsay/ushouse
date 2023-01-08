@@ -1,6 +1,6 @@
 # ushouse
 
-Election results for the US House (2000 – 2020) with imputed results for uncontested races.
+Election results for the US House (2000 – 2020) with results imputed for uncontested races.
 
 The workflow from raw to imputed results is described in [Process](./docs/process.md).
 
