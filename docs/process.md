@@ -26,7 +26,7 @@ These are the baseline, unmodified results in the data/extracted/ directory.
 
 For each election, I run the impute_election.py script. 
 The process is described [here](impute-code.md), and
-the essential logic is described [here](impute-code.md).
+the essential logic is described [here](impute-logic.md).
 
 ## Step 4 - Analyze the elections in Python
 
