@@ -12,7 +12,7 @@ controlled the House---a "wrong winner" anti-majoritarian result.
 What is not well understood is that it could have been worse, on the one
 hand, and that also it got better, on the other. What follows is a
 structural postmortem of redistricting and congressional elections
-2012-2020 independent of individual candidates and campaigns.
+2012-20 independent of individual candidates and campaigns.
 
 ## Data & Methodology
 
@@ -31,7 +31,7 @@ Table 1
 (at the end and linked [here](assets/images/Table%201.pdf)) 
 shows UE seats for each state over time:
 
--   Columns I--M show the results for the 2012-2020 elections
+-   Columns I--M show the results for the 2012-20 elections
 
 -   Columns D--H show the results for the previous decade for comparison
 
@@ -52,7 +52,7 @@ groups:
 
 -   The next 16 states -- AK, IA, ID, KS, KY, LA, MO, MS, MT, ND, NE,
     SD, UT, WI, WV, and WY -- yielded smaller R-favoring UE seats, but
-    they didn't subsequently change much in 2018-2020. This becomes
+    they didn't subsequently change much in 2018-20. This becomes
     important later in the analysis. These maps were drawn by a mix of
     commissions, courts, split processes, or processes controlled by one
     party or the other.
@@ -70,7 +70,7 @@ over time.
 
 ## It Could Have Been Worse
 
-During the decade before REDMAP, 2002-2010, R's enjoyed a small average
+During the decade before REDMAP, 2002-10, R's enjoyed a small average
 national net UE seat advantage of 3.2 seats compared to what they should
 have won based on the two-party vote share (Table 2). With REDMAP
 redistricting, the R advantage in states where they controlled the
@@ -79,7 +79,8 @@ As a result, R's enjoyed a new post-redistricting national advantage
 that averaged 21.67 seats. This is REDMAP, in a nutshell.
 
 ![Table 2](assets/images/Table%202.png)
-*Table 2: R/D Seat Advantage 2010-2020*
+
+*Table 2: R/D Seat Advantage 2010-20*
 
 That advantage wasn't bigger, because D UE seat in other states
 increased -8.47 seats to -24.67 seats at the same time. I wasn't aware
@@ -119,11 +120,12 @@ You can this see numerically in Table 2 and visually in Figure 1. For
 proportional nationally.
 
 ![Figure 1](assets/images/Figure%201.png)
-*Figure 1: R/D Seat Advantage 2010-2020*
+
+*Figure 1: R/D Seat Advantage 2010-20*
 
 The average UE seats for the first R group in Table 1 declined an
-average of -11.17 seats from the 2012-2016 average to an average of 35.5
-seats the 2018-2020, with the bulk of the change (84%) coming from five
+average of -11.17 seats from the 2012-16 average to an average of 35.5
+seats the 2018-20, with the bulk of the change (84%) coming from five
 states. The first three were states in which R gerrymanders were redrawn
 mid-decade:
 
