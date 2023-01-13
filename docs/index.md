@@ -28,7 +28,7 @@ analysis from changing vote shares.
 The election data supporting this analysis is the official data from the
 Clerk of the House with results for uncontested races imputed.[^2]
 
-Table 1 (at the end and [linked](assets/images/Table%201.pdf){:target="_blank"}) 
+Table 1 (at the end and [linked](assets/images/Table%201.pdf)) 
 shows UE seats for each state over time:
 
 -   Columns I--M show the results for the 2012-2020 elections
@@ -78,7 +78,7 @@ redistricting process more than doubled from 18.4 seats to 46.33 seats.
 As a result, R's enjoyed a new post-redistricting national advantage
 that averaged 21.67 seats. This is REDMAP, in a nutshell.
 
-![Table 2](assets/images/Table%202.png){width=300px;}
+![Table 2](assets/images/Table%202.png)
 
 Table 2: R/D Seat Advantage 2010-2020
 
@@ -119,7 +119,7 @@ You can this see numerically in Table 2 and visually in Figure 1. For
 2018 and 2020, net UE seats averaged just -0.50, i.e., was almost
 proportional nationally.
 
-![Figure 1](assets/images/Figure%201.png){width=300px;}
+![Figure 1](assets/images/Figure%201.png)
 
 Figure 1: R/D Seat Advantage 2010-2020
 
