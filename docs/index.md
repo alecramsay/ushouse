@@ -1,5 +1,5 @@
-**Redistricting & Congressional Elections 2012-2020: A Structural
-Analysis**
+# Redistricting & Congressional Elections 2012-2020: A Structural
+Analysis
 
 REDMAP, the Republican plan to aggressively gerrymander the states where
 they controlled the 2011 redistricting process, is well documented.[^1]
@@ -15,7 +15,7 @@ hand, and that also it got better, on the other. What follows is a
 structural postmortem of redistricting and congressional elections
 2012-2020 independent of individual candidates and campaigns.
 
-**Data & Methodology**
+## Data & Methodology
 
 This analysis uses the concept of unearned seats (UE): the seats a party
 wins in excess of the number of whole seats closest to proportional
@@ -67,7 +67,7 @@ groups:
 Organizing the data this way makes it easier to see the macro dynamics
 over time.
 
-**It Could Have Been Worse**
+## It Could Have Been Worse
 
 During the decade before REDMAP, 2002-2010, R's enjoyed a small average
 national net UE seat advantage of 3.2 seats compared to what they should
@@ -77,9 +77,13 @@ redistricting process more than doubled from 18.4 seats to 46.33 seats.
 As a result, R's enjoyed a new post-redistricting national advantage
 that averaged 21.67 seats. This is REDMAP, in a nutshell.
 
+<div>
+
 ![Table 2](assets/images/Table%202.png)
 
-Table 2: R/D Seat Advantage 2010-2020
+</div>
+
+*Table 2: R/D Seat Advantage 2010-2020*
 
 That advantage wasn't bigger, because D UE seat in other states
 increased -8.47 seats to -24.67 seats at the same time. I wasn't aware
@@ -110,7 +114,7 @@ Three factors contributed to this countervailing change:
 Without these offsetting changes, the R advantage due to REDMAP would
 have been roughly 30 seats instead of 20.
 
-**It Got Better**
+## It Got Better
 
 The other dynamic that I wasn't aware of and didn't expect to find was
 that the early R advantage due to REDMAP disappeared in 2018 and 2020.
@@ -120,7 +124,7 @@ proportional nationally.
 
 ![Figure 1](assets/images/Figure%201.png)
 
-Figure 1: R/D Seat Advantage 2010-2020
+*Figure 1: R/D Seat Advantage 2010-2020*
 
 The average UE seats for the first R group in Table 1 declined an
 average of -11.17 seats from the 2012-2016 average to an average of 35.5
@@ -171,7 +175,7 @@ independent -- both also included semi-competitive seats with relatively
 thin R margins.[^8] In the face of increased D two-party vote shares in
 2018 and 2020, these districts elected D's.
 
-**Conclusion**
+## Conclusion
 
 REDMAP could not have happened to begin with if redistricting maps had
 been drawn by independent commissions. It was partially redressed by
@@ -184,7 +188,7 @@ national proportionality.
 
 ![Table 1](assets/images/Table%201.png)
 
-**Footnotes**
+## Footnotes
 
 [^1]: See *Ratf\*\*cked: The True Story Behind the Secret Plan to Steal
     America\'s Democracy*, Dave Daley (2016).
