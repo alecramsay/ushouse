@@ -28,8 +28,10 @@ analysis from changing vote shares.
 The election data supporting this analysis is the official data from the
 Clerk of the House with results for uncontested races imputed.[^2]
 
-Table 1 (at the end and [linked](assets/images/Table%201.pdf)) 
-shows UE seats for each state over time:
+Table 1 (at the end and 
+<a href=assets/images/Table%201.png target=_blank>Table 1</a>
+[//]: # ([linked](assets/images/Table%201.pdf)) 
+) shows UE seats for each state over time:
 
 -   Columns I--M show the results for the 2012-2020 elections
 
@@ -78,7 +80,9 @@ redistricting process more than doubled from 18.4 seats to 46.33 seats.
 As a result, R's enjoyed a new post-redistricting national advantage
 that averaged 21.67 seats. This is REDMAP, in a nutshell.
 
+<div style="text-align: center;">
 ![Table 2](assets/images/Table%202.png)
+</div>
 
 Table 2: R/D Seat Advantage 2010-2020
 
@@ -119,7 +123,9 @@ You can this see numerically in Table 2 and visually in Figure 1. For
 2018 and 2020, net UE seats averaged just -0.50, i.e., was almost
 proportional nationally.
 
+<div style="text-align: center;">
 ![Figure 1](assets/images/Figure%201.png)
+</div>
 
 Figure 1: R/D Seat Advantage 2010-2020
 
@@ -144,9 +150,9 @@ In addition, while the plans didn't change in MI and VA, how they
 performed did. Five competitive districts in these two R-drawn maps
 flipped blue:
 
--   MI -- 8^th^ and 11^th^
+-   MI -- 8th and 11th
 
--   VA -- 2^nd^, 7^th^, and 10^th^
+-   VA -- 2nd, 7th, and 10th
 
 To eke out extra R wins, both maps had been drawn with significant R/D
 asymmetries that "packed" D's and created some thin-margin
@@ -163,9 +169,9 @@ bluer. Much of that change (-6.67 seats, 68%) came from competitive
 districts flipping blue in the face of increased two-party D vote share
 in two states:
 
--   NJ -- 2^nd^, 3^rd^, 7^th^, and 11^th^
+-   NJ -- 2nd, 3rd, 7th, and 11th
 
--   CA -- 10^th^, 21^st^, 45^th^, and 49^th^
+-   CA -- 10th, 21st, 45th, and 49th
 
 While both plans were drawn by commissions -- NJ's political, CA's
 independent -- both also included semi-competitive seats with relatively
@@ -181,6 +187,12 @@ importantly though, a dozen competitive districts in five states acted
 as feedback mechanisms that enabled the system to autocorrect to near
 national proportionality.
 
+**Appendix: Table 1**
+
+<div style="text-align: center;">
+![Table 1](assets/images/Table%201.png)
+</div>
+
 **Footnotes**
 
 [^1]: See *Ratf\*\*cked: The True Story Behind the Secret Plan to Steal
@@ -190,7 +202,7 @@ national proportionality.
     uncontested races, and a description of it are all in this GitHub
     repository: <https://github.com/alecramsay/ushouse>.
 
-[^3]: AZ got a 9^th^ representative in the apportionment based on the
+[^3]: AZ got a 9th representative in the apportionment based on the
     2010 census.
 
 [^4]: Declination 8.16 =\> -4.52 degrees; average R win 56.02% =\>
@@ -210,7 +222,3 @@ national proportionality.
 
 [^8]: NJ (map: http://bit.ly/3XrN86T), CA (map:
     https://davesredistricting.org/join/09a02b57-93e8-4d59-8a04-bd7d65edf820).
-
-**Table 1**
-
-![Table 1](assets/images/Table%201.png)
