@@ -181,7 +181,7 @@ importantly though, a dozen competitive districts in five states acted
 as feedback mechanisms that enabled the system to autocorrect to near
 national proportionality.
 
-**Appendix: Table 1**
+## Appendix: Table 1
 
 ![Table 1](assets/images/Table%201.png)
 
