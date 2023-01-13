@@ -1,5 +1,4 @@
-# Redistricting & Congressional Elections 2012-2020: A Structural
-Analysis
+# Redistricting & House Elections 2012-20: A Structural Analysis
 
 REDMAP, the Republican plan to aggressively gerrymander the states where
 they controlled the 2011 redistricting process, is well documented.[^1]
@@ -28,7 +27,9 @@ analysis from changing vote shares.
 The election data supporting this analysis is the official data from the
 Clerk of the House with results for uncontested races imputed.[^2]
 
-Table 1 (at the end and [linked](assets/images/Table%201.pdf)) shows UE seats for each state over time:
+Table 1
+(at the end and linked [here](assets/images/Table%201.pdf)) 
+shows UE seats for each state over time:
 
 -   Columns I--M show the results for the 2012-2020 elections
 
@@ -77,12 +78,7 @@ redistricting process more than doubled from 18.4 seats to 46.33 seats.
 As a result, R's enjoyed a new post-redistricting national advantage
 that averaged 21.67 seats. This is REDMAP, in a nutshell.
 
-<div>
-
 ![Table 2](assets/images/Table%202.png)
-
-</div>
-
 *Table 2: R/D Seat Advantage 2010-2020*
 
 That advantage wasn't bigger, because D UE seat in other states
@@ -123,7 +119,6 @@ You can this see numerically in Table 2 and visually in Figure 1. For
 proportional nationally.
 
 ![Figure 1](assets/images/Figure%201.png)
-
 *Figure 1: R/D Seat Advantage 2010-2020*
 
 The average UE seats for the first R group in Table 1 declined an
