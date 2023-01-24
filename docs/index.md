@@ -31,15 +31,14 @@ Table 1
 (at the end and linked [here](assets/images/Table%201.pdf)) 
 shows UE seats for each state over time:
 
--   Columns I--M show the results for the 2012-20 elections
+-   The results for the 2012-20 elections
 
--   Columns D--H show the results for the previous decade for comparison
+-   Preceded by the results for the decade before for comparison, and
 
--   Columns N, O, and P show the average UE seats for 2002-10, 2012-16,
-    and 2018-20, respectively, and
+-   Followed by the average UE seats for the periods 2002-10, 2012-16,
+    and 2018-20, respectively
 
--   Column Q names the entity that controlled the initial redistricting
-    in the 2010 cycle
+The last column identifies the entity that controlled the initial redistricting in the 2010 cycle
 
 The states are sorted by their average UE seats for 2012-16, from most R
 favoring (+) to most D favoring (--). This highlights four distinct
