@@ -1,6 +1,6 @@
 # ushouse/__init__.py
 
-from .settings import *
+from .constants import *
 from .utils import *
 from .readwrite import *
 from .states import *

@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
-#
-# METRICS
-#
 
-from .settings import *
+"""
+METRICS
+"""
+
+from .constants import *
 from .utils import *
 
 

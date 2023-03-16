@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
-#
-# ANALYZE CONGRESSIONAL ELECTIONS OVER TIME
-#
+
+"""
+ANALYZE CONGRESSIONAL ELECTIONS OVER TIME
+"""
 
 
-from .settings import *
+from .constants import *
 from .states import *
 from .readwrite import *
 from .metrics import *

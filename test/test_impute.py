@@ -37,12 +37,12 @@ class TestImputingOneUncontestedElection:
 
         actual: dict = recast_uncontested_race(uncontested, avg_contested_votes)
 
-        assert dict_approx(actual, expected)
+        assert dict_approx_equal(actual, expected)
 
         recast: dict[str, int] = expected
         actual: dict = offset_uncontested_race(uncontested, recast)
 
-        assert dict_approx(actual, expected)
+        assert dict_approx_equal(actual, expected)
 
     def test_blank_uncontested(self) -> None:
         """2016 / FL 24th -- Uncontested, no votes recorded"""
@@ -73,12 +73,12 @@ class TestImputingOneUncontestedElection:
 
         actual: dict = recast_uncontested_race(uncontested, avg_contested_votes)
 
-        assert dict_approx(actual, expected)
+        assert dict_approx_equal(actual, expected)
 
         recast: dict[str, int] = expected
         actual: dict = offset_uncontested_race(uncontested, recast)
 
-        assert dict_approx(actual, expected)
+        assert dict_approx_equal(actual, expected)
 
     def test_REP_uncontested(self) -> None:
         """2020 / AL 5th -- R uncontested"""
@@ -109,7 +109,7 @@ class TestImputingOneUncontestedElection:
 
         actual: dict = recast_uncontested_race(uncontested, avg_contested_votes)
 
-        assert dict_approx(actual, expected)
+        assert dict_approx_equal(actual, expected)
 
         recast: dict[str, int] = expected
         expected: dict = {
@@ -120,7 +120,7 @@ class TestImputingOneUncontestedElection:
         }
         actual: dict = offset_uncontested_race(uncontested, recast)
 
-        assert dict_approx(actual, expected)
+        assert dict_approx_equal(actual, expected)
 
     def test_DEM_uncontested(self) -> None:
         """2020 / AL 7th -- D uncontested"""
@@ -151,7 +151,7 @@ class TestImputingOneUncontestedElection:
 
         actual: dict = recast_uncontested_race(uncontested, avg_contested_votes)
 
-        assert dict_approx(actual, expected)
+        assert dict_approx_equal(actual, expected)
 
         recast: dict[str, int] = expected
         expected: dict = {
@@ -162,7 +162,7 @@ class TestImputingOneUncontestedElection:
         }
         actual: dict = offset_uncontested_race(uncontested, recast)
 
-        assert dict_approx(actual, expected)
+        assert dict_approx_equal(actual, expected)
 
     def test_large_OTH(self) -> None:
         """2004 / NY 25th -- fragmented "other" votes > winning"""
@@ -193,7 +193,7 @@ class TestImputingOneUncontestedElection:
 
         actual: dict = recast_uncontested_race(uncontested, avg_contested_votes)
 
-        assert dict_approx(actual, expected)
+        assert dict_approx_equal(actual, expected)
 
         recast: dict[str, int] = expected
         expected: dict = {
@@ -204,7 +204,7 @@ class TestImputingOneUncontestedElection:
         }
         actual: dict = offset_uncontested_race(uncontested, recast)
 
-        assert dict_approx(actual, expected)
+        assert dict_approx_equal(actual, expected)
 
     def test_majority_OTH(self) -> None:
         """2010 / NY 29th -- non-winning imputed votes > winning"""
@@ -246,7 +246,7 @@ class TestImputingOneUncontestedElection:
 
         actual: dict = recast_uncontested_race(uncontested, avg_contested_votes)
 
-        assert dict_approx(actual, expected)
+        assert dict_approx_equal(actual, expected)
 
         recast: dict[str, int] = expected
         expected: dict = {
@@ -267,7 +267,7 @@ class TestImputingOneUncontestedElection:
         """
         actual: dict = offset_uncontested_race(uncontested, recast)
 
-        assert dict_approx(actual, expected)
+        assert dict_approx_equal(actual, expected)
 
     def test_imputed_gt_actual(self) -> None:
         """2016 / MN / 2nd -- imputed > actual"""
@@ -298,7 +298,7 @@ class TestImputingOneUncontestedElection:
 
         actual: dict = recast_uncontested_race(uncontested, avg_contested_votes)
 
-        assert dict_approx(actual, expected)
+        assert dict_approx_equal(actual, expected)
 
         recast: dict[str, int] = expected
         expected: dict = {
@@ -309,7 +309,7 @@ class TestImputingOneUncontestedElection:
         }
         actual: dict = offset_uncontested_race(uncontested, recast)
 
-        assert dict_approx(actual, expected)
+        assert dict_approx_equal(actual, expected)
 
     def test_actual_gt_imputed(self) -> None:
         """2018 / WI / 2nd -- actual votes > 0.7 average contested vote"""
@@ -340,7 +340,7 @@ class TestImputingOneUncontestedElection:
 
         actual: dict = recast_uncontested_race(uncontested, avg_contested_votes)
 
-        assert dict_approx(actual, expected)
+        assert dict_approx_equal(actual, expected)
 
         recast: dict[str, int] = expected
         expected: dict = {
@@ -351,7 +351,7 @@ class TestImputingOneUncontestedElection:
         }
         actual: dict = offset_uncontested_race(uncontested, recast)
 
-        assert dict_approx(actual, expected)
+        assert dict_approx_equal(actual, expected)
 
     def test_2002_NY_5th(self) -> None:
         """
@@ -401,11 +401,11 @@ class TestImputingOneUncontestedElection:
 
         actual: dict = recast_uncontested_race(uncontested, avg_contested_votes)
 
-        assert dict_approx(actual, recast)
+        assert dict_approx_equal(actual, recast)
 
         actual: dict = offset_uncontested_race(uncontested, recast)
 
-        assert dict_approx(actual, adjustments)
+        assert dict_approx_equal(actual, adjustments)
 
     def test_2006_TX_22nd(self) -> None:
         """
@@ -458,11 +458,11 @@ class TestImputingOneUncontestedElection:
 
         actual: dict = recast_uncontested_race(uncontested, avg_contested_votes)
 
-        assert dict_approx(actual, recast)
+        assert dict_approx_equal(actual, recast)
 
         actual: dict = offset_uncontested_race(uncontested, recast)
 
-        assert dict_approx(actual, adjustments)
+        assert dict_approx_equal(actual, adjustments)
 
     def test_2016_MN_2nd(self) -> None:
         """
@@ -513,11 +513,11 @@ class TestImputingOneUncontestedElection:
 
         actual: dict = recast_uncontested_race(uncontested, avg_contested_votes)
 
-        assert dict_approx(actual, recast)
+        assert dict_approx_equal(actual, recast)
 
         actual: dict = offset_uncontested_race(uncontested, recast)
 
-        assert dict_approx(actual, adjustments)
+        assert dict_approx_equal(actual, adjustments)
 
     def test_2018_WI_2nd(self) -> None:
         """
@@ -568,11 +568,11 @@ class TestImputingOneUncontestedElection:
 
         actual: dict = recast_uncontested_race(uncontested, avg_contested_votes)
 
-        assert dict_approx(actual, recast)
+        assert dict_approx_equal(actual, recast)
 
         actual: dict = offset_uncontested_race(uncontested, recast)
 
-        assert dict_approx(actual, adjustments)
+        assert dict_approx_equal(actual, adjustments)
 
     def test_2010_NY_29th(self) -> None:
         """
@@ -624,11 +624,11 @@ class TestImputingOneUncontestedElection:
 
         actual: dict = recast_uncontested_race(uncontested, avg_contested_votes)
 
-        assert dict_approx(actual, recast)
+        assert dict_approx_equal(actual, recast)
 
         actual: dict = offset_uncontested_race(uncontested, recast)
 
-        assert dict_approx(actual, adjustments)
+        assert dict_approx_equal(actual, adjustments)
 
 
 ### END ###

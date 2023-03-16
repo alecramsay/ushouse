@@ -1,7 +1,10 @@
 #!/usr/bin/env python3
-#
-# SETTINGS
-#
+
+"""
+CONSTANTS
+"""
+
+from pyutils import EPSILON
 
 congresses: dict = {
     "2000": "107th",
@@ -17,8 +20,6 @@ congresses: dict = {
     "2020": "117th",
     "2022": "118th",
 }
-
-EPSILON: float = 1 / (10**6)
 
 AVGSVERROR: float = 0.02
 

@@ -44,7 +44,7 @@ old_elections: list[dict[str, Any]] = read_election(
 )
 
 for new, old in zip(new_elections, old_elections):
-    if not dict_close(new, old):
+    if not dict_approx_equal(new, old, int_threshold=1):
         new_values: str = ",".join(["New"] + [str(x) for x in list(new.values())])
         old_values: str = ",".join(["Old"] + [str(x) for x in list(old.values())])
         print(new_values)

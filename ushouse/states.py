@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
-#
-# STATES
-#
 
-from .settings import *
+"""
+STATES
+"""
+
+from .constants import *
 
 
 states: list[dict[str, str]] = [

@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
-#
-# The logic for imputing results for uncontested elections.
-#
+
+"""
+The logic for imputing results for uncontested elections.
+"""
 
 from .states import state_codes
 
