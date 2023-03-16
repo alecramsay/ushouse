@@ -4,104 +4,30 @@
 READ/WRITE HELPERS
 """
 
-import os
 import sys
 import csv
-from csv import DictReader, DictWriter
-import contextlib
-from typing import Any, Generator, TextIO
-
-
-### GENERIC CSV READ/WRITE FUNCTIONS ###
-
-
-def read_typed_csv(rel_path, field_types) -> list:
-    """
-    Read a CSV with DictReader
-    Patterned after: https://stackoverflow.com/questions/8748398/python-csv-dictreader-type
-    """
-
-    abs_path: str = FileSpec(rel_path).abs_path
-
-    try:
-        rows: list = []
-        with open(abs_path, "r", encoding="utf-8-sig") as file:
-            reader: DictReader[str] = DictReader(
-                file, fieldnames=None, restkey=None, restval=None, dialect="excel"
-            )
-
-            for row_in in reader:
-                if len(field_types) >= len(reader.fieldnames):
-                    # Extract the values in the same order as the csv header
-                    ivalues = map(row_in.get, reader.fieldnames)
-
-                    # Apply type conversions
-                    iconverted: list = [
-                        cast(x, y) for (x, y) in zip(field_types, ivalues)
-                    ]
-
-                    # Pass the field names and the converted values to the dict constructor
-                    row_out: dict = dict(zip(reader.fieldnames, iconverted))
-
-                rows.append(row_out)
-
-        return rows
-
-    except:
-        raise Exception("Exception reading CSV with explicit types.")
-
-
-def cast(t, v_str) -> str | int | float:
-    # HACK - For thease files, treat missing values as 0.
-    if t == int and (len(v_str) == 0 or v_str == " "):
-        return 0
-    return t(v_str)
-
-
-def write_csv(rel_path, rows, cols) -> None:
-    try:
-        cf: str | None = FileSpec(rel_path).abs_path if (rel_path is not None) else None
-
-        with smart_open(cf) as f:
-            writer: DictWriter = DictWriter(f, fieldnames=cols)
-            writer.writeheader()
-
-            for row in rows:
-                mod: dict = {}
-                for (k, v) in row.items():
-                    if isinstance(v, float):
-                        mod[k] = "{:.6f}".format(v)
-                    else:
-                        mod[k] = v
-                writer.writerow(mod)
-
-    except:
-        raise Exception("Exception writing CSV.")
-
-
-@contextlib.contextmanager
-def smart_open(filename=None) -> Generator[TextIO | TextIO, None, None]:
-    """
-    Patterned after: https://stackoverflow.com/questions/17602878/how-to-handle-both-with-open-and-sys-stdout-nicely
-    """
-    if filename and filename != "-":
-        fh: TextIO = open(filename, "w")
-    else:
-        fh = sys.stdout
-
-    try:
-        yield fh
-    finally:
-        if fh is not sys.stdout:
-            fh.close()
+from csv import DictReader
+from pyutils import (
+    FileSpec,
+    file_name,
+    path_to_file,
+    read_csv,
+    write_csv,
+    read_shapes,
+    write_pickle,
+    read_pickle,
+    smart_open,
+)
+from typing import Any
 
 
 ### ANALYSIS INPUT HELPERS ###
 
 
 def read_election(rel_path: str, invert: bool = False) -> list:
-    """
-    Read a CSV of congressional election results with columns;
+    """Read a CSV of congressional election results & tranform it into the format we need.
+
+    The columns are:
     YEAR, STATE, XX, REP_V, DEM_V, OTH_V, TOT_V, REP_S, DEM_S, OTH_S, TOT_S, VOTE_%, SEAT_%
     """
 
@@ -196,21 +122,6 @@ def print_row(key, row) -> None:
         "{0},".format(row["Elections"][9]),
         "{0}".format(row["Elections"][10]),
     )
-
-
-### MISCELLANEOUS ###
-
-
-class FileSpec:
-    def __init__(self, path: str, name=None) -> None:
-        file_name: str
-        file_extension: str
-        file_name, file_extension = os.path.splitext(path)
-
-        self.rel_path: str = path
-        self.abs_path: str = os.path.abspath(path)
-        self.name: str = name.lower() if (name) else os.path.basename(file_name).lower()
-        self.extension: str = file_extension
 
 
 ### END ###

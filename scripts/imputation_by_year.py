@@ -102,14 +102,12 @@ for year in years:
     uncontested_csv: str = extracted_file(year, congress, "UNCONTESTED")
     imputed_csv: str = election_file(year, congress)
 
-    official_results: list = read_typed_csv(
-        extracted_root + official_csv, official_types
-    )
-    uncontested_races: list = read_typed_csv(
+    official_results: list = read_csv(extracted_root + official_csv, official_types)
+    uncontested_races: list = read_csv(
         extracted_root + uncontested_csv, uncontested_types
     )
 
-    imputed_results: list = read_typed_csv(election_root + imputed_csv, imputed_types)
+    imputed_results: list = read_csv(election_root + imputed_csv, imputed_types)
 
     # Summarize the data
 

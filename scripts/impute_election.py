@@ -84,10 +84,8 @@ def election_file(year: str, congress: str) -> str:
 results_csv: str = extracted_file(year, congress, "RESULTS")
 uncontested_csv: str = extracted_file(year, congress, "UNCONTESTED")
 
-results_official: list = read_typed_csv(extracted_root + results_csv, results_types)
-uncontested_races: list = read_typed_csv(
-    extracted_root + uncontested_csv, uncontested_types
-)
+results_official: list = read_csv(extracted_root + results_csv, results_types)
+uncontested_races: list = read_csv(extracted_root + uncontested_csv, uncontested_types)
 
 ### Impute the results for uncontested races ###
 
